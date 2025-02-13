@@ -10,6 +10,7 @@ map_rotation = true
 lobbyduration = 180
 role_timers = false
 round_end_pvs_overrides = false
+contraband_examine = false
 
 [ghost]
 kill_crit = false
@@ -38,6 +39,16 @@ flavor_text = true
 enable_suicide = false
 
 [shuttle]
+arrivals_planet = false
+arrivals = false
+grid_fill = false
+preload_grids = false
+startup_time = 10
+travel_time = 100
+arrival_time = 10
+cooldown = 120
+mass_limit = -1
+emergency = false
 auto_call_time = 0
 
 [discord]
@@ -60,8 +71,30 @@ advertise = true
 tags = "lang:ru,rp:med,region:eu_e"
 
 [physics]
-maxlinvelocity = 51
+maxlinvelocity = 72
 grid_splitting = false
 
 [auth]
 mode = 1
+
+[guidebook]
+show_editor_species_button = false
+
+[events]
+enabled = false
+
+[explosion]
+can_create_vacuum = false
+
+[gateway]
+generator_enabled = false
+
+[pointing]
+cooldown_seconds = 1
+
+[procgen]
+preload = false
+
+[tips]
+dataset = "CM_Tips"
+login_dataset = "CM_Tips"
