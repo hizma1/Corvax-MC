@@ -1,5 +1,5 @@
-﻿- type: dataset
-  id: NamesFirstMilitaryLeader
+﻿- type: localizedDataset
+  id: NamesMilitaryFirstLeader
   values:
   - Коммандер
   - Полковник
@@ -16,8 +16,8 @@
   - Капрал
   - Ефрейтор
 
-- type: dataset
-  id: NamesLastMilitary
+- type: localizedDataset
+  id: NamesMilitaryFirst
   values:
   - Антарес
   - Андромеда

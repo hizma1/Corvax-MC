@@ -1,5 +1,5 @@
-﻿- type: dataset
-  id: adjectives
+﻿- type: localizedDataset
+  id: Adjectives
   values:
   - новый
   - хороший

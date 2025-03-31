@@ -1,5 +1,5 @@
-- type: dataset
-  id: skeletonNamesFirst
+- type: localizedDataset
+  id: NamesSkeletonFirst
   values:
   - Стернум
   - Рибс

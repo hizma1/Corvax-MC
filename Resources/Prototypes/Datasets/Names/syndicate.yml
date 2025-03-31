@@ -1,5 +1,5 @@
-- type: dataset
-  id: SyndicateNamesNormal
+- type: localizedDataset
+  id: NamesSyndicateNormal
   values:
   - Альфа
   - Браво
@@ -27,8 +27,8 @@
   - Иксрей
   - Зулу
 
-- type: dataset
-  id: SyndicateNamesElite
+- type: localizedDataset
+  id: NamesSyndicateElite
   values:
   - Альфа
   - Бета
@@ -54,8 +54,8 @@
   - Пси
   - Омега
 
-- type: dataset
-  id: SyndicateNamesPrefix
+- type: localizedDataset
+  id: NamesSyndicatePrefix
   values:
   - Оперативник
   - Агент

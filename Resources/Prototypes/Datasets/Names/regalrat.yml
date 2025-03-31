@@ -1,5 +1,5 @@
-- type: dataset
-  id: RegalRatNameKingdom
+- type: localizedDataset
+  id: NamesRegalratKingdom
   values:
   - Чумной
   - Миазмовый
@@ -18,8 +18,8 @@
   - Конкретный
   - Из нержавеющей стали
 
-- type: dataset
-  id: RegalRatNameTitle
+- type: localizedDataset
+  id: NamesRegalratTitle
   values:
   - Король
   - Лорд

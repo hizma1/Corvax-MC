@@ -1,5 +1,5 @@
-- type: dataset
-  id: verbs
+- type: localizedDataset
+  id: Verbs
   values:
   - сказать
   - говорить

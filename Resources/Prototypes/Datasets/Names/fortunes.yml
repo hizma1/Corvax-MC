@@ -1,5 +1,5 @@
-- type: dataset
-  id: CookieFortuneDescriptions
+- type: localizedDataset
+  id: DescriptionsCookieFortune
   values:
   - Конец близок... и это всё ТВОЯ вина.
   - Мы знаем что ты сделал.

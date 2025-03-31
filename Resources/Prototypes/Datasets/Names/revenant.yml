@@ -1,5 +1,5 @@
-- type: dataset
-  id: RevenantType
+- type: localizedDataset
+  id: NamesRevenantType
   values:
   - сущность
   - привидение
@@ -10,8 +10,8 @@
   - тень
   - дух
 
-- type: dataset
-  id: RevenantAdjective
+- type: localizedDataset
+  id: NamesRevenantAdjective
   values:
   - адской
   - бездонной
@@ -30,8 +30,8 @@
   - тихой
   - злорадной
 
-- type: dataset
-  id: RevenantTheme
+- type: localizedDataset
+  id: NamesRevenantTheme
   values:
   - агонии
   - злости

@@ -1,5 +1,5 @@
-﻿- type: dataset
-  id: names_ninja
+﻿- type: localizedDataset
+  id: NamesNinja
   values:
   - Тень
   - Сарутоби
