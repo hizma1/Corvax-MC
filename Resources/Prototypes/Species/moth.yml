@@ -8,10 +8,10 @@
   markingLimits: MobMothMarkingLimits
   dollPrototype: MobMothDummy
   skinColoration: Hues
-  maleFirstNames: names_moth_first_male
-  femaleFirstNames: names_moth_first_female
-  maleLastNames: names_moth_last # CCM-Localization
-  femaleLastNames: names_moth_last # CCM-Localization
+  maleFirstNames: NamesMothFirstMale
+  femaleFirstNames: NamesMothFirstFemale
+  maleLastNames: NamesMothLast # CCM-LastnameGender
+  femaleLastNames: NamesMothLast # CCM-LastnameGender
 
 - type: speciesBaseSprites
   id: MobMothSprites
