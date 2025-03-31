@@ -185,7 +185,7 @@
 - type: radioChannel
   id: Hivemind
   name: chat-radio-hivemind
-  keycode: "у" #CCM
+  keycode: "ш" #CCM
   frequency: 426
   color: "#8b36a6"
   longRange: true
