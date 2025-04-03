@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: NamesHumanLastFemale
+  id: NamesLastFemale
   values:
     prefix: names-last-female-dataset-
     count: 249

@@ -90,10 +90,10 @@ public sealed partial class SpeciesPrototype : IPrototype
     // CCM-Localization-Start: Split lastname field by gender
     [DataField]
     // public string LastNames { get; private set; } = "names_last";
-    public string MaleLastNames { get; private set; } = "NamesHumanLastMale";
+    public string MaleLastNames { get; private set; } = "NamesLastMale";
 
     [DataField]
-    public string FemaleLastNames { get; private set; } = "NamesHumanLastFemale";
+    public string FemaleLastNames { get; private set; } = "NamesLastFemale";
     // CCM-Localization-End
 
     [DataField]
