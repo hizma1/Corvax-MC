@@ -1,12 +1,13 @@
 species-name-rodentia = Грызлит
+
 # head markings
+
 
 ## patterns
 
 marking-RodentiaHeadBlaze = Голова - Пламя
 marking-RodentiaHeadBlaze-head_m = Голова
 marking-RodentiaHeadBlaze-blaze = Узор
-
 marking-RodentiaHeadRound = Голова - Цвет лица
 marking-RodentiaHeadRound-head_m = Голова
 marking-RodentiaHeadRound-round = Узор
@@ -15,36 +16,27 @@ marking-RodentiaHeadRound-round = Узор
 
 marking-RodentiaHeadTopEarBat = Уши - Летучая мышь
 marking-RodentiaHeadTopEarBat-bat = Наружное ухо
-
 marking-RodentiaHeadTopEarBatLarge = Уши - Летучая мышь (Большие)
 marking-RodentiaHeadTopEarBatLarge-bat_large = Наружное ухо
-
 marking-RodentiaHeadTopEarHamster = Уши - Хомяк
 marking-RodentiaHeadTopEarHamster-hamster = Наружное ухо
 marking-RodentiaHeadTopEarHamster-hamster_overlay = Внутреннее ухо
-
 marking-RodentiaHeadTopEarLong = Уши - Длинные
 marking-RodentiaHeadTopEarLong-long = Наружное ухо
 marking-RodentiaHeadTopEarLong-long_overlay = Внутреннее ухо
-
 marking-RodentiaHeadTopEarMouse = Уши - Мышь
 marking-RodentiaHeadTopEarMouse-mouse = Наружное ухо
 marking-RodentiaHeadTopEarMouse-mouse_overlay = Внутреннее ухо
-
 marking-RodentiaHeadTopEarMouseLarge = Уши - Мышь (Большие)
 marking-RodentiaHeadTopEarMouseLarge-mouse_large = Наружное ухо
 marking-RodentiaHeadTopEarMouseLarge-mouse_large_overlay = Внутреннее ухо
-
 marking-RodentiaHeadTopEarNone = Уши - Спрятанные
 marking-RodentiaHeadTopEarNone-none = Нет
-
 marking-RodentiaHeadTopEarPointy = Уши - Заостренные
 marking-RodentiaHeadTopEarPointy-pointy = Наружное ухо
-
 marking-RodentiaHeadTopEarRabbit = Уши - Кролик
 marking-RodentiaHeadTopEarRabbit-rabbit = Наружное ухо
 marking-RodentiaHeadTopEarRabbit-rabbit_overlay = Внутреннее ухо
-
 marking-RodentiaHeadTopEarSmall = Уши - Маленькие
 marking-RodentiaHeadTopEarSmall-small = Наружное ухо
 
@@ -53,25 +45,20 @@ marking-RodentiaHeadTopEarSmall-small = Наружное ухо
 marking-RodentiaSnoutBat = Морда - Летучая мышь
 marking-RodentiaSnoutBat-bat = Морда
 marking-RodentiaSnoutBat-bat_nose = Нос
-
 marking-RodentiaSnoutBatCounter = Морда - Летучая мышь, Два тона
 marking-RodentiaSnoutBatCounter-bat = Морда
 marking-RodentiaSnoutBatCounter-bat_nose = Нос
 marking-RodentiaSnoutBatCounter-bat_overlay = Противотень
-
 marking-RodentiaSnoutFlat = Морда - Плоская
 marking-RodentiaSnoutFlat-flat = Морда
 marking-RodentiaSnoutFlat-flat_nose = Нос
-
 marking-RodentiaSnoutFlatCounter = Морда - Плоская, Два тона
 marking-RodentiaSnoutFlatCounter-flat = Морда
 marking-RodentiaSnoutFlatCounter-flat_nose = Нос
 marking-RodentiaSnoutFlatCounter-flat_overlay = Противотень
-
 marking-RodentiaSnoutRound = Морда - Круглая
 marking-RodentiaSnoutRound-round = Морда
 marking-RodentiaSnoutRound-round_nose = Нос
-
 marking-RodentiaSnoutRoundCounter = Морда - Круглая, Два тона
 marking-RodentiaSnoutRoundCounter-round = Морда
 marking-RodentiaSnoutRoundCounter-round_nose = Нос
@@ -81,66 +68,51 @@ marking-RodentiaSnoutRoundCounter-round_overlay = Противотень
 
 marking-RodentiaCheeksRound = Щёки - Круглые
 marking-RodentiaCheeksRound-cheeks = Щека
-
 marking-RodentiaCheeksRoundCounter = Щёки - Круглые, Два тона
 marking-RodentiaCheeksRoundCounter-cheeks = Щека
 marking-RodentiaCheeksRoundCounter-cheeks_overlay = Противотень
-
 marking-RodentiaCheeksFluff = Щёки - Пух
 marking-RodentiaCheeksFluff-fluff = Щека fluff
-
 marking-RodentiaCheeksFluffCounter = Щёки - Пух, Два тона
 marking-RodentiaCheeksFluffCounter-fluff = Пух на щеках
 marking-RodentiaCheeksFluffCounter-fluff_overlay = Противотень
-
 marking-RodentiaCheeksFluffAlt = Щёки - Пух, Альт
 marking-RodentiaCheeksFluffAlt-fluff_alt = Пух на щеках
-
 marking-RodentiaCheeksFluffAltCounter = Щёки - Пух, Альт, Два тона
 marking-RodentiaCheeksFluffAltCounter-fluff_alt = Пух на щеках
 marking-RodentiaCheeksFluffAltCounter-fluff_alt_overlay = Противотень
-
 marking-RodentiaCheeksWhiskers = Усики
 marking-RodentiaCheeksWhiskers-whiskers = Усики
 
 # body markings
 
+
 ## tail
 
 marking-RodentiaTailBeaver = Хвост - Бобёр
 marking-RodentiaTailBeaver-beaver = Хвост
-
 marking-RodentiaTailHamster = Хвост - Хомяк
 marking-RodentiaTailHamster-hamster = Хвост
-
 marking-RodentiaTailLong = Хвост - Длинный
 marking-RodentiaTailLong-long = Хвост
-
 marking-RodentiaTailLongCounter = Хвост - Длинный, Два тона
 marking-RodentiaTailLongCounter-long = Хвост
 marking-RodentiaTailLongCounter-long_overlay = Противотень
-
 marking-RodentiaTailLongCounterTip = Хвост - Длинный, Три тона
 marking-RodentiaTailLongCounterTip-long = Хвост
 marking-RodentiaTailLongCounterTip-long_overlay = Противотень
 marking-RodentiaTailLongCounterTip-long_tip = Кончик
-
 marking-RodentiaTailMouse = Хвост - Мышь
 marking-RodentiaTailMouse-mouse = Хвост
-
 marking-RodentiaTailRabbit = Хвост - Кролик
 marking-RodentiaTailRabbit-rabbit = Хвост
-
 marking-RodentiaTailRabbitCounter = Хвост - Кролик, Два тона
 marking-RodentiaTailRabbitCounter-rabbit = Хвост
 marking-RodentiaTailRabbitCounter-rabbit_overlay = Противотень
-
 marking-RodentiaTailShort = Хвост - Короткий
 marking-RodentiaTailShort-short = Хвост
-
 marking-RodentiaTailSquirrel = Хвост - Белка
 marking-RodentiaTailSquirrel-squirrel = Хвост
-
 marking-RodentiaTailSquirrelBicolor = Хвост - Белка, Два тона
 marking-RodentiaTailSquirrelBicolor-squirrel = Хвост
 marking-RodentiaTailSquirrelBicolor-squirrel_overlay = Вторичный
@@ -149,24 +121,18 @@ marking-RodentiaTailSquirrelBicolor-squirrel_overlay = Вторичный
 
 marking-RodentiaChestCountershade = Грудь - Противотень
 marking-RodentiaChestCountershade-countershade = Противотень
-
 marking-RodentiaChestCountershadeF = Грудь - Противотень
 marking-RodentiaChestCountershadeF-countershade_f = Противотень
-
 marking-RodentiaLegLeftCountershade = Левая нога - Противотень
 marking-RodentiaLegLeftCountershade-l_leg = Нога
 marking-RodentiaLegLeftCountershade-countershade_lleg = Противотень
-
 marking-RodentiaLegRightCountershade = Правая нога - Противотень
 marking-RodentiaLegRightCountershade-r_leg = Нога
 marking-RodentiaLegRightCountershade-countershade_rleg = Противотень
-
 marking-RodentiaChestFawn = Грудь - Фавн
 marking-RodentiaChestFawn-fawn = Узор
-
 marking-RodentiaChestHooded = Грудь - Капюшон
 marking-RodentiaChestHooded-hooded = Узор
-
 marking-RodentiaChestHoodedF = Грудь - Капюшон
 marking-RodentiaChestHoodedF-hooded_f = Узор
 
@@ -174,31 +140,22 @@ marking-RodentiaChestHoodedF-hooded_f = Узор
 
 marking-RodentiaHeadBasic = Голова - Базовая
 marking-RodentiaHeadBasic-head_m = Голова
-
 marking-RodentiaArmLeftBasic = Левая рука - Базовая
 marking-RodentiaArmLeftBasic-l_arm = Рука
-
 marking-RodentiaArmRightBasic = Правая рука - Базовая
 marking-RodentiaArmRightBasic-r_arm = Рука
-
 marking-RodentiaLegLeftBasic = Левая нога - Базовая
 marking-RodentiaLegLeftBasic-l_leg = Нога
-
 marking-RodentiaLegRightBasic = Правая нога - Базовая
 marking-RodentiaLegRightBasic-r_leg = Нога
-
 marking-RodentiaHandLeftBasic = Левая кисть - Базовая
 marking-RodentiaHandLeftBasic-l_hand = Кисть
-
 marking-RodentiaHandRightBasic = Правая кисть - Базовая
 marking-RodentiaHandRightBasic-r_hand = Кисть
-
 marking-RodentiaFootLeftBasic = Левая ступня - Базовая
 marking-RodentiaFootLeftBasic-l_foot = Ступня
-
 marking-RodentiaFootRightBasic = Правая ступня - Базовая
 marking-RodentiaFootRightBasic-r_foot = Ступня
-
 # generic names
 rmc-name-rodentia-male-1 = Сквикс
 rmc-name-rodentia-male-2 = Сквикер
@@ -231,7 +188,6 @@ rmc-name-rodentia-male-28 = Чеддар
 rmc-name-rodentia-male-29 = Тутси
 rmc-name-rodentia-male-30 = Пикл
 rmc-name-rodentia-male-31 = Берри
-
 # gender-neutral
 rmc-name-rodentia-male-32 = Алекс
 rmc-name-rodentia-male-33 = Райли
@@ -319,7 +275,6 @@ rmc-name-rodentia-male-114 = Перси
 rmc-name-rodentia-male-115 = Тео
 rmc-name-rodentia-male-116 = Уинстон
 rmc-name-rodentia-male-117 = Эрни
-
 # "surnames"
 rmc-name-rodentia-male-118 = Брамблвуд
 rmc-name-rodentia-male-119 = Барроуз
@@ -371,7 +326,6 @@ rmc-name-rodentia-male-164 = Вискерфилд
 rmc-name-rodentia-male-165 = Вискершир
 rmc-name-rodentia-male-166 = Вискерсноут
 rmc-name-rodentia-male-167 = Вискервейл
-
 # generic names
 rmc-name-rodentia-female-1 = Сквикс
 rmc-name-rodentia-female-2 = Сквикер
@@ -404,7 +358,6 @@ rmc-name-rodentia-female-28 = Чеддар
 rmc-name-rodentia-female-29 = Тутси
 rmc-name-rodentia-female-30 = Пикл
 rmc-name-rodentia-female-31 = Берри
-
 # gender-neutral
 rmc-name-rodentia-female-32 = Алекс
 rmc-name-rodentia-female-33 = Райли
@@ -447,7 +400,6 @@ rmc-name-rodentia-female-69 = Рен
 rmc-name-rodentia-female-70 = Слоун
 rmc-name-rodentia-female-71 = Райлан
 rmc-name-rodentia-female-72 = Сейдж
-
 # feminine names
 rmc-name-rodentia-female-73 = Минни
 rmc-name-rodentia-female-74 = Дейзи
@@ -486,7 +438,6 @@ rmc-name-rodentia-female-106 = Нелли
 rmc-name-rodentia-female-107 = Полли
 rmc-name-rodentia-female-108 = Сейди
 rmc-name-rodentia-female-109 = Айла
-
 # "surnames"
 rmc-name-rodentia-female-110 = Брамблвуд
 rmc-name-rodentia-female-111 = Барроуз
@@ -538,7 +489,93 @@ rmc-name-rodentia-female-156 = Вискерфилд
 rmc-name-rodentia-female-157 = Вискершир
 rmc-name-rodentia-female-158 = Вискерсноут
 rmc-name-rodentia-female-159 = Вискервейл
-
+rmc-name-rodentia-last-1 = Agile
+rmc-name-rodentia-last-2 = Beady-eyed
+rmc-name-rodentia-last-3 = Berry-picking
+rmc-name-rodentia-last-4 = Big
+rmc-name-rodentia-last-5 = Big-ears
+rmc-name-rodentia-last-6 = Big-eyed
+rmc-name-rodentia-last-7 = Big-heart
+rmc-name-rodentia-last-8 = Big-nose
+rmc-name-rodentia-last-9 = Blunt-nose
+rmc-name-rodentia-last-10 = Brave
+rmc-name-rodentia-last-11 = Break-neck
+rmc-name-rodentia-last-12 = Bright
+rmc-name-rodentia-last-13 = Bright-eyed
+rmc-name-rodentia-last-14 = Cheeky
+rmc-name-rodentia-last-15 = Crafty
+rmc-name-rodentia-last-16 = Cunning
+rmc-name-rodentia-last-17 = Curious
+rmc-name-rodentia-last-18 = Day-sleeping
+rmc-name-rodentia-last-19 = Eager
+rmc-name-rodentia-last-20 = Fast-moving
+rmc-name-rodentia-last-21 = Fast-paws
+rmc-name-rodentia-last-22 = Fat
+rmc-name-rodentia-last-23 = Fidgety
+rmc-name-rodentia-last-24 = Food-stealing
+rmc-name-rodentia-last-25 = Gentle
+rmc-name-rodentia-last-26 = Great
+rmc-name-rodentia-last-27 = Greedy
+rmc-name-rodentia-last-28 = Grumpy
+rmc-name-rodentia-last-29 = Hasty
+rmc-name-rodentia-last-30 = High-jumping
+rmc-name-rodentia-last-31 = Jumpy
+rmc-name-rodentia-last-32 = Keen
+rmc-name-rodentia-last-33 = Keen-eyes
+rmc-name-rodentia-last-34 = Light-foot
+rmc-name-rodentia-last-35 = Little
+rmc-name-rodentia-last-36 = Long
+rmc-name-rodentia-last-37 = Long-ears
+rmc-name-rodentia-last-38 = Long-legged
+rmc-name-rodentia-last-39 = Long-snout
+rmc-name-rodentia-last-40 = Long-tail
+rmc-name-rodentia-last-41 = Long-tooth
+rmc-name-rodentia-last-42 = Night-hunting
+rmc-name-rodentia-last-43 = Nimble
+rmc-name-rodentia-last-44 = No-eyes
+rmc-name-rodentia-last-45 = No-tail
+rmc-name-rodentia-last-46 = Nosy
+rmc-name-rodentia-last-47 = Quick-footed
+rmc-name-rodentia-last-48 = Quick-wits
+rmc-name-rodentia-last-49 = Quiet
+rmc-name-rodentia-last-50 = Ravenous
+rmc-name-rodentia-last-51 = Ravenous
+rmc-name-rodentia-last-52 = Restless
+rmc-name-rodentia-last-53 = Rough
+rmc-name-rodentia-last-54 = Round-belly
+rmc-name-rodentia-last-55 = Rowdy
+rmc-name-rodentia-last-56 = Seed-stashing
+rmc-name-rodentia-last-57 = Shadow-dwelling
+rmc-name-rodentia-last-58 = Sharp
+rmc-name-rodentia-last-59 = Sharp-clawed
+rmc-name-rodentia-last-60 = Shifty
+rmc-name-rodentia-last-61 = Shiny-eyes
+rmc-name-rodentia-last-62 = Short-ears
+rmc-name-rodentia-last-63 = Short-legged
+rmc-name-rodentia-last-64 = Short-snout
+rmc-name-rodentia-last-65 = Short-tail
+rmc-name-rodentia-last-66 = Shy
+rmc-name-rodentia-last-67 = Silent
+rmc-name-rodentia-last-68 = Silver-tongue
+rmc-name-rodentia-last-69 = Skittish
+rmc-name-rodentia-last-70 = Small-ears
+rmc-name-rodentia-last-71 = Small-nose
+rmc-name-rodentia-last-72 = Sneaky
+rmc-name-rodentia-last-73 = Soft-fur
+rmc-name-rodentia-last-74 = Soft-paws
+rmc-name-rodentia-last-75 = Squeaking
+rmc-name-rodentia-last-76 = Squeaky
+rmc-name-rodentia-last-77 = Stout
+rmc-name-rodentia-last-78 = Stubborn
+rmc-name-rodentia-last-79 = Stubby
+rmc-name-rodentia-last-80 = Sweet
+rmc-name-rodentia-last-81 = Swift
+rmc-name-rodentia-last-82 = Thick-fur
+rmc-name-rodentia-last-83 = Thick-skin
+rmc-name-rodentia-last-84 = Thieving
+rmc-name-rodentia-last-85 = Trash-eating
+rmc-name-rodentia-last-86 = Tunnel-building
+rmc-name-rodentia-last-87 = Whisker-twitching
 rmc-rodentia-last-female-1 = Эйджайл
 rmc-rodentia-last-female-2 = Биди-Айд
 rmc-rodentia-last-female-3 = Берри-Пикинг
@@ -626,7 +663,6 @@ rmc-rodentia-last-female-84 = Сивинг
 rmc-rodentia-last-female-85 = Трэш-Итинг
 rmc-rodentia-last-female-86 = Таннел-Билдинг
 rmc-rodentia-last-female-87 = Вискер-Твичинг
-
 rmc-rodentia-last-male-1 = Эйджайл
 rmc-rodentia-last-male-2 = Биди-Айд
 rmc-rodentia-last-male-3 = Берри-Пикинг

@@ -1,5 +1,4 @@
 species-name-avali = Авали
-
 marking-AvaliHairBigPonytail = Большой конский хвост
 marking-AvaliHairBigPonytail-avali_crest_bigponytail_primary = Основной
 marking-AvaliHairBigPonytail-avali_crest_bigponytail_secondary = Вторичный
@@ -25,7 +24,6 @@ marking-AvaliHairLongFeather-avali_crest_longfeather_secondary = Вторичн�
 marking-AvaliHairPunk = Панк
 marking-AvaliHairPunk-avali_crest_punk_primary = Основной
 marking-AvaliHairPunk-avali_crest_punk_secondary = Вторичный
-
 marking-AvaliEarsBase = (Обычные) Уши Авали
 marking-AvaliEarsBase-ears_avalibase_primary = Верхушка ушей
 marking-AvaliEarsBase-ears_avalibase_secondary = Низ ушей
@@ -128,7 +126,6 @@ marking-AvaliTailTrimTwo = (Второй тип) Подстриженный хв
 marking-AvaliTailTrimTwo-tail_avalibase = Основание хвоста
 marking-AvaliTailTrimTwo-tail_avali_primary = Основной
 marking-AvaliTailTrimTwo-tail_avali_secondary = Вторичный
-
 rmc-name-avali-1 = Ко
 rmc-name-avali-2 = Номи
 rmc-name-avali-3 = Ясио
