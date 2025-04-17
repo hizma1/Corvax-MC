@@ -1,7 +1,5 @@
 ent-RMCCrateOpenableBase = { ent-BaseStructureDynamic }
     .desc = { ent-BaseStructureDynamic.desc }
-ent-RMCCrateLarge = large crate
-    .desc = A hefty wooden crate.
 ent-RMCSecureCase = storage case
     .desc = A black storage case.
 ent-RMCSecureCaseDouble = cases

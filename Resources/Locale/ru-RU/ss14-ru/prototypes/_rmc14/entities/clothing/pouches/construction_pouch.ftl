@@ -1,8 +1,8 @@
-ent-RMCPouchConstruction = construction pouch
-    .desc = It's designed to hold construction materials - glass/metal sheets, metal rods, barbed wire, cable coil, and empty sandbags. It also has two hooks for an entrenching tool and light replacer.
+ent-RMCPouchConstruction = подсумок для строительства
+    .desc = Он предназначен для хранения строительных материалов - листов стекла/металла, металлических стержней, колючей проволоки, мотков кабеля и пустых мешков для песка. В нём также предусмотрены два крепления, для сапёрной лопатки и лампозаменителя.
 ent-RMCPouchConstructionFillLowGrade = { ent-RMCPouchConstruction }
     .suffix = Low grade full
     .desc = { ent-RMCPouchConstruction.desc }
 ent-RMCPouchConstructionFillFull = { ent-RMCPouchConstruction }
-    .suffix = Full
+    .suffix = Заполненный предметами низкого класса
     .desc = { ent-RMCPouchConstruction.desc }
