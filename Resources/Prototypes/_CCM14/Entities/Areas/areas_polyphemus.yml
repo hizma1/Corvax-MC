@@ -130,6 +130,7 @@
     medevac: true
     OB: true
     supplyDrop: true
+    linkedLz: dropship_lz1
 
 - type: entity
   parent:
