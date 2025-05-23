@@ -108,4 +108,4 @@ screen_shake_intensity = 1
 enabled = false
 
 [build]
-engine_version = "251.0.1-source-gen-debug" #and remember to remove it next update...xd
+engine_version = "251.0.1-fixtures-fix" #and remember to remove it next update...xd
