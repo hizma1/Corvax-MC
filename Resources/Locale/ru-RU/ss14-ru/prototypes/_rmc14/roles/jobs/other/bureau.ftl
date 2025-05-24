@@ -1,12 +1,6 @@
 ent-RMCSpawnerBureauMarshal = спавнер маршал бюро
     .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidBureauMarshal = маршал бюро роль призрака
-    .suffix = Роль
-    .desc = { "" }
 ent-RMCSpawnerBureauDeputy = спавнер представитель бюро
     .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidBureauDeputy = представитель бюро роль призрака
-    .suffix = Роль
-    .desc = { "" }

@@ -9,3 +9,5 @@ ent-CMDefibrillatorEmpty = { ent-CMDefibrillator }
 ent-CMDefibrillatorInfinite = { ent-CMBaseDefibrillator }
     .suffix = RMC14, Infinite
     .desc = { ent-CMBaseDefibrillator.desc }
+ent-RMCDefibrillatorCompact = compact defibrillator
+    .desc = This particular defibrillator has halved charge capacity compared to the standard emergency defibrillator, but can fit in your pocket.

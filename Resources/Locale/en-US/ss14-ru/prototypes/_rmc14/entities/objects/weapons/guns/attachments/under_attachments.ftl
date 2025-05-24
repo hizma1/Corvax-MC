@@ -30,3 +30,4 @@ ent-RMCAttachmentFlashlightGrip = underbarrel flashlight grip
     .desc = Holy smokes RO man, they put a grip on a flashlight! Reduces recoil and scatter by a tiny amount. Works as a light source.
 ent-RMCAttachmentLaserLightModule = MK80 laser-light module
     .desc = A Laser-Light module for the MK80 Service Pistol which is currently undergoing limited field testing as part of the marines' next generation pistol program. All MK80 pistols come equipped with the module.
+    .suffix = DO NOT MAP

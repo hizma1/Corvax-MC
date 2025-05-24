@@ -29,16 +29,18 @@ ent-ActionXenoDefensiveShield = Defensive Shield (50)
 ent-ActionXenoRetrieveEgg = Retrieve Egg
     .desc = Retrieves an egg from your storage if you have an empty hand. Using this on an unplanted egg will pick up all nearby unplanted eggs. Using an egg in hand will put it into your storage.
 ent-ActionXenoThrowParasite = Throw Parasite
-    .desc = Retrieves a parasite from your storage if you have an empty hand. Using this on a parasite on the ground will pickup all nearby parasites. Targeting a tile with a parasite in hand will throw it up to 4 tiles away, where the parasite will be stunned for 5 seconds. Using a parasite in hand will add it to your storage.[color=green]Parasites won't die due to time while you hold or carry them.[/color]
+    .desc = Retrieves a parasite from your storage if you have an empty hand. Using this on a parasite on the ground will pickup all nearby parasites. Targeting a tile with a parasite in hand will throw it up to 4 tiles away, where the parasite will be stunned for 5 seconds. Using a parasite in hand will add it to your storage. [color=green]Parasites won't die due to time while you hold or carry them.[/color]
 ent-ActionXenoParasiteReserve = Set Parasite Reserve
     .desc = Sets your parasite Reserves. Observers cannot join as a stored parasite if your parasites stored is less than or equal to your reserve.
 ent-ActionXenoManageHive = Manage The Hive
     .desc = { ent-ActionXenoBase.desc }
 ent-ActionXenoDodge = Dodge (200)
-    .desc = Gain a speed boost for 7 seconds. Your speed is doubled near standing enemies.
+    .desc = Gain a speed boost for 7 seconds and move through allies and enemies unimpeded. Your speed is doubled near standing enemies.
 ent-ActionXenoBurrow = Burrow
     .desc = Burrow underground preventing you from getting hit from all sources. Once burrowed click a tile to move to it and resurface after a doafter that depends on distance.
 ent-ActionXenoSoak = Soak (20)
     .desc = Soak in damage for 6 seconds. If you take 140 damage or higher, you regen 75 health and your tail slam gets refreshed.
 ent-ActionXenoEmpower = Empower (50)
     .desc = On first activation it, gain a small amount of shield. After 6 seconds or using it again, get empowered based on surrounding enemies (max 6), gaining shield from each. If you empowered from at least 3 targets, you become Super-Empowered, gaing additional damage on melee attacks, and changing how some of your other abilities work.
+ent-ActionXenoGenerateEggs = Generate Eggs (50)
+    .desc = Generate an egg every 30 seconds, which goes into your storage. [color=cyan]Consumes 15 plasma every 2 seconds.[/color]

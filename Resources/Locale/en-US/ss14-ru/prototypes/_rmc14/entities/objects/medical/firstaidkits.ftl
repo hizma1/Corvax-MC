@@ -1,7 +1,15 @@
 ent-CMFirstAidKit = first-aid kit
     .desc = It's an emergency medical kit for those serious boo-boos. With medical training you can fit this in a backpack.
+ent-CMFirstAidKitSurgery = basic field surgery kit
+    .desc = { ent-CMFirstAidKit.desc }
 ent-CMFirstAidKitFilled = { ent-CMFirstAidKit }
     .desc = It's an emergency medical kit containing basic medication and equipment. No training required to use.
+    .suffix = Filled
+ent-CMFirstAidKitFilledRobust = { ent-CMFirstAidKit }
+    .suffix = Filled, Robust
+    .desc = { ent-CMFirstAidKit.desc }
+ent-CMFirstAidKitSurgeryFilled = { ent-CMFirstAidKitSurgery }
+    .desc = Contains a surgical line, cautery, scalpel, hemostat, retractor, drapes and an oxycodone injector for tending wounds surgically.
     .suffix = Filled
 ent-CMBurnAidKit = fire first-aid kit
     .desc = It's an emergency medical kit for when the dropship ammo storage spontaneously burns down.

@@ -14,3 +14,5 @@ ent-CMEncryptionKeyFoxtrot = foxtrot encryption key
     .desc = { ent-CMEncryptionKey.desc }
 ent-CMEncryptionKeySOF = sof's encryption key
     .desc = { ent-CMEncryptionKey.desc }
+ent-RMCEncryptionKeyFORECON = forecon encryption key
+    .desc = { ent-CMEncryptionKey.desc }

@@ -1,3 +1,5 @@
+ent-BaseWeaponTurret = баллистическая турель
+    .desc = { ent-BaseStructure.desc }
 ent-BaseWeaponBallisticTurret = ballistic turret
     .desc = A ballistic machine gun auto-turret.
 ent-BaseWeaponEnergyTurret = laser turret

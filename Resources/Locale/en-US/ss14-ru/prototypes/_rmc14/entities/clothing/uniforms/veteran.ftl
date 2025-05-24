@@ -1,5 +1,9 @@
 ent-RMCJumpsuitVeteranPMC = PMC fatigues
     .desc = A white set of fatigues, designed for private security operators. The symbol of the Weston-Yamada corporation is emblazed on the suit.
+ent-RMCJumpsuitVeteranPMCMedic = { ent-RMCJumpsuitVeteranPMC }
+    .desc = { ent-RMCJumpsuitVeteranPMC.desc }
+ent-RMCJumpsuitVeteranPMCGunner = { ent-RMCJumpsuitVeteranPMC }
+    .desc = { ent-RMCJumpsuitVeteranPMC.desc }
 ent-RMCJumpsuitVeteranPMCLeader = PMC command fatigues
     .desc = A white set of fatigues, designed for private security operators. The symbol of the Weston-Yamada corporation is emblazed on the suit. This particular suit looks like it belongs to a high-ranking officer.
 ent-RMCJumpsuitVeteranPMCCommando = PMC commando uniform
@@ -12,3 +16,5 @@ ent-RMCJumpsuitVeteranPMCKutjevo = We-Ya corporate security uniform
     .desc = An armored uniform worn by We-Ya corporate security members. This variant is more breathable for use in hot, dry environments.
 ent-RMCJumpsuitVeteranPMCKutjevoLead = We-Ya corporate security uniform
     .desc = An armored uniform worn by We-Ya corporate security members. This variant is more breathable for use in hot, dry environments and has gold armbands denoting the team leader
+ent-RMCJumpsuitVeteranPMCDirector = director's suit
+    .desc = It's a suit that oozes with authority. Belongs to someone very important.

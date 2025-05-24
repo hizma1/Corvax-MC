@@ -1,5 +1,8 @@
 ent-WeaponSMGM63 = M63 submachine gun
     .desc = The Aegis Battlefield Armaments M-63 submachinegun. Occasionally carried by light-infantry, scouts, engineers and medics.
+ent-RMCWeaponSMGM63ExtendedFilled = { ent-WeaponSMGM63 }
+    .suffix = Filled, Extended
+    .desc = { ent-WeaponSMGM63.desc }
 ent-CMMagazineSMGM63 = M63 HV magazine (10x20mm)
     .desc = { ent-CMMagazineRifleBase.desc }
 ent-CMMagazineSMGM63AP = M63 AP magazine (10x20mm)

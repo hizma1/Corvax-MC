@@ -1,2 +1,9 @@
+ent-CMBeltMedicBag = пояс для спасения жизни M276
+    .desc = M276 является стандартным грузовым снаряжением ККМП. Эта версия представляет собой вещевой мешок, наполненный различными инъекторами и лёгкими предметами медицинского назначения, и широко распространена среди медиков.
 ent-RMCBeltMedicBagERTFilled = { ent-CMBeltMedicBag }
     .desc = { ent-CMBeltMedicBag.desc }
+ent-RMCBeltMedicBagPMC = WY-TM625 pattern medical bag
+    .desc = The WY-TM625 is the standard load-bearing equipment of the W-Y security forces. This configuration mounts a duffel bag filled with a range of injectors and light medical supplies, and is common among medics.
+ent-RMCBeltMedicBagPMCFilled = { ent-RMCBeltMedicBagPMC }
+    .suffix = Filled
+    .desc = { ent-RMCBeltMedicBagPMC.desc }

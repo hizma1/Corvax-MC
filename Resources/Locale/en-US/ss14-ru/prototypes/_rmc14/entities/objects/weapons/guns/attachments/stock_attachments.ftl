@@ -54,3 +54,7 @@ ent-RMCAttachmentHG3712Stock = HG3712 stock
     .desc = The non-detachable stock of a HG 37-12 pump shotgun.
 ent-RMCAttachmentHuntingStock = Basira-Armstrong stock
     .desc = The non-detachable stock of a Basira-Armstrong hunting rifle
+ent-RMCAttachmentSSG45Stock = SSG45 solid stock
+    .desc = Intergrated into the SSG45. You shouldn't have this.
+ent-RMCAttachmentL83A2Stock = L83A2 solid stock
+    .desc = Intergrated into the L83A2. You shouldn't have this.

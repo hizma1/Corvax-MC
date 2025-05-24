@@ -1,6 +1,6 @@
 ent-RMCAreaLv522 = { ent-RMCAreaBase }
     .desc = { ent-RMCAreaBase.desc }
-ent-RMCAreaLv522Indoors = Chance's Claim - Outdoors
+ent-RMCAreaLv522Indoors = Chance's Claim - Indoors
     .desc = { ent-RMCAreaLv522.desc }
 ent-RMCAreaLv522Outdoors = Chance's Claim - Outdoors
     .desc = { ent-RMCAreaLv522.desc }

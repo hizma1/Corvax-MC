@@ -1,7 +1,10 @@
 ent-CMMedilinkSupplyPort = medilink supply port
     .desc = A complex network of pipes and machinery, linking to large storage systems below the deck. Medical vendors linked to this port will be able to infinitely restock supplies.
-ent-CMVendorMedical = We-Ya-Med Plus
+ent-CMVendorMedicalAllAccess = We-Ya-Med Plus
     .desc = Medical pharmaceutical dispenser. Provided by We-Ya Pharmaceuticals Division(TM).
+    .suffix = All Access
+ent-CMVendorMedical = { ent-CMVendorMedicalAllAccess }
+    .desc = { ent-CMVendorMedicalAllAccess.desc }
 ent-CMVendorChemistry = We-Ya-Chem Plus
     .desc = Medical chemistry dispenser. Provided by We-Ya Pharmaceuticals Division(TM).
 ent-ColMarTechMarineMedical = ColMarTech MarineMed

@@ -1,8 +1,16 @@
 ent-CMFirstAidKit = аптечка первой помощи
     .desc = Это набор для оказания неотложной медицинской помощи при серьёзных травмах. При наличии медицинской подготовки вы сможете уместить её в рюкзаке.
+ent-CMFirstAidKitSurgery = basic field surgery kit
+    .desc = { ent-CMFirstAidKit.desc }
 ent-CMFirstAidKitFilled = { ent-CMFirstAidKit }
     .desc = Это набор для оказания неотложной медицинской помощи, содержащий базовые медикаменты и оборудование. Не требует специальной подготовки для использования.
     .suffix = Заполненный
+ent-CMFirstAidKitFilledRobust = { ent-CMFirstAidKit }
+    .suffix = Filled, Robust
+    .desc = { ent-CMFirstAidKit.desc }
+ent-CMFirstAidKitSurgeryFilled = { ent-CMFirstAidKitSurgery }
+    .desc = Contains a surgical line, cautery, scalpel, hemostat, retractor, drapes and an oxycodone injector for tending wounds surgically.
+    .suffix = Filled
 ent-CMBurnAidKit = аптечка первой помощи при ожогах
     .desc = Это набор для оказания неотложной медицинской помощи, когда хранилище боеприпасов десантного корабля самопроизвольно загорится.
 ent-CMBurnAidKitFilled = { ent-CMBurnAidKit }

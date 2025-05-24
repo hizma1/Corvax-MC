@@ -29,3 +29,7 @@ ent-RMCOrbitalCannonCableConnector = cannon cable connector
     .desc = A connector for the large cannon cables.
 ent-RMCOrbitalCannonCable = cannon cables
     .desc = Some large cables.
+ent-RMCExplosionEffectClusterOB = { "" }
+    .desc = { "" }
+ent-RMCExplosionEffectClusterOBShockWave = { "" }
+    .desc = { "" }

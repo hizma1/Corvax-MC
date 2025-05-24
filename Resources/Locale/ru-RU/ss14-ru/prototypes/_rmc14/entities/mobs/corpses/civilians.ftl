@@ -1,3 +1,5 @@
+ent-RMCGuidebookCorpseColonistBurst = Dead Colonist
+    .desc = { ent-MobHuman.desc }
 ent-RMCHumanCorpsePrisoner = { ent-RMCHumanCorpse }
     .desc = { ent-RMCHumanCorpse.desc }
 ent-RMCHumanCorpseChef = { ent-RMCHumanCorpse }
