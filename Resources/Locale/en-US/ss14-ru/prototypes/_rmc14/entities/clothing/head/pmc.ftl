@@ -20,3 +20,7 @@ ent-RMCArmorHelmetPMCKutjevoSecurity = We-Ya corporate security helmet
     .desc = A basic skull-helm worn by corporate security assets. This variant comes with a wider brim to protect the user from the harsh climate of the desert.
 ent-RMCArmorHelmetPMCKutjevoMedical = We-Ya corporate medic helmet
     .desc = A basic skull-helm worn by corporate security assets. This variant comes with a wider brim to protect the user from the harsh climate of the desert and has a medical cross across the front.
+ent-ArmorHelmetPMCEngineer = pmc engineer helmet
+    .desc = An advanced technician helmet with a black finish, including advanced welding protection and resistence to the potential industrial hazards, but has less kevlar against potential firefights.
+ent-ArmorHelmetPMCDirector = director's hat
+    .desc = Belongs to someone very important. Has minor protection to all damage types.

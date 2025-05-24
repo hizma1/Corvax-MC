@@ -24,3 +24,5 @@ ent-RMCLabcoatCMOOpened = chief medical officer's labcoat
     .desc = { ent-RMCBaseJacketButtonableOpened.desc }
 ent-RMCMedicalApron = medical apron
     .desc = A basic and sterile white apron, good for surgical and, of course, other medical practices.
+ent-RMCHydroApron = apron
+    .desc = A basic blue apron.

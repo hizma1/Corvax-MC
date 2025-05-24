@@ -33,7 +33,7 @@
   parent:
   - RMCAreaProtectionZero
   - CCMAreaNova
-  id: CCMAreaNovaGround 
+  id: CCMAreaNovaGround
   suffix: No mapping
   name: Ground
   components:
@@ -131,6 +131,7 @@
     medevac: true
     OB: true
     supplyDrop: true
+    linkedLz: dropship_lz1
 
 - type: entity
   parent:

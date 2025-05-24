@@ -1,6 +1,7 @@
 ent-CMHeadBeret = beret
     .desc = Does not protect a head from bullet.
 ent-RMCHeadBeret = { ent-CMHeadBeret }
+    .suffix = Camo
     .desc = { ent-CMHeadBeret.desc }
 ent-CMHeadBeretRed = MP beret
     .desc = { ent-CMHeadBeret.desc }
@@ -48,7 +49,7 @@ ent-CMHeadCapPeakedFormal = marine peaked cap
 ent-CMHeadCapPeakedService = marine service peaked cap
     .desc = A peaked cap. Wearer may suffer the heavy weight of responsibility upon their head and shoulders.
 ent-CMHeadCapCMO = chief medical officer's peaked cap
-    .desc = A peaked cap given to high-ranking civilian medical officers. Looks just a touch silly.
+    .desc = A peaked cap given to high-ranking medical officers. Looks just a touch silly.
 ent-CMHeadCapSurgBlue = blue surgical cap
     .desc = A cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
 ent-CMHeadCapSurgGreen = green surgical cap

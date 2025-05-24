@@ -1,5 +1,7 @@
 ent-RMCHelmetGarbBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
+ent-RMCHelmetGarbToggleableBase = { ent-RMCHelmetGarbBase }
+    .desc = { ent-RMCHelmetGarbBase.desc }
 ent-RMCHelmetGarbNightVision = старый прибор ночного видения M2
     .desc = У этой пары очков была удалена вся электроника, поэтому они не работают. Но они позволяют чувствовать себя тактикульным, а это главное, верно?
 ent-RMCHelmetGarbNetting = боевая сетка

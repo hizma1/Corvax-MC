@@ -84,3 +84,59 @@ rmc-xeno-steelcrest-description =
     - Удар головой при Укреплении. Удар головой не теряет урон и сохраняет свою высокую дальность и высокое отбрасывание.
     - Используйте Поглощение чтобы начать поглощать урон на протяжении 6 секунд с небольшим исцелением, одновременно перезаряжая ваш Шлепок хвостом.
 rmc-xeno-steelcrest-popup = Он, подобно моей воле, несокрушим. Он станет моим стальным панцирем против всех, кто бросит мне вызов.
+rmc-xeno-maid-name = Cat Maid
+rmc-xeno-maid-description =
+    You trade your dignity.
+    You gain the ability to:
+    - Cause mental anguish in friends and foes alike.
+rmc-xeno-maid-popup = Rawr :3
+rmc-xeno-vampire-name = Vampire
+rmc-xeno-vampire-description =
+    You lose all of your abilities and you forfeit a chunk of your health and damage in exchange for a large amount of armor, a little bit of movement speed, increased attack speed, and brand new abilities that make you an assassin.
+    You gain the ability to:
+    - Rush on your opponent to disorient them.
+    - Flurry to unleash a forward cleave that can hit and slow three talls and heal you for every tall you hit.
+    - A special AoE Tail Jab to knock talls away, doing more damage with direct hits and even more damage and a stun if they smack into walls.
+    - Execute unconscious talls with a headbite to heal your wounds.
+rmc-xeno-vampire-popup = Show no mercy! Slaughter them all!
+rmc-xeno-eggsac-name = Eggsac
+rmc-xeno-eggsac-description =
+    You trade your ability to store parasites and make resin traps for stronger pheromones, more egg storage, and the ability to produce eggs.
+    You gain the ability to:
+    - Place eggs from slightly farther away.
+    - Put eggs on non-hive weeds. You can have 4 sustained this way at once, and they will last awhile while you're near and not long if you're far.
+    - Sustained Eggs will convert into normal eggs upon touching hive weeds, and cannot produce sentient parasites.
+    - Use plasma over time to make eggs.
+rmc-xeno-eggsac-popup = An egg is always an adventure; the next one may be different.
+rmc-xeno-berserker-name = Berserker
+rmc-xeno-berserker-description =
+    You lose:
+    - Your empower, charge, and scissor cut.
+    - Some health.
+    - A bit of your influence under frenzy pheromones.
+    You gain:
+    - Movement speed, a slight increase in armor, and gain a new set of abilities that make you a terrifying melee monster.
+    - The ability to heal when you slash and gain a stack of rage that increases your armor, movement speed, and your heals per slash, to a maximum of six rage.
+    - Apprehend to increase your movement speed and apply a slow on the next target you slash.
+    - Eviscerate to unleash a devastating windmill attack that heals you for every enemy you hit after an immobilizing wind-up.
+    - Clothesline to fling your target to heal yourself, even more-so if you have a rage stack that will be used up.
+rmc-xeno-berserker-popup = Unbridled fury fills this one. You will become an extension of my rage.
+rmc-xeno-charger-name = Charger
+rmc-xeno-charger-description =
+    In exchange for:
+    - Your defensive shield ability.
+    - A little bit of your armor and damage.
+    - Your slowdown resist from turrets.
+    - Your influence under frenzy pheromones.
+    - Your stomp no longer knocking down talls.
+    - Your ability to lock your direction.
+    
+    You gain:
+    - A considerable amount of health.
+    - Some speed.
+    - Your stomp does extra damage when stomping over a grounded tall.
+    - Your charge is now manually-controlled and momentum-based; the further you go, the more damage and speed you will gain until you achieve maximum momentum, indicated by your roar.
+    - Your armor is now directional, being the toughest on the front, weaker on the sides, and weakest from the back.
+    - You gain an ability to tumble to pass through enemies.
+    - You gain an ability to forcefully move enemies via ramming into them.
+rmc-xeno-charger-popup = Nothing stops this hive. This one will become both the immovable object and the unstoppable force.

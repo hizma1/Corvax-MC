@@ -12,7 +12,7 @@
     minimapColor: '#6C6767D8'
     landingZone: false
 
-- type: entity 
+- type: entity
   parent:
   - RMCAreaMax
   - CCMAreaForest
@@ -230,6 +230,7 @@
     medevac: true
     OB: true
     supplyDrop: true
+    linkedLz: dropship_lz1
 
 - type: entity
   parent:

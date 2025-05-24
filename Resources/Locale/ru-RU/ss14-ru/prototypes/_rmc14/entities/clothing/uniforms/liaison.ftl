@@ -30,3 +30,5 @@ ent-CMJumpsuitLiaisonBrown = коричневые костюмные брюки
     .desc = Коричневые слаксы в паре с белой рубашкой. Частая пара среди корпоративных служащих.
 ent-CMJumpsuitLiaisonBlue = синие костюмные брюки
     .desc = Синие слаксы в сочетании с белой рубашкой. Частая пара среди корпоративных служащих.
+ent-RMCJumpsuitLiaisonGreenWorkwear = green workwear
+    .desc = A pair of brown canvas workpants paired with a green workshirt. An common pairing among blue-collar workers.

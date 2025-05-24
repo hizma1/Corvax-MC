@@ -8,12 +8,12 @@ rmc-ui-specialist-points = Очки специалиста:
 rmc-ui-weapons-specialist-skills = Навыки специалиста по вооружению
 rmc-ui-create-squad = Создать отряд
 rmc-ui-members =
-        Бойцы: { $members } { $members ->
-            [one] жив
-            [few] живы
-            [many] живо
-            *[other] живо
-        }
+    Бойцы: { $members } { $members ->
+        [one] жив
+        [few] живы
+        [many] живо
+       *[other] живо
+    }
 rmc-ui-add-to-squad = Добавить в отряд
 rmc-ui-xeno-tab = Ксено
 rmc-ui-xeno-hive = Улей:

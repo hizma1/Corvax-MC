@@ -214,3 +214,5 @@ reagent-name-whiskey-sour = whiskey sour
 reagent-desc-whiskey-sour = What's the secret ingredient? Eggs. It's eggs.
 reagent-name-zombiecocktail = Зомби
 reagent-desc-zombiecocktail = It gets in your head. Your he-eyeh-ead.
+reagent-name-bacchus-blessing = bacchus' blessing
+reagent-desc-bacchus-blessing = You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?

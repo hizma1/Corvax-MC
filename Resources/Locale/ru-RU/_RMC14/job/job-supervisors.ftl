@@ -10,4 +10,6 @@ cm-job-supervisors-cmp = начальнику военной полиции
 cm-job-supervisors-qm = квартирмейстеру
 cm-job-supervisors-ce = главному инженеру
 cm-job-supervisors-sl = действующему командиру отряда
+cm-job-supervisors-staff = Server Staff
 cm-job-supervisors-nobody = никому, вы сами по себе.
+cm-job-supervisors-colonists = the sapient colonists

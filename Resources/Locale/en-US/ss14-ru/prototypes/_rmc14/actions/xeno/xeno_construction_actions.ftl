@@ -24,3 +24,5 @@ ent-ActionXenoDigTunnel = Dig Tunnel (200)
     .desc = Dig a tunnel for speedy transportation across the hive.
 ent-ActionLesserDronePlantWeeds = Plant Weeds (75)
     .desc = Plant a weed node that will spread more weeds.
+ent-ActionXenoExpandWeeds = Expand Weeds (50)
+    .desc = Expand existing weeds or turn a weed tile into a node.

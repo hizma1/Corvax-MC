@@ -1,3 +1,5 @@
+ent-RMCRollerBedDestruction = { "" }
+    .desc = { "" }
 ent-CMRollerBed = roller bed
     .desc = A collapsed roller bed that can be carried around.
 ent-CMRollerBedSpawnFolded = { ent-CMRollerBed }

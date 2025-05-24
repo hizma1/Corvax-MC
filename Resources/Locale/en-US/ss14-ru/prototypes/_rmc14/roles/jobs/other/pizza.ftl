@@ -1,6 +1,3 @@
-ent-RMCSpawnerPizzaDeliveryBoy = pizza delivery boy spawner
-    .suffix = Spawner
-    .desc = { ent-MarkerBase.desc }
 ent-RMCRandomHumanoidPizzaDeliveryBoy = pizza delivery boy ghost role
-    .suffix = Role
+    .suffix = Spawner, Player, Neutral
     .desc = { "" }

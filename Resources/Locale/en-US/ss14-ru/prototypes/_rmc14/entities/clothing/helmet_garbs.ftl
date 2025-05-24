@@ -1,5 +1,7 @@
 ent-RMCHelmetGarbBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
+ent-RMCHelmetGarbToggleableBase = { ent-RMCHelmetGarbBase }
+    .desc = { ent-RMCHelmetGarbBase.desc }
 ent-RMCHelmetGarbNightVision = old M2 night vision goggles
     .desc = This pair has been gutted of all electronics and therefore not working. But hey, they make you feel tacticool, and that's all that matters, right?
 ent-RMCHelmetGarbNetting = combat netting

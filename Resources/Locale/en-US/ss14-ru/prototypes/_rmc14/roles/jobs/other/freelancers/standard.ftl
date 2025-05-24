@@ -1,6 +1,6 @@
-ent-RMCSpawnerFreelancerStandard = Freelancer Standard spawner
-    .suffix = Spawner
-    .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidFreelancerStandard = Freelancer Standard ghost role
-    .suffix = Role
+ent-RMCRandomHumanoidFreelancerStandardHostile = freelancer ghost role rifleman
+    .suffix = Spawner, Player, Hostile
+    .desc = { "" }
+ent-RMCRandomHumanoidFreelancerStandardFriendly = freelancer ghost role rifleman
+    .suffix = Spawner, Player, Friendly
     .desc = { "" }

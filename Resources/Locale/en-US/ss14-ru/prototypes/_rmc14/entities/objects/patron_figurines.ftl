@@ -15,7 +15,7 @@ ent-RMCFigurinePatronTempestasFrostbiteGlacies = Tempestas 'Frostclaw' Glacies f
 ent-RMCFigurinePatronSilvanodAndrea = Silvano d'Andrea figurine
     .desc = Employee of the Month, every month.
 ent-RMCFigurinePatronIanthaAtikson = Iantha Atikson
-    .desc = This Figurine of a Quartermaster, despite it's inanimate nature, seems to stare back at you with cold, refined calculation. That glossy look in those fake eyes make you feel uncomfortable, and you get the impression that you're just another number to her.
+    .desc = A figurine of an ASO. A sense of mental exhaustion fills your mind and clouds your vision, and you swear you could see paperwork on the back of your eyelids. Was she... always facing toward you?
 ent-RMCFigurinePatronScott = Scott Hoover figurine
     .desc = I work for the company. But don't let that fool you, I'm really an OK guy!
 ent-RMCFigurineRyanRockstarRuan = Ryan "Rockstar" Ruan
@@ -196,7 +196,7 @@ ent-RMCFigurinePatronKamielLancoaster = Kamiel Lancoaster figurine
     .desc = Set a record for most sub 5 minute deaths during boot camp training simulations.
 ent-RMCFigurinePatronEricRasczak = Eric Rasczak figurine
     .desc = "Has anyone seen my synth-graft?"
-ent-RMCFigurinePatronNanSnowBunnyMazu = Nan 'Snow Bunny' Mazu figurine
+ent-RMCFigurinePatronNanSnowBunnyMazu = Nan Mazu figurine
     .desc =
         The Way of Sunlight
         
@@ -219,3 +219,52 @@ ent-RMCFigurinePatronColtenRipcordBailey = Colten 'Ripcord' Bailey figurine
     .desc = This figure's tail appears to have broken off and been glued back on. Twice.
 ent-RMCFigurinePatronSpikeLight-FootFluff-Usta = Spike Light-Foot Fluff-Usta figurine
     .desc = This abomination vulp-slime hybrid dosent seem to stay dead long yet always seem to be killed often.
+ent-RMCFigurinePatronNells-the-Jobs = Nells-the-Jobs figurine
+    .desc = A silly little lizard that is known for enjoying Slaw.
+ent-RMCFigurinePatronFast-pawsChip = Fast-paws Chip figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronDryWetbrush = Dry Wetbrush figurine
+    .desc = He wonders what you are thinking about.
+ent-RMCFigurinePatronHaileyMorgan = Hailey Morgan figurine
+    .desc = "Oh my gawd, bestie, I loooove your outfit."
+ent-RMCFigurinePatronOsbornCheeseballCurry = Osborn 'Cheeseball' Curry figurine
+    .desc =
+        Under the figurine, a text is engraved that reads:
+        
+        "In the silence, I hear them crawl..."
+        "From the shadows, we answer the call…"
+        "One shot... one kill..."
+        "Another queen falls..."
+        
+        "We wombo combo, in the dark we reign,"
+        "The stars above, watchin’ in vain."
+        "Through fire and ash, through blood and bone,"
+        "We stand as brothers, in this war we own."
+        
+        A souvenir for my brotha Pip, may this figurine bring you comfort in your darkest hours.
+        Let it be a reminder of our friendship, even in the most remote and lonely corners of the world.
+        
+        ATTENTION: DO NOT LICK, DOES NOT TASTE LIKE ORANGE!
+ent-RMCFigurinePatronGregorCain = Gregor Cain figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronJessieFirstDaily = Jessie 'First' Daily figurine
+    .desc = "Charlies never die." Smells like pinesap and sawdust.
+ent-RMCFigurinePatronKhauniBrooks = Khauni Brooks figurine
+    .desc = She has a cute an adorable snoot you can boop.
+ent-RMCFigurinePatronBurniHeatSenira = Burni 'Heat' Senira figurine
+    .desc = Every scar a mistake, and a lesson.
+ent-RMCFigurinePatronAustinSpectreEventide = Austin 'Spectre' Eventide figurine
+    .desc = "Allan please add description"
+ent-RMCFigurinePatronShei-Teegla = Shei-Teegla figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronJazzyJune = Jazzy June figurine
+    .desc = She's trying her best. Can't you tell?
+ent-RMCFigurinePatronAnglerAngusSeawing = Angler 'Angus' Seawing figurine
+    .desc =
+        A fish-looking dragon who is known for telling people they arent a fish.
+        
+        Usually seen in the hangar or patrolling around.
+ent-RMCFigurinePatronLilianaShorkGodwin = Liliana 'Shork' Godwin figurine
+    .desc = SHORK GANG RISE UP!!
+ent-RMCFigurinePatronKuafuSpeedDemonLightweaver = Kuafu 'Speed Demon' Lightweaver figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }

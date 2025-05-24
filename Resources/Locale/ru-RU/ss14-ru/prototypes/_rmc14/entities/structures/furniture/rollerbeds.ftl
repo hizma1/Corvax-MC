@@ -1,3 +1,5 @@
+ent-RMCRollerBedDestruction = { "" }
+    .desc = { "" }
 ent-CMRollerBed = носилки
     .desc = Складные носилки на колёсиках, которые можно носить с собой.
 ent-CMRollerBedSpawnFolded = { ent-CMRollerBed }

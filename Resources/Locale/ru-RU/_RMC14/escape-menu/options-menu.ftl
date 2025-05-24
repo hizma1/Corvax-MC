@@ -12,5 +12,6 @@ ui-options-function-cm-holster-tertiary = Достать третичное ор
 ui-options-function-cm-holster-quaternary = Достать четвертичное оружие
 ui-options-function-rmc-pick-up-dropped-items = Поднять оброненный предмет
 ui-options-function-rmc-interact-with-other-hand = Взаимодействать другой рукой
+ui-options-function-rmc-rest = Rest
 ui-options-header-rmc-xeno = Ксено
 ui-options-function-cm-xeno-wide-swing = Широкий удар ксено

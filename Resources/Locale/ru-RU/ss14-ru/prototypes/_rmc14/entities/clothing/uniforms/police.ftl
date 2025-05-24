@@ -16,3 +16,7 @@ ent-CMJumpsuitWardenTan = коричневая униформа надзират
     .desc = Стандартная униформа надзирателя.
 ent-CMJumpsuitWO = униформа начальника ВП
     .desc = Униформа, которую обычно носит глава военной полиции ККМП. В ней имеются фрагменты лёгкого кевлара для защиты от колющего оружия, пуль и шрапнели. Кроме того, в форму встроен небольшой распределитель электромагнитного излучения, чтобы свести к нулю воздействие энергетического оружия, а также химический фильтр для защиты от биологической и радиационной опасности.
+ent-RMCScrubsPrisonMedsec = prisoner medium custody scrubs
+    .desc = Orange scrubs worn by prisoners as directed by marine law. Marked with yellow for medium custody prisoners.
+ent-RMCScrubsPrisonMaxsec = prisoner maximum custody scrubs
+    .desc = Orange scrubs worn by prisoners as directed by marine law. Marked with red for maximum custody prisoners.

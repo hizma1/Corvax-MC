@@ -26,3 +26,5 @@ ent-ActionXenoTantrum = Tantrum (100 plasma, 75 fury)
     .desc = Give an ally and yourself temporary armor for a few seconds, which lasts longer on you. Crushers and Ravagers get a speed boost instead.
 ent-ActionXenoFightOrFlight = Fight or Flight (300 plasma, 75 fury)
     .desc = Remove ailments and stuns from all allies around you. The radius is longer if you have 75+ fury after paying the cost.
+ent-ActionXenoQueenEye = Enter Eye Form
+    .desc = Look around any area with weeds remotely. You can use infinite range abilities while in this form, and build resin from afar.

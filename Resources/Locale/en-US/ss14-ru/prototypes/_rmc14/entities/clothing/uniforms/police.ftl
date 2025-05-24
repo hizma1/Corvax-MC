@@ -16,3 +16,7 @@ ent-CMJumpsuitWardenTan = tan warden uniform
     .desc = A standard-issue warden uniform.
 ent-CMJumpsuitWO = chief MP uniform
     .desc = A uniform typically worn by a Chief MP of the UNMC. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions. This uniform includes a small EMF distributor to help nullify energy-based weapon fire, along with a hazmat chemical filter woven throughout the material to ward off biological and radiation hazards.
+ent-RMCScrubsPrisonMedsec = prisoner medium custody scrubs
+    .desc = Orange scrubs worn by prisoners as directed by marine law. Marked with yellow for medium custody prisoners.
+ent-RMCScrubsPrisonMaxsec = prisoner maximum custody scrubs
+    .desc = Orange scrubs worn by prisoners as directed by marine law. Marked with red for maximum custody prisoners.

@@ -29,3 +29,7 @@ ent-RMCOrbitalCannonCableConnector = соединитель орудийного
     .desc = Соединитель для кабелей больших орудий.
 ent-RMCOrbitalCannonCable = орудийные кабели
     .desc = Несколько больших кабелей.
+ent-RMCExplosionEffectClusterOB = { "" }
+    .desc = { "" }
+ent-RMCExplosionEffectClusterOBShockWave = { "" }
+    .desc = { "" }

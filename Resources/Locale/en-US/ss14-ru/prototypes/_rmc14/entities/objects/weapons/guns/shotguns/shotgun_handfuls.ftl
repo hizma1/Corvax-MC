@@ -1,5 +1,8 @@
 ent-CMShellShotgunBuckshot = handful of buckshot shells
     .desc = { ent-CMShellShotgunBase.desc }
+ent-CMShellShotgunBuckshot1 = { ent-CMShellShotgunBuckshot }
+    .suffix = 1
+    .desc = { ent-CMShellShotgunBuckshot.desc }
 ent-RMCShellShotgunBreaching = handful of breaching shells
     .desc = { ent-CMShellShotgunBase.desc }
 ent-CMShellShotgunSlugs = handful of shotgun slugs

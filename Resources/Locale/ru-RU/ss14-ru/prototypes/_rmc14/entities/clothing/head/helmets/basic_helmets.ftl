@@ -4,7 +4,3 @@ ent-RMCMarineHelmetBase = { ent-RMCHelmetBase }
     .desc = { ent-RMCHelmetBase.desc }
 ent-RMCFoldableHelmetBase = { "" }
     .desc = { "" }
-ent-ArmorHelmetRiot = шлем для подавления беспорядков
-    .desc = Это шлем, разработанный специально для защиты от атак ближнего боя. Он защищает уши.
-ent-ArmorHelmetRiotOld = { ent-ArmorHelmetRiot }
-    .desc = Покрытый царапинами и паутиной шлем для подавления беспорядков. Он по-прежнему защищает уши.

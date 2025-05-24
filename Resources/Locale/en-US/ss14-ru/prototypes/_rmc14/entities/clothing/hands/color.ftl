@@ -8,3 +8,5 @@ ent-CMHandsWhite = white gloves
     .desc = A pair of white gloves.
 ent-CMHandsWhiteDress = dress gloves
     .desc = A pair of fashionable white gloves, worn by marines in dress.
+ent-RMCHandsPurple = purple gloves
+    .desc = A pair of gloves, they don't look special in any way.
