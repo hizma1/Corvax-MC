@@ -28,3 +28,7 @@ ent-SquadFORECON = Reconnaissance
     .desc = { ent-SquadBase.desc }
 ent-SquadSOF = SOF
     .desc = { ent-SquadBase.desc }
+ent-SquadCLF = CLF
+    .desc = { ent-SquadBase.desc }
+ent-SquadUnassigned = Unassigned
+    .desc = { ent-SquadBase.desc }
