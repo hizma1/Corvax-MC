@@ -1,2 +1,4 @@
-ent-CMSpawnPointExecutiveOfficer = executive officer spawn point
+ent-CMSpawnPointExecutiveOfficer = точка появления исполнительный офицер
     .desc = { ent-CMSpawnPointJobBase.desc }
+ent-RMCGuidebookRoleXO = Исполнительный офицер
+    .desc = Исполнительный офицер.

@@ -24,8 +24,6 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private readonly SlotFlags _detectSlots = SlotFlags.SUITSTORAGE | SlotFlags.BELT;
-
     public override void Initialize()
     {
         if (!_overlay.HasOverlay<MotionDetectorOverlay>())
@@ -37,7 +35,7 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
         _overlay.RemoveOverlay<MotionDetectorOverlay>();
     }
 
-    public void DrawBlips<T>(DrawingHandleWorld handle, ref TimeSpan last, List<Vector2> blips, Texture texture) where T : IComponent, IDetectorComponent
+    public void DrawBlips<T>(DrawingHandleWorld handle, ref TimeSpan last, List<(Vector2 Pos, bool QueenEye)> blips, Texture texture, Texture queenEyeTexture) where T : IComponent, IDetectorComponent
     {
         if (_player.LocalEntity is not { } player)
             return;
@@ -49,7 +47,7 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
         float vpWidth = _config.GetCVar(CCVars.ViewportWidth);
 
         var eye = _eye.CurrentEye;
-        var vpSize =eye.Zoom;
+        var vpSize = eye.Zoom;
         if (eye.Rotation.GetCardinalDir() is Direction.East or Direction.West)
         {
             (vpWidth, vpHeight) = (vpHeight, vpWidth);
@@ -60,7 +58,7 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
         var time = _timing.CurTime;
 
         var ents = hands.EnumerateHeld(player).ToList();
-        if (inventory.TryGetContainerSlotEnumerator(player, out var inv, _detectSlots))
+        if (inventory.TryGetContainerSlotEnumerator(player, out var inv))
         {
             while (inv.NextItem(out var item))
             {
@@ -85,23 +83,23 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
                 last = detector.LastScan;
                 blips.Clear();
 
-                foreach (var coordinates in detector.Blips)
+                foreach (var blip in detector.Blips)
                 {
-                    if (playerCoords.MapId != coordinates.MapId)
+                    if (playerCoords.MapId != blip.Coordinates.MapId)
                         continue;
 
                     vpWidth *= vpSize.X;
                     vpHeight *= vpSize.Y;
-                    var diff = coordinates.Position - new Vector2(0.5f, 0.5f) - playerCoords.Position;
+                    var diff = blip.Coordinates.Position - new Vector2(0.5f, 0.5f) - playerCoords.Position;
                     Cap(ref diff.X, vpWidth);
                     Cap(ref diff.Y, vpHeight);
-                    blips.Add(diff);
+                    blips.Add((diff, blip.QueenEye));
                 }
             }
 
             foreach (var diff in blips)
             {
-                handle.DrawTexture(texture, playerCoords.Position + diff);
+                handle.DrawTexture(diff.QueenEye ? queenEyeTexture : texture, playerCoords.Position + diff.Pos);
             }
         }
     }

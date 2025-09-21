@@ -1,4 +1,4 @@
-﻿[net]
+[net]
 tickrate = 30
 max_connections = 1024
 
@@ -8,9 +8,13 @@ desc = "Corvax первый русскоязычный проект в Space Sta
 soft_max_players = 100
 map_rotation = true
 lobbyduration = 180
-role_timers = false
 round_end_pvs_overrides = false
+defaultpreset = "CMDistressSignal"
+fallbackenabled = false
+fallbackpreset = "CMDistressSignal"
+round_end_sound_collection = "CMRoundEnd"
 contraband_examine = false
+map_pool = "CCMMapPool"
 
 [ghost]
 kill_crit = false
@@ -33,12 +37,14 @@ new_player_threshold = 600
 space_wind = false
 monstermos_rip_tiles = false
 grid_impulse = false
+max_process_time = 1
 
 [ic]
 flavor_text = true
 enable_suicide = false
 
 [shuttle]
+auto_call_time = 0
 arrivals_planet = false
 arrivals = false
 grid_fill = false
@@ -49,7 +55,6 @@ arrival_time = 10
 cooldown = 120
 mass_limit = -1
 emergency = false
-auto_call_time = 0
 
 [discord]
 rich_main_icon_id = "corvax"
@@ -71,30 +76,39 @@ advertise = true
 tags = "lang:ru,rp:med,region:eu_e"
 
 [physics]
-maxlinvelocity = 72
+maxlinvelocity = 51
 grid_splitting = false
 
 [auth]
 mode = 1
 
-[guidebook]
-show_editor_species_button = false
-
-[events]
-enabled = false
-
 [explosion]
 can_create_vacuum = false
-
-[gateway]
-generator_enabled = false
-
-[pointing]
-cooldown_seconds = 1
 
 [procgen]
 preload = false
 
-[tips]
-dataset = "CM_Tips"
-login_dataset = "CM_Tips"
+[rmc]
+late_joins_per_burrowed_larva = 3.5
+late_joins_per_burrowed_larva_early = 3.5
+late_joins_per_burrowed_larva_early_threshold_minutes = 5
+marines_per_xeno = 3.5
+auto_balance_step = 0.5
+auto_balance_min = 2.5
+auto_balance_max = 4.5
+distress_xenos_minimum = 1
+
+[gateway]
+generator_enabled = false
+
+[accessibility]
+screen_shake_intensity = 1
+
+[events]
+enabled = false
+
+[build]
+engine_version = "264.0.1-fix-physics" #and remember to remove it next update...xd
+
+[movement]
+mob_pushing = true

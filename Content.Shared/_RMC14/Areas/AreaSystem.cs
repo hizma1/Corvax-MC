@@ -1,7 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._RMC14.CCVar;
 using Content.Shared._RMC14.GameStates;
+using Content.Shared._RMC14.Warps;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
@@ -22,10 +23,13 @@ public sealed class AreaSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRMCPvsSystem _rmcPvs = default!;
+    [Dependency] private readonly SharedRMCWarpSystem _rmcWarp = default!;
     [Dependency] private readonly ITileDefinitionManager _tile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntityQuery<AreaGridComponent> _areaGridQuery;
+    private EntityQuery<AreaLabelComponent> _areaLabelQuery;
     private EntityQuery<MapGridComponent> _mapGridQuery;
     private EntityQuery<MinimapColorComponent> _minimapColorQuery;
 
@@ -36,6 +40,7 @@ public sealed class AreaSystem : EntitySystem
     public override void Initialize()
     {
         _areaGridQuery = GetEntityQuery<AreaGridComponent>();
+        _areaLabelQuery = GetEntityQuery<AreaLabelComponent>();
         _mapGridQuery = GetEntityQuery<MapGridComponent>();
         _minimapColorQuery = GetEntityQuery<MinimapColorComponent>();
 
@@ -61,6 +66,11 @@ public sealed class AreaSystem : EntitySystem
             ent.Comp.AreaEntities[area] = areaEnt;
             _rmcPvs.AddGlobalOverride(areaEnt);
         }
+    }
+
+    public void ReplaceArea(AreaGridComponent areaGrid, Vector2i position, EntProtoId<AreaComponent> area)
+    {
+        areaGrid.Areas[position] = area;
     }
 
     public bool TryGetArea(
@@ -147,6 +157,28 @@ public sealed class AreaSystem : EntitySystem
         return area.Value.Comp.AvoidBioscan;
     }
 
+    public bool IsWeatherEnabled(Entity<MapGridComponent> grid, Vector2i indices)
+    {
+        if (!TryGetArea(grid, indices, out var area, out _))
+            return false;
+
+        if (IsRoofed(new EntityCoordinates(grid.Owner, indices), r => !r.Comp.CanMortarPlace))
+            return false;
+
+        return area.Value.Comp.WeatherEnabled;
+    }
+
+    public bool IsLightBlocked(Entity<MapGridComponent> grid, Vector2i indices)
+    {
+        if (!TryGetArea(grid, indices, out var area, out _))
+            return false;
+
+        if (IsRoofed(new EntityCoordinates(grid.Owner, indices), r => !r.Comp.CanMortarPlace))
+            return true;
+
+        return !area.Value.Comp.WeatherEnabled;
+    }
+
     public bool CanCAS(EntityCoordinates coordinates)
     {
         if (!TryGetArea(coordinates, out var area, out _))
@@ -163,7 +195,7 @@ public sealed class AreaSystem : EntitySystem
         if (!TryGetArea(coordinates, out var area, out _))
             return false;
 
-        if (IsRoofed(coordinates, r => !r.Comp.CanMortar))
+        if (IsRoofed(coordinates, r => !r.Comp.CanMortarFire))
             return false;
 
         return area.Value.Comp.MortarFire;
@@ -174,7 +206,7 @@ public sealed class AreaSystem : EntitySystem
         if (!TryGetArea(coordinates, out var area, out _))
             return false;
 
-        if (IsRoofed(coordinates, r => !r.Comp.CanMortar))
+        if (IsRoofed(coordinates, r => !r.Comp.CanMortarPlace))
             return false;
 
         return area.Value.Comp.MortarPlacement;
@@ -200,7 +232,43 @@ public sealed class AreaSystem : EntitySystem
         if (!TryGetArea(coordinates, out var area, out _))
             return false;
 
+        if (IsRoofed(coordinates, r => !r.Comp.CanFulton))
+            return false;
+
         return area.Value.Comp.Fulton;
+    }
+
+    public bool CanLase(EntityCoordinates coordinates)
+    {
+        if (!TryGetArea(coordinates, out var area, out _))
+            return false;
+
+        if (IsRoofed(coordinates, r => !r.Comp.CanLase))
+            return false;
+
+        return area.Value.Comp.Lasing;
+    }
+
+    public bool CanMedevac(EntityCoordinates coordinates)
+    {
+        if (!TryGetArea(coordinates, out var area, out _))
+            return false;
+
+        if (IsRoofed(coordinates, r => !r.Comp.CanMedevac))
+            return false;
+
+        return area.Value.Comp.Medevac;
+    }
+
+    public bool CanParadrop(EntityCoordinates coordinates)
+    {
+        if (!TryGetArea(coordinates, out var area, out _))
+            return false;
+
+        if (IsRoofed(coordinates, r => !r.Comp.CanParadrop))
+            return false;
+
+        return area.Value.Comp.Paradropping;
     }
 
     private bool IsRoofed(EntityCoordinates coordinates, Predicate<Entity<RoofingEntityComponent>> predicate)
@@ -213,6 +281,25 @@ public sealed class AreaSystem : EntitySystem
 
             if (coordinates.TryDistance(EntityManager, uid.ToCoordinates(), out var distance) &&
                 distance <= roof.Range)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool IsRoofed(MapCoordinates mapCoordinates, Predicate<Entity<RoofingEntityComponent>> predicate)
+    {
+        var roofs = EntityQueryEnumerator<RoofingEntityComponent>();
+        while (roofs.MoveNext(out var uid, out var roof))
+        {
+            if (!predicate((uid, roof)))
+                continue;
+
+            var distance = (mapCoordinates.Position - _transform.ToMapCoordinates(uid.ToCoordinates()).Position).Length();
+
+            if (distance <= roof.Range)
             {
                 return true;
             }
@@ -252,6 +339,9 @@ public sealed class AreaSystem : EntitySystem
         if (!TryGetArea(mapCoordinates, out var area, out _))
             return false;
 
+        if (IsRoofed(mapCoordinates, r => !r.Comp.CanSupplyDrop))
+            return false;
+
         return area.Value.Comp.SupplyDrop;
     }
 
@@ -284,12 +374,15 @@ public sealed class AreaSystem : EntitySystem
                             areaGrid.Colors[pos] = minimapColor.Color;
                             found = true;
                         }
+
+                        if (_areaLabelQuery.HasComp(anchored))
+                            areaGrid.Labels[pos] = _rmcWarp.GetName(anchored.Value) ?? Name(anchored.Value);
                     }
 
                     if (found)
                         continue;
 
-                    var tile = tileRef.GetContentTileDefinition(_tile);
+                    var tile = _turf.GetContentTileDefinition(tileRef);
                     if (tile.MinimapColor != default)
                     {
                         areaGrid.Colors[pos] = tile.MinimapColor;

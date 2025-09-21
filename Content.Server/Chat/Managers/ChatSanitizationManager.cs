@@ -14,6 +14,31 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     private static readonly Dictionary<string, string> ShorthandToEmote = new()
     {
+        // CCM-Localization-Start
+        { "хд", "chatsan-laughs" },
+        { "о-о", "chatsan-wide-eyed" }, // cyrillic о
+        { "о.о", "chatsan-wide-eyed" }, // cyrillic о
+        { "0_о", "chatsan-wide-eyed" }, // cyrillic о
+        { "о/", "chatsan-waves" }, // cyrillic о
+        { "о7", "chatsan-salutes" }, // cyrillic о
+        { "0_o", "chatsan-wide-eyed" },
+        { "лмао", "chatsan-laughs" },
+        { "рофл", "chatsan-laughs" },
+        { "яхз", "chatsan-shrugs" },
+        { ":0", "chatsan-surprised" },
+        { "кек", "chatsan-laughs" },
+        { "T_T", "chatsan-cries" },
+        { "Т_Т", "chatsan-cries" }, // cyrillic T
+        { "=_(", "chatsan-cries" },
+        { "!с", "chatsan-laughs" },
+        { "!в", "chatsan-sighs" },
+        { "!х", "chatsan-claps" },
+        { "!щ", "chatsan-snaps" },
+        { "))", "chatsan-smiles-widely" },
+        { ")", "chatsan-smiles" },
+        { "((", "chatsan-frowns-deeply" },
+        { "(", "chatsan-frowns" },
+        // CCM-Localization-End
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },
         { "=)", "chatsan-smiles" },
@@ -35,6 +60,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ":D", "chatsan-smiles-widely" },
         { "D:", "chatsan-frowns-deeply" },
         { ":O", "chatsan-surprised" },
+        { "!", "chatsan-surprised" }, // RMC14
         { ":3", "chatsan-smiles" },
         { ":S", "chatsan-uncertain" },
         { ":>", "chatsan-grins" },
@@ -51,6 +77,22 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
         { "qwq", "chatsan-cries" },
+        { "t.t", "rmc-chatsan-emote-sobs" }, // RMC14 should be cries after case sensitive emote detection
+        { "t-t", "rmc-chatsan-emote-sobs" }, // RMC14
+        { "t_t", "rmc-chatsan-emote-sobs" }, // RMC14
+        { "t~t", "rmc-chatsan-emote-sobs" }, // RMC14
+//        { "T.t", "chatsan-cries" }, // RMC14
+//        { "T-t", "chatsan-cries" }, // RMC14
+//        { "T_t", "chatsan-cries" }, // RMC14
+//        { "T~t", "chatsan-cries" }, // RMC14
+//        { "t.T", "chatsan-cries" }, // RMC14
+//        { "t-T", "chatsan-cries" }, // RMC14
+//        { "t_T", "chatsan-cries" }, // RMC14
+//        { "t~T", "chatsan-cries" }, // RMC14
+//        { "T.T", "rmc-chatsan-emote-sobs" }, // RMC14 pending case sensitive emote detection option, make lowercase cries
+//        { "T-T", "rmc-chatsan-emote-sobs" }, // RMC14
+//        { "T_T", "rmc-chatsan-emote-sobs" }, // RMC14
+//        { "T~T", "rmc-chatsan-emote-sobs" }, // RMC14
         { ":u", "chatsan-smiles-smugly" },
         { ":v", "chatsan-smiles-smugly" },
         { ">:i", "chatsan-annoyed" },
@@ -64,6 +106,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "o.o", "chatsan-wide-eyed" },
         { "._.", "chatsan-surprised" },
         { ".-.", "chatsan-confused" },
+        { "?", "chatsan-confused" }, // RMC14
         { "-_-", "chatsan-unimpressed" },
         { "smh", "chatsan-unimpressed" },
         { "o/", "chatsan-waves" },
@@ -78,7 +121,25 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "rofl", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
         { ";_;7", "chatsan-tearfully-salutes" },
+        { ";-;7", "chatsan-tearfully-salutes" }, // RMC14
+        { "t.t7", "chatsan-tearfully-salutes" }, // RMC14
+        { "t-t7", "chatsan-tearfully-salutes" }, // RMC14
+        { "t_t7", "chatsan-tearfully-salutes" }, // RMC14
+        { "t~t7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T.t7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T-t7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T_t7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T~t7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "t.T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "t-T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "t_T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "t~T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T.T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T-T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T_T7", "chatsan-tearfully-salutes" }, // RMC14
+//        { "T~T7", "chatsan-tearfully-salutes" }, // RMC14
         { "idk", "chatsan-shrugs" },
+        { "idgaf", "chatsan-shrugs" }, // RMC14
         { ";)", "chatsan-winks" },
         { ";]", "chatsan-winks" },
         { "(;", "chatsan-winks" },
@@ -156,7 +217,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
             message = r.Replace(message, string.Empty);
         }
 
-        sanitized = message.Trim();
+        sanitized = message; // RMC14
         return emote is not null;
     }
 }

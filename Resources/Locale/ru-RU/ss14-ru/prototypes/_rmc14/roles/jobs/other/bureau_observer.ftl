@@ -1,6 +1,3 @@
-ent-RMCSpawnerBureauObserver = interstellar sapient-life rights observer spawner
-    .suffix = Spawner
+ent-RMCSpawnerBureauObserver = спавнер межзвёздный смотритель за правами разумных существ
+    .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidBureauObserver = interstellar sapient-life rights observer ghost role
-    .suffix = Role
-    .desc = { "" }

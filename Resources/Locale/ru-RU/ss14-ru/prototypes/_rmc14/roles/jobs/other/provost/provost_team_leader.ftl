@@ -1,8 +1,6 @@
-ent-RMCSpawnerProvostTeamLeader = provost spawner team leader
-    .suffix = Spawner, Player
+ent-RMCSpawnerProvostTeamLeader = спавнер лидер отряда военного приставолитета
+    .suffix = Спавнер, Игрок
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidProvostTeamLeader = provost ghost role team leader
-    .suffix = Role, Player
+ent-RMCRandomHumanoidProvostTeamLeader = лидер отряда военного приставолитета роль призрака
+    .suffix = Роль, Игрок
     .desc = { "" }
-ent-RMCIDCardProvostTeamLeader = provost team leader ID card
-    .desc = { ent-CMIDCardGold.desc }

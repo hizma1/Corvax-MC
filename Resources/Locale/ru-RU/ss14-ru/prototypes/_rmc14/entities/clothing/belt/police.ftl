@@ -1,17 +1,13 @@
-ent-CMBeltSecurity = M276 pattern security rig
-    .desc = The M276 is the standard load-bearing equipment of the UNMC. It consists of a modular belt with various clips. This configuration is commonly seen among Marine Military Police and peacekeepers, though it can hold some light munitions.
-ent-CMBeltSecurityMP = M276 pattern military police rig
-    .desc = The M276 is the standard load-bearing equipment of the UNMC. It consists of a modular belt with various clips. This version is filled with an array of small pouches, meant to carry non-lethal equipment and restraints.
-ent-CMBeltSecurityMPFilled = { ent-CMBeltSecurityMP }
-    .suffix = Filled
-    .desc = { ent-CMBeltSecurityMP.desc }
-ent-CMBeltSecuritySPP = Type 43 military police rig
-    .desc = The Type 43 is the standard load-bearing equipment of the SPP. It consists of a modular belt with various clips. This version is filled with an array of small pouches, meant to carry non-lethal equipment and restraints.
-ent-CMBeltSecuritySPPFilled = { ent-CMBeltSecuritySPP }
-    .suffix = Filled
-    .desc = { ent-CMBeltSecuritySPP.desc }
-ent-CMBeltSecurityMarshal = marshal duty belt
-    .desc = The black duty belt used to carry the instruments of a Marshals. It is a heavy police belt with several pouches to contain various law enforcement items.
-ent-CMBeltSecurityMarshalFilled = { ent-CMBeltSecurityMarshal }
-    .suffix = Filled
-    .desc = { ent-CMBeltSecurityMarshal.desc }
+ent-CMBeltSecurity = пояс охраны M276
+    .desc = M276 является стандартным грузовым снаряжением ККМП. Он состоит из модульного ремня с различными фиксаторами. Эта версия обычно встречается у военной полиции колониальной морской пехоты и миротворцев, хотя в неё могут помещаться и некоторые лёгкие боеприпасы.
+ent-CMBeltSecurityMP = пояс военной полиции M276
+    .desc = M276 является стандартным грузовым снаряжением ККМП. Он состоит из модульного ремня с различными фиксаторами. Эта версия оснащена множеством маленьких подсумков, предназначенных для переноски нелетального снаряжения и сковывающих устройств.
+ent-RMCBeltSecurityWeYa = M276-C corporate security rig
+    .desc = A Weston-Yamada adaptation of the M276 load-bearing equipment, designed for corporate security forces. This modular black rig features multiple pouches for carrying restraints, ammunition, and a mix of lethal and non-lethal equipment for maintaining order.
+
+ent-CMBeltSecuritySPP = пояс военной полиции Тип 43
+    .desc = Тип 43 является стандартным грузовым снаряжением СПН. Он состоит из модульного ремня с различными фиксаторами. Эта версия оснащена множеством маленьких подсумков, предназначенных для переноски нелетального снаряжения и сковывающих устройств.
+
+ent-CMBeltSecurityMarshal = должностной пояс маршала
+    .desc = Чёрный должностной пояс, используемый для транспортировки экипировки маршала. Это тяжёлый полицейский ремень с несколькими подсумками для хранения различных средств поддержания правопорядка.
+

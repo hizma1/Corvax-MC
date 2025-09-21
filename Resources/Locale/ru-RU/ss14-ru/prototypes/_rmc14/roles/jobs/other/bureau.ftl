@@ -1,12 +1,6 @@
-ent-RMCSpawnerBureauMarshal = bureau marshal spawner
-    .suffix = Spawner
+ent-RMCSpawnerBureauMarshal = спавнер маршал бюро
+    .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidBureauMarshal = bureau marshal ghost role
-    .suffix = Role
-    .desc = { "" }
-ent-RMCSpawnerBureauDeputy = bureau deputy spawner
-    .suffix = Spawner
+ent-RMCSpawnerBureauDeputy = спавнер представитель бюро
+    .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidBureauDeputy = bureau deputy ghost role
-    .suffix = Role
-    .desc = { "" }

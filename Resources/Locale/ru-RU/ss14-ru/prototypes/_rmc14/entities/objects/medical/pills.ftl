@@ -1,5 +1,5 @@
-ent-CMPill = pill
-    .desc = A pill.
+ent-CMPill = таблетка
+    .desc = Таблетка.
 ent-CMPillBicaridine = { ent-CMPill }
     .desc = { ent-CMPill.desc }
 ent-CMPillDexalin = { ent-CMPill }
@@ -11,4 +11,9 @@ ent-CMPillInaprovaline = { ent-CMPill }
 ent-CMPillKelotane = { ent-CMPill }
     .desc = { ent-CMPill.desc }
 ent-CMPillTricordrazine = { ent-CMPill }
+    .desc = { ent-CMPill.desc }
+ent-RMCPillRussianRed = { ent-CMPill }
+    .desc = { ent-CMPill.desc }
+ent-RMCPillAntiZed = { ent-CMPill }
+    .suffix = DO NOT MAP, AntiZed
     .desc = { ent-CMPill.desc }

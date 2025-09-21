@@ -1,7 +1,7 @@
 ent-RMCBaseFigurinePatron = { ent-BaseFigurine }
-    .desc = A small, detailed miniature.
-ent-RMCSpawnerFigurinePatron = patron figurine spawner
-    .desc = A patron figurine spawner.
+    .desc = Маленькая, детализированная миниатюрка.
+ent-RMCSpawnerFigurinePatron = спавнер фигурка патрона
+    .desc = Спавнер фигурки патрона.
 ent-RMCFigurinePatronFoxBridgeton = Fox Bridgeton figurine
     .desc = This is like that book by George Orwell, Nineteen Eighty Fo'
 ent-RMCFigurinePatronKillsTheMice = Kills-The-Mice figurine
@@ -198,6 +198,133 @@ ent-RMCFigurinePatronKamielLancoaster = Kamiel Lancoaster figurine
     .desc = Set a record for most sub 5 minute deaths during boot camp training simulations.
 ent-RMCFigurinePatronEricRasczak = Eric Rasczak figurine
     .desc = "Has anyone seen my synth-graft?"
+ent-RMCFigurinePatronZverNemesis = Zver' Nemesis figurine
+    .desc = "If you had not broken Marine Law, I would not have been sent to arrest you."
+ent-RMCFigurinePatronHazzyLicious = Hazzy Licious figurine
+    .desc = It looks fleshy and covered in red tendrils...
+ent-RMCFigurinePatronFlapsConflagMoth = Flaps 'Conflag' Moth figurine
+    .desc = You can almost hear him Screaming, "HI FREN!"
+ent-RMCFigurinePatronSethXXiao = Seth 'X' Xiao figurine
+    .desc = X marks the spot…right between the eyes.
+ent-RMCFigurinePatronJunoKleptocatKaneko = Juno 'Kleptocat' Kaneko figurine
+    .desc = The figure bears a striking appearance of a young male felinid. Could it be a thief? A scoundrel? A Cargonian? No, it's just your lovable Kleptocat and his "legally" acquired goods! Soaring high in the sky like the Gunship Pilot he was always meant to be. Proudly marking another tally on the hull of Normandy. Whether or not those tallies are enemy or Marines... you will never know.
+ent-RMCFigurinePatronStellaCowabungaStewart = Stella 'Cowabunga' Stewart figurine
+    .desc = We're building the mother of all FOB's here, Jack!
+ent-RMCFigurinePatronRosalindHexVolkov = Rosalind 'Hex' Volkov figurine
+    .desc = "I solemnly swear to not charge sensors."
+ent-RMCFigurinePatronColtenRipcordBailey = Colten 'Ripcord' Bailey figurine
+    .desc = This figure's tail appears to have broken off and been glued back on. Twice.
+ent-RMCFigurinePatronSpikeLight-FootFluff-Usta = Spike Light-Foot Fluff-Usta figurine
+    .desc = This abomination vulp-slime hybrid dosent seem to stay dead long yet always seem to be killed often.
+ent-RMCFigurinePatronNells-the-Jobs = Nells-the-Jobs figurine
+    .desc = A silly little lizard that is known for enjoying Slaw.
+ent-RMCFigurinePatronFast-pawsChip = Fast-paws Chip figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronDryWetbrush = Dry Wetbrush figurine
+    .desc = He wonders what you are thinking about.
+ent-RMCFigurinePatronHaileyMorgan = Hailey Morgan figurine
+    .desc = "Oh my gawd, bestie, I loooove your outfit."
+ent-RMCFigurinePatronOsbornCheeseballCurry = Osborn 'Cheeseball' Curry figurine
+    .desc =
+        Under the figurine, a text is engraved that reads:
+        
+        "In the silence, I hear them crawl..."
+        "From the shadows, we answer the call…"
+        "One shot... one kill..."
+        "Another queen falls..."
+        
+        "We wombo combo, in the dark we reign,"
+        "The stars above, watchin’ in vain."
+        "Through fire and ash, through blood and bone,"
+        "We stand as brothers, in this war we own."
+        
+        A souvenir for my brotha Pip, may this figurine bring you comfort in your darkest hours.
+        Let it be a reminder of our friendship, even in the most remote and lonely corners of the world.
+        
+        ATTENTION: DO NOT LICK, DOES NOT TASTE LIKE ORANGE!
+ent-RMCFigurinePatronGregorCain = Gregor Cain figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronJessieFirstDaily = Jessie 'First' Daily figurine
+    .desc = "Charlies never die." Smells like pinesap and sawdust.
+ent-RMCFigurinePatronKhauniBrooks = Khauni Brooks figurine
+    .desc = She has a cute an adorable snoot you can boop.
+ent-RMCFigurinePatronBurniHeatSenira = Burni 'Heat' Senira figurine
+    .desc = Every scar a mistake, and a lesson.
+ent-RMCFigurinePatronAustinSpectreEventide = Austin 'Spectre' Eventide figurine
+    .desc = "Allan please add description"
+ent-RMCFigurinePatronShei-Teegla = Shei-Teegla figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronJazzyJune = Jazzy June figurine
+    .desc = She's trying her best. Can't you tell?
+ent-RMCFigurinePatronAnglerAngusSeawing = Angler 'Angus' Seawing figurine
+    .desc =
+        A fish-looking dragon who is known for telling people they arent a fish.
+        
+        Usually seen in the hangar or patrolling around.
+ent-RMCFigurinePatronJackHunterDunes = Jack 'Hunter' Dunes figurine
+    .desc = This item smells of old MRE, and blood......seems like people thrown this one at their targets with all the dents on it.
+ent-RMCFigurinePatronDurganChumCarlyle = Durgan 'Chum' Carlyle figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronAdrianArchangelGutierrez = Adrian 'Archangel' Gutierrez figurine
+    .desc = The Armor and looks worn and battered, You notice a faded cross on his left shoulder pad.  On the back of the helmet you see his callsign. "Archangel" In a faded red. You can almost notice a faint smile.
+ent-RMCFigurinePatronNeza = Neza figurine
+    .desc = Charlie squad till the day he dies, again.
+ent-RMCFigurinePatronJadeFiendEria = Jade 'Fiend' Eria figurine
+    .desc = You can see a broken receiver sticking out, it emits incomprehensible gibberish when squeezed. The figurine's jaw looks slightly melted off, as if someone held it above a candle.
+ent-RMCFigurinePatronAshWinter = Ash Winter figurine
+    .desc = Most Devious Silly Lizard.
+ent-RMCFigurinePatronLoreWulbrenEra = Lore 'Wulbren' Era figurine
+    .desc = The best Pilot in the Almayer! - And the best rifleman..
+ent-RMCFigurinePatronLydiaSanitater = Lydia Sanitater figurine
+    .desc = Stand still or I can not save you.
+ent-RMCFigurinePatronVinceDogPetrov = Vince 'Dog' Petrov figurine
+    .desc = A figurine of a prime woofrine. Even though he's pocket sized, he still has that dog in him.
+ent-RMCFigurinePatronKallKallovski = Kall Kallovski figurine
+    .desc = Delta leads the way.
+ent-RMCFigurinePatronAtlasWolfySnowlight = Atlas 'Wolfy' Snowlight figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronCaineRuffRuffalo = Caine 'Ruff' Ruffalo figurine
+    .desc = Ruff as a Ruffalo. Always Ruffs. Is always Rough as a Ruff.
+ent-RMCFigurinePatronSethGrimm = Seth Grimm figurine
+    .desc = You can be a Queen or a parasite, but everyone dances with the Grim Reaper.
+ent-RMCFigurinePatronAnneTaylor = Anne Taylor figurine
+    .desc = If you see her piloting the Alamo and it still looks normal, something is horribly wrong.
+ent-RMCFigurinePatronYeoSakuraBunnia = Yeo 'Sakura' Bunnia figurine
+    .desc = This bunny seems familiar. Maybe they’re working around the medical department? Maybe even around the Staff office perhaps. Who knows! This bunny sure loves to provide overwatch for the marines and even providing medical care for them too.
+ent-RMCFigurinePatronSoft-pawsLiona = Soft-paws Liona figurine
+    .desc = Huh, seems like this squirrel action figure comes with its own miniature sentry gun as well.
+ent-RMCFigurinePatronValerieHawkins = Valerie Hawkins figurine
+    .desc = "I am just here to relay orders from the shark."
+ent-RMCFigurinePatronCargoNahami = Cargo Nahami figurine
+    .desc = That's cargo Nahami, one of the very many Nahami. It says on the bottom that you can redeem this at requisitions for one free HEDP.
+ent-RMCFigurinePatronSamsonParker = Samson Parker figurine
+    .desc = An Alpha squad leader willing to give up his life for his men! Reckless but with a big heart, always seeking to make the best out of the worst situations and NOT die in the process...
+ent-RMCFigurinePatronSilasAlatus = Silas Alatus figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronKasuni = Kasuni figurine
+    .desc = Kasuni is fix, will be ok soon.
+ent-RMCFigurinePatronAltairFlamecoat = Altair Flamecoat figurine
+    .desc = The most chittery Close Air Support the Corps can offer.
+ent-RMCFigurinePatronRikkiNakesone = Rikki Nakesone figurine
+    .desc = When one loaf of banana bread isn't enough.
+ent-RMCFigurinePatronSudie-Mim = Sudie-Mim figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronJazminLudwig = Jazmin Ludwig figurine
+    .desc = Wait, this isn't Hawaii.
+ent-RMCFigurinePatronJakeFoster = Jake Foster figurine
+    .desc = Hey bro!
+ent-RMCFigurinePatronForgeGrimes = Forge Grimes figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronCoreyShaffer = Corey Shaffer figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
+ent-RMCFigurinePatronCorlaBlitzDreams = Corla 'Blitz' Dreams figurine
+    .desc = An arachnid that reeks of gunpowder, thermite and oddly enough...a bunny? Whoever this arachnid is, you can sense how reckless they are with explosives...and how big their heart is, too.
+ent-RMCFigurinePatronRedMachinaSwiftcleave = Red 'Machina' Swiftcleave figurine
+    .desc = Not much can be said apart from this figure having some style to it. The Beret, the smart pistol having ivory colored engravings, a miniature plasma turret sits atop the left shoulder next to the light. But one thing that may catch your eye is the words, "To a place where..."written on the bottom of the stand.
+ent-RMCFigurinePatronLilianaShorkGodwin = Liliana 'Shork' Godwin figurine
+    .desc = SHORK GANG RISE UP!!
+ent-RMCFigurinePatronKuafuSpeedDemonLightweaver = Kuafu 'Speed Demon' Lightweaver figurine
+    .desc = { ent-RMCBaseFigurinePatron.desc }
 ent-RMCFigurinePatronNanSnowBunnyMazu = Nan 'Snow Bunny' Mazu figurine
     .desc =
         The Way of Sunlight

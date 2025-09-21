@@ -1,6 +1,6 @@
-ent-CMTestDummy = test dummy
+ent-CMTestDummy = испытательный манекен
     .suffix = RMC14
     .desc = { ent-CMBaseMobSpeciesOrganic.desc }
-ent-SpawnCMTestDummy = RMC Test Dummy Spawner
-    .suffix = DEBUG
+ent-SpawnCMTestDummy = Спавнер испытательного манекена RMC
+    .suffix = Дебаг
     .desc = { ent-MarkerBase.desc }

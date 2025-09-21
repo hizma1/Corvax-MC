@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._RMC14.Ghost.Roles;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
@@ -57,6 +58,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
     private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
+    private readonly List<uint> _ghostRolesToRemove = new();
 
     private readonly Dictionary<ICommonSession, GhostRolesEui> _openUis = new();
     private readonly Dictionary<ICommonSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
@@ -126,7 +128,7 @@ public sealed class GhostRoleSystem : EntitySystem
     public void OpenEui(ICommonSession session)
     {
         if (session.AttachedEntity is not { Valid: true } attached ||
-            !EntityManager.HasComponent<GhostComponent>(attached))
+            !HasComp<GhostComponent>(attached))
             return;
 
         if (_openUis.ContainsKey(session))
@@ -369,6 +371,12 @@ public sealed class GhostRoleSystem : EntitySystem
         // we copy these settings into the component because they would be cumbersome to access otherwise
         raffle.JoinExtendsDurationBy = TimeSpan.FromSeconds(settings.JoinExtendsDurationBy);
         raffle.MaxDuration = TimeSpan.FromSeconds(settings.MaxDuration);
+
+        // RMC14
+        var ev = new GhostRoleRaffleEvent(TimeSpan.FromSeconds(countdown), settings.RoundTimeRequirement);
+        RaiseLocalEvent(ent, ref ev);
+        if (ev.Handled)
+            raffle.Countdown = ev.CountDown;
     }
 
     private void OnRaffleShutdown(Entity<GhostRoleRaffleComponent> ent, ref ComponentShutdown args)
@@ -510,8 +518,13 @@ public sealed class GhostRoleSystem : EntitySystem
 
         DebugTools.AssertNotNull(player.ContentData());
 
+        // After taking a ghost role, the player cannot return to the original body, so wipe the player's current mind
+        // unless it is a visiting mind
+        if(_mindSystem.TryGetMind(player.UserId, out _, out var mind) && !mind.IsVisitingEntity)
+            _mindSystem.WipeMind(player);
+
         var newMind = _mindSystem.CreateMind(player.UserId,
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
+            Comp<MetaDataComponent>(mob).EntityName);
 
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
@@ -528,7 +541,7 @@ public sealed class GhostRoleSystem : EntitySystem
     public int GetGhostRoleCount()
     {
         var metaQuery = GetEntityQuery<MetaDataComponent>();
-        return _ghostRoles.Count(pair => metaQuery.GetComponent(pair.Value.Owner).EntityPaused == false);
+        return _ghostRoles.Count(pair => metaQuery.CompOrNull(pair.Value.Owner)?.EntityPaused == false);
     }
 
     /// <summary>
@@ -542,13 +555,17 @@ public sealed class GhostRoleSystem : EntitySystem
         var roles = new List<GhostRoleInfo>();
         var metaQuery = GetEntityQuery<MetaDataComponent>();
 
+        _ghostRolesToRemove.Clear();
         foreach (var (id, (uid, role)) in _ghostRoles)
         {
-            if (!metaQuery.TryComp(uid, out var meta) ||
-                meta.EntityPaused)
+            if (!metaQuery.TryComp(uid, out var meta))
             {
+                _ghostRolesToRemove.Add(id);
                 continue;
             }
+
+            if (meta.EntityPaused)
+                continue;
 
             var kind = GhostRoleKind.FirstComeFirstServe;
             GhostRoleRaffleComponent? raffle = null;
@@ -583,6 +600,12 @@ public sealed class GhostRoleSystem : EntitySystem
                 RafflePlayerCount = rafflePlayerCount,
                 RaffleEndTime = raffleEndTime
             });
+        }
+
+        foreach (var id in _ghostRolesToRemove)
+        {
+            _ghostRoles.Remove(id);
+            _ghostRoleRaffles.Remove(id);
         }
 
         return roles.ToArray();

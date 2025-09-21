@@ -7,7 +7,12 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: CMSquad
-    time: 36000 # 10 hours
+    time: 21600 # 6 hours. CCM14 role timers. RMC: 36000 # 10 hours
+# CCM14 role timers [add/start]
+  - !type:RoleTimeRequirement
+    role: CMJobCombatTech
+    time: 10800 # 3 hours
+# CCM14 role timers [add/end]
   ranks:
     RMCRankSergeant:
     - !type:RoleTimeRequirement
@@ -22,14 +27,12 @@
   dummyStartingGear: CMGearFireteamLeaderEquipped
   icon: "CMJobIconFireteamLeader"
   joinNotifyCrew: false
+  marineAuthorityLevel: 1
   supervisors: cm-job-supervisors-sl
   accessGroups:
   - FTL
-  overwatchSortPriority: -4
+  overwatchSortPriority: -5
   overwatchRoleName: Fire Team Leaders
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: tl
   roleWeight: 1
   special:
   - !type:AddComponentSpecial
@@ -37,15 +40,21 @@
     - type: Skills
       skills:
         RMCSkillConstruction: 2
+        RMCSkillEndurance: 1
         RMCSkillEngineer: 2
         RMCSkillFirearms: 1
         RMCSkillFireman: 1
         RMCSkillJtac: 3
     - type: CMVendorUser
+      id: CMFireteamLeader
       points: 45
     - type: SquadArmorWearer
     - type: JobPrefix
       prefix: cm-job-prefix-fireteam-leader
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: tl
 
 - type: startingGear
   id: CMGearFireteamLeader
@@ -120,3 +129,20 @@
     role: CMFireteamLeader
   - type: Sprite
     state: tl_spawn_delta
+
+- type: randomHumanoidSettings
+  parent: RMCRandomHumanoidBase
+  id: RMCFireteamLeader
+  components:
+  - type: GhostRole
+    name: cm-job-name-fireteam-leader
+    description: cm-job-description-fireteam-leader
+    rules: ghost-role-information-nonantagonist-rules
+    reregister: false
+    raffle:
+      settings: default
+    job: CMFireteamLeader
+    requirements:
+    - !type:RoleTimeRequirement
+      role: CMJobFireteamLeader
+      time: 1

@@ -62,6 +62,8 @@ chatsan-replacement-32 = got to go
 #chatsan-word-33 = gl
 #chatsan-replacement-33 = good luck
 
+chatsan-word-33 = gl
+chatsan-replacement-33 = good luck
 chatsan-word-34 = hbu
 chatsan-replacement-34 = how about you
 chatsan-word-35 = hmu

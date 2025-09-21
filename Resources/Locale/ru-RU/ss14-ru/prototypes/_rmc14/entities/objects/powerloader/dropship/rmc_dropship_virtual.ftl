@@ -1,6 +1,6 @@
-ent-RMCVirtualPowerLoaderRight = power loader right hydraulic claw
+ent-RMCVirtualPowerLoaderRight = правая гидравлическая клешня силового погрузчика
     .desc = { "" }
-ent-RMCVirtualPowerLoaderLeft = power loader left hydraulic claw
+ent-RMCVirtualPowerLoaderLeft = левая гидравлическая клешня силового погрузчика
     .desc = { ent-VirtualItem.desc }
 ent-RMCVirtualDropshipGearRight = { ent-RMCVirtualPowerLoaderRight }
     .desc = { ent-RMCVirtualPowerLoaderRight.desc }
@@ -22,3 +22,7 @@ ent-RMCVirtualWarheadRight = { ent-RMCVirtualPowerLoaderRight }
     .desc = { ent-RMCVirtualPowerLoaderRight.desc }
 ent-RMCVirtualWarheadLeft = { ent-RMCVirtualPowerLoaderLeft }
     .desc = { ent-RMCVirtualPowerLoaderLeft.desc }
+ent-RMCVirtualWarheadLeftAegis = { ent-RMCVirtualPowerLoaderLeft }
+    .desc = { ent-RMCVirtualPowerLoaderLeft.desc }
+ent-RMCVirtualWarheadRightAegis = { ent-RMCVirtualPowerLoaderRight }
+    .desc = { ent-RMCVirtualPowerLoaderRight.desc }

@@ -1,5 +1,8 @@
 ent-RMCArmorMARSOC = marine raider armor
     .desc = A heavily customized suit of M3 armor. Used by Marine Raiders.
+ent-RMCArmorMARSOCXM40 = { ent-RMCArmorMARSOC }
+    .suffix = XM40 HEAP, Filled
+    .desc = { ent-RMCArmorMARSOC.desc }
 ent-CMArmorIronBear = H1 iron bears vest
     .desc = A protective vest worn by Iron Bears mercenaries.
 ent-CMArmorDutchVest = D2 armored vest
@@ -18,6 +21,7 @@ ent-RMCCoatMilitiaHauberk = colonial militia partial hauberk
     .desc = The hauberk of a colonist militia member, created from boiled leather and some modern armored plates. While not the most powerful form of armor, and primitive compared to most modern suits of armor, it gives the wearer almost perfect mobility, which suits the needs of the local colonists. It is also quick to don, easy to hide, and cheap to produce in large workshops. This even lighter variant has some of the arm pieces removed.
 ent-RMCCoatMilitiaHarness = colonial militia harness
     .desc = The hauberk of a colonist militia member, created from boiled leather and some modern armored plates. While not the most powerful form of armor, and primitive compared to most modern suits of armor, it gives the wearer almost perfect mobility, which suits the needs of the local colonists. It is also quick to don, easy to hide, and cheap to produce in large workshops. This one has straps interweaved with the plates, that allow the user to fire a captured smart gun, if a bit uncomfortably.
+    .suffix = smart gun harness
 ent-RMCArmorMercenary = mercenary K12 ceramic plated armor
     .desc = A set of grey, heavy ceramic armor with dark blue highlights. It is the standard uniform of an unknown mercenary group working in the sector.
 ent-RMCArmorMercenaryHeavy = mercenary modified K12 ceramic plated armor

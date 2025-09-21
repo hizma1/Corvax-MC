@@ -4,6 +4,10 @@
   name: cm-job-name-cargotech
   description: cm-job-description-cargotech
   playTimeTracker: CMJobCargoTech
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: CMSquad
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 18000 # 5 hours
   ranks:
     RMCRankLanceCorporal:
     - !type:RoleTimeRequirement
@@ -20,12 +24,6 @@
   supervisors: cm-job-supervisors-qm
   accessGroups:
   - CMCargoTech
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: cargo
-  minimapBackground:
-   sprite: _RMC14/Interface/map_blips.rsi
-   state: background_shipside
   roleWeight: 0.25
   special:
   - !type:AddComponentSpecial
@@ -33,11 +31,18 @@
     - type: Skills
       skills:
         RMCSkillConstruction: 1
+        RMCSkillEndurance: 1
         RMCSkillFirearms: 1
         RMCSkillFireman: 1
         RMCSkillPowerLoader: 2
+    - type: CMVendorUser
+      id: CMCargoTech
     - type: JobPrefix
       prefix: cm-job-prefix-cargotech
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: cargo
 
 - type: startingGear
   id: CMGearCargoTech

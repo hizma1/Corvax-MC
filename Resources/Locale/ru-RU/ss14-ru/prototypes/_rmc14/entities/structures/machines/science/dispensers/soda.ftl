@@ -1,5 +1,8 @@
-ent-CMDispenserSoda = soda fountain
-    .desc = A drink fabricating machine, capable of producing many sugary drinks with just one touch.
+ent-CMDispenserSoda = раздатчик безалкоголя
+    .desc = Машина для розлива напитков, способная в одно нажатие производить множество сладких напитков.
+ent-RMCChemStorageDrinks = { ent-RMCChemStorageBase }
+    .suffix = Напитки
+    .desc = { ent-RMCChemStorageBase.desc }
 ent-CMDispenserSodaEmpty = { ent-CMDispenserSoda }
-    .suffix = Empty
+    .suffix = Пустой
     .desc = { ent-CMDispenserSoda.desc }

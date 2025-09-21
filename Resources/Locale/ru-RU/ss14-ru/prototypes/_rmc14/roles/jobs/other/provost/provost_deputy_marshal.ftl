@@ -1,8 +1,6 @@
-ent-RMCSpawnerProvostDeputyMarshal = provost spawner deputy marshal
-    .suffix = Spawner, Whitelisted COs
+ent-RMCSpawnerProvostDeputyMarshal = спавнер помощник маршала военного приставолитета
+    .suffix = Спавнер, Вайтлист КО
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidProvostDeputyMarshal = provost ghost role deputy marshal
-    .suffix = Role, Whitelisted COs
+ent-RMCRandomHumanoidProvostDeputyMarshal = помощник маршала военного приставолитета роль призрака
+    .suffix = Роль, Вайтлист КО
     .desc = { "" }
-ent-RMCIDCardProvostDeputyMarshal = provost deputy marshal ID card
-    .desc = { ent-CMIDCardGold.desc }

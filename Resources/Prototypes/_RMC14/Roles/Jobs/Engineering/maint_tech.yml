@@ -7,7 +7,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: CMSquad
-    time: 7200 # 2 hours
+    time: 3600 # 1 hour. CCM14 role timers. RMC: 7200 # 2 hours
   startingGear: CMGearMaintTech
   icon: "CMJobIconMaintTech"
   joinNotifyCrew: false
@@ -24,12 +24,6 @@
     RMCRankPrivate: []
   accessGroups:
   - MaintTech
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: mt
-  minimapBackground:
-   sprite: _RMC14/Interface/map_blips.rsi
-   state: background_shipside
   roleWeight: 0.25
   special:
   - !type:AddComponentSpecial
@@ -38,12 +32,20 @@
       skills:
         RMCSkillDomestics: 1
         RMCSkillConstruction: 3
+        RMCSkillEndurance: 1
         RMCSkillEngineer: 3
         RMCSkillFirearms: 1
         RMCSkillFireman: 1
         RMCSkillPowerLoader: 2
     - type: JobPrefix
       prefix: cm-job-prefix-maint-tech
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: mt
+      background:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: background_shipside
 
 - type: startingGear
   id: CMGearMaintTech

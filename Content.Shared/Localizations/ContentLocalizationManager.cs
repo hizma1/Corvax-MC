@@ -10,7 +10,8 @@ namespace Content.Shared.Localizations
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        private const string Culture = "ru-RU"; // CCM-Localization
+        private const string FallbackCulture = "en-US"; // CCM-Localization
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -26,11 +27,17 @@ namespace Content.Shared.Localizations
         public void Initialize()
         {
             var culture = new CultureInfo(Culture);
+            var fallbackCulture = new CultureInfo(FallbackCulture); // CCM-Localization
 
             _loc.LoadCulture(culture);
+            _loc.LoadCulture(fallbackCulture); // CCM-Localization
+            _loc.SetFallbackCluture(fallbackCulture); // CCM-Localization
+            _loc.AddFunction(culture, "MANY", FormatMany); // CCM-Localization: To prevent problems in auto-generated locale files
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+            // NOTE: ENERGYWATTHOURS() still takes a value in joules, but formats as watt-hours.
+            _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
             _loc.AddFunction(culture, "UNITS", FormatUnits);
             _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
             _loc.AddFunction(culture, "LOC", FormatLoc);
@@ -147,6 +154,7 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatPlaytime(TimeSpan time)
         {
+            time = TimeSpan.FromMinutes(Math.Ceiling(time.TotalMinutes));
             var hours = (int)time.TotalHours;
             var minutes = time.Minutes;
             return Loc.GetString($"zzzz-fmt-playtime", ("hours", hours), ("minutes", minutes));
@@ -171,10 +179,16 @@ namespace Content.Shared.Localizations
             return new LocValueString(obj?.ToString() ?? "");
         }
 
-        private static ILocValue FormatUnitsGeneric(LocArgs args, string mode)
+        private static ILocValue FormatUnitsGeneric(
+            LocArgs args,
+            string mode,
+            Func<double, double>? transformValue = null)
         {
             const int maxPlaces = 5; // Matches amount in _lib.ftl
             var pressure = ((LocValueNumber) args.Args[0]).Value;
+
+            if (transformValue != null)
+                pressure = transformValue(pressure);
 
             var places = 0;
             while (pressure > 1000 && places < maxPlaces)
@@ -199,6 +213,13 @@ namespace Content.Shared.Localizations
         private static ILocValue FormatPowerJoules(LocArgs args)
         {
             return FormatUnitsGeneric(args, "zzzz-fmt-power-joules");
+        }
+
+        private static ILocValue FormatEnergyWattHours(LocArgs args)
+        {
+            const double joulesToWattHours = 1.0 / 3600;
+
+            return FormatUnitsGeneric(args, "zzzz-fmt-energy-watt-hours", joules => joules * joulesToWattHours);
         }
 
         private static ILocValue FormatUnits(LocArgs args)

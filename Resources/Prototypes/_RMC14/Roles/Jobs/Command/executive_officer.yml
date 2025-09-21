@@ -5,9 +5,24 @@
   description: cm-job-description-executive-officer
   playTimeTracker: CMJobExecutiveOfficer
   requirements:
+# CCM14 role timers [remove/start]
+#  - !type:DepartmentTimeRequirement
+#    department: CMCommand
+#    time: 36000 # 10 hours
+# CCM14 role timers [remove/end] [add/start]
+  - !type:RoleTimeRequirement
+    role: CMJobSquadLeader
+    time: 21600 # 6 hours
   - !type:DepartmentTimeRequirement
-    department: CMCommand
-    time: 36000 # 10 hours
+    department: CMRequisitions
+    time: 10800 # 3 hours
+  - !type:TotalJobsTimeRequirement
+    group: CMJobsMedical
+    time: 10800 # 3 hours
+  - !type:TotalJobsTimeRequirement
+    group: CMJobsEngineering
+    time: 10800 # 3 hours
+# CCM14 role timers [add/end]
   ranks:
     RMCRankCaptain: []
   weight: 5
@@ -15,15 +30,10 @@
   icon: "CMJobIconExecutiveOfficer"
   requireAdminNotify: true
   joinNotifyCrew: true
+  marineAuthorityLevel: 14
   supervisors: cm-job-supervisors-co
   accessGroups:
   - MarineMain
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: xo
-  minimapBackground:
-   sprite: _RMC14/Interface/map_blips.rsi
-   state: background_command
   roleWeight: 0.25
   special:
   - !type:AddComponentSpecial
@@ -48,11 +58,23 @@
         RMCSkillVehicles: 1
     - type: MarineOrders
     - type: CMVendorUser
-      points: 120
+      id: CMExecutiveOfficer
+      points: 45
+      extraPoints:
+        Specialist: 120
     - type: RMCPointing
     - type: JobPrefix
       prefix: cm-job-prefix-executive-officer
     - type: ViewIntelObjectives
+    - type: CommandAccent
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: xo
+      background:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: background_command
+    - type: RMCTrackable
 
 - type: startingGear
   id: CMGearExecutiveOfficer
@@ -82,3 +104,13 @@
 - type: playTimeTracker
   id: CMJobExecutiveOfficer
   isHumanoid: true
+
+- type: entity
+  parent: CMGuidebookRole
+  id: RMCGuidebookRoleXO
+  name: The Executive Officer
+  description: The Executive Officer.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: executive_officer

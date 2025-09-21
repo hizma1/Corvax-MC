@@ -1,4 +1,8 @@
-ent-XenoEgg = egg
-    .desc = It looks like a weird egg.
-ent-XenoEggDestroyed = egg
-    .desc = A mess of... something.
+ent-XenoEgg = яйцо
+    .desc = Напоминает странное яйцо.
+ent-XenoEggDestroyed = яйцо
+    .desc = Какое-то... месиво.
+ent-XenoEggDestroyedFragile = хрупкое яйцо
+    .desc = { ent-XenoEggDestroyed.desc }
+ent-XenoEggDestroyedFragileSustained = хрупкое яйцо
+    .desc = { ent-XenoEggDestroyed.desc }

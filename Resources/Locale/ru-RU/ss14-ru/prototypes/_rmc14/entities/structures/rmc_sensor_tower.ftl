@@ -1,2 +1,5 @@
-ent-RMCSensorTower = experimental sensor tower
-    .desc = A tower with a lot of delicate sensors made to track weather conditions. This one has been adjusted to track biosignatures.
+ent-RMCSensorTower = экспериментальная сенсорная вышка
+    .desc = Вышка с множеством чувствительных датчиков, предназначенных для отслеживания погодных условий. Эта была приспособлена для отслеживания биологических сигнатур.
+ent-RMCSensorTowerOn = { ent-RMCSensorTower }
+    .suffix = Вкл, Нет шанса сломаться
+    .desc = { ent-RMCSensorTower.desc }

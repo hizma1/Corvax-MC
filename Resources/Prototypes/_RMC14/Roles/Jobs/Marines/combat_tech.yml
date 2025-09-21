@@ -7,7 +7,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: CMSquad
-    time: 18000 # 5 hours
+    time: 3600 # 1 hour. CCM14 role timers. RMC: 18000 # 5 hours
   ranks:
     RMCRankCorporal:
     - !type:RoleTimeRequirement
@@ -22,14 +22,12 @@
   dummyStartingGear: CMGearCombatTechEquipped
   icon: "CMJobIconCombatTech"
   joinNotifyCrew: false
+  marineAuthorityLevel: 1
   supervisors: cm-job-supervisors-sl
   accessGroups:
   - CombatTech
-  overwatchSortPriority: 0
+  overwatchSortPriority: -1
   overwatchRoleName: Combat Technicians
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: engi
   roleWeight: 1
   special:
   - !type:AddComponentSpecial
@@ -37,16 +35,22 @@
     - type: Skills
       skills:
         RMCSkillConstruction: 2
+        RMCSkillEndurance: 1
         RMCSkillEngineer: 3
         RMCSkillFirearms: 1
         RMCSkillFireman: 1
         RMCSkillJtac: 1
         RMCSkillVehicles: 1
     - type: CMVendorUser
+      id: CMCombatTech
       points: 45
     - type: SquadArmorWearer
     - type: JobPrefix
       prefix: cm-job-prefix-combat-tech
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: engi
 
 - type: startingGear
   id: CMGearCombatTech
@@ -122,3 +126,20 @@
     role: CMCombatTech
   - type: Sprite
     state: engi_spawn_delta
+
+- type: randomHumanoidSettings
+  parent: RMCRandomHumanoidBase
+  id: RMCCombatTech
+  components:
+  - type: GhostRole
+    name: cm-job-name-combat-tech
+    description: cm-job-description-combat-tech
+    rules: ghost-role-information-nonantagonist-rules
+    reregister: false
+    raffle:
+      settings: default
+    job: CMCombatTech
+    requirements:
+    - !type:RoleTimeRequirement
+      role: CMJobCombatTech
+      time: 1

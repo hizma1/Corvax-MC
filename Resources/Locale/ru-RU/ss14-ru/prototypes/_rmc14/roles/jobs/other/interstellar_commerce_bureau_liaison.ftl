@@ -1,6 +1,3 @@
-ent-RMCSpawnerICBLiaison = interstellar commerce bureau liaison spawner
-    .suffix = Spawner
+ent-RMCSpawnerICBLiaison = спавнер связной бюро межзвёздной торговли
+    .suffix = Спавнер
     .desc = { ent-MarkerBase.desc }
-ent-RMCRandomHumanoidICBLiaison = interstellar commerce bureau liaison ghost role
-    .suffix = Role
-    .desc = { "" }

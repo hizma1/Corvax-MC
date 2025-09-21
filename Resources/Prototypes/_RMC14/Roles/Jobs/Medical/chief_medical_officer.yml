@@ -5,38 +5,36 @@
   description: cm-job-description-cmo
   playTimeTracker: CMJobCMO
   requirements:
-  - !type:TotalJobsTimeRequirement
-    group: CMJobsMedical
-    time: 36000 # 10 hours
+# CCM14 role timers [remove/start]
+#  - !type:TotalJobsTimeRequirement
+#    group: CMJobsMedical
+#    time: 36000 # 10 hours
+# CCM14 role timers [remove/end]
   - !type:RoleTimeRequirement
     role: CMJobDoctor
-    time: 18000 # 5 hours
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 18000 # 5 hours
   ranks:
     RMCRankFirstLT:
     - !type:RoleTimeRequirement
       role: CMJobCMO
-      time: 36000 # 10 hours
+      time: 252000 # 70 hours
     RMCRankSecondLT: []
   weight: 5
   startingGear: CMGearCMO
   icon: "CMJobIconCMO"
   requireAdminNotify: true
-  joinNotifyCrew: true
+  joinNotifyCrew: false
+  marineAuthorityLevel: 10
   supervisors: cm-job-supervisors-co
   accessGroups:
   - CMCMO
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: doctor
-  minimapBackground:
-   sprite: _RMC14/Interface/map_blips.rsi
-   state: background_command
   roleWeight: 0.25
   special:
   - !type:AddComponentSpecial
     components:
     - type: Skills
       skills:
+        RMCSkillEndurance: 1
         RMCSkillFirearms: 0
         RMCSkillFireman: 1
         RMCSkillIntel: 1
@@ -47,11 +45,22 @@
         RMCSkillPolice: 1
         RMCSkillResearch: 1
         RMCSkillSurgery: 2
+    - type: CMVendorUser
+      points: 45
     - type: MarineOrders
     - type: RMCPointing
     - type: JobPrefix
       prefix: cm-job-prefix-cmo
     - type: ViewIntelObjectives
+    - type: CommandAccent
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: doctor
+      background:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: background_command
+    - type: RMCTrackable
 
 - type: startingGear
   id: CMGearCMO
@@ -86,3 +95,13 @@
 - type: playTimeTracker
   id: CMJobCMO
   isHumanoid: true
+
+- type: entity
+  parent: CMGuidebookRole
+  id: RMCGuidebookRoleCMO
+  name: The CMO
+  description: The Chief Medical Officer.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: chief_medical_officer

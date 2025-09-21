@@ -1,6 +1,6 @@
-ent-RMCHardHat = hard hat
-    .desc = A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
-ent-RMCHardhatRed = firefighter helmet
+ent-RMCHardHat = защитная каска
+    .desc = Головной убор, используемый для защиты головы в небезопасных условиях труда. Поставляется со встроенным фонариком.
+ent-RMCHardhatRed = пожарная каска
     .desc = { ent-RMCHardHat.desc }
 ent-RMCHardhatOrange = { ent-RMCHardHat }
     .desc = { ent-RMCHardHat.desc }
@@ -8,3 +8,7 @@ ent-RMCHardhatBlue = { ent-RMCHardHat }
     .desc = { ent-RMCHardHat.desc }
 ent-RMCHardhatWhite = { ent-RMCHardHat }
     .desc = { ent-RMCHardHat.desc }
+ent-RMCHardhatWhiteAlt = Chǎnyè Combine mining helmet
+    .desc = { ent-RMCHardHat.desc }
+ent-RMCHardhatRedTMCC = tartarus-mining hard hat
+    .desc = { ent-RMCHardhatRed.desc }

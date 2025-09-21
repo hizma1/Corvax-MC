@@ -6,6 +6,7 @@
   - type: StorageFill
     contents:
       - id: CMSandbagEmpty50
+        amount: 3 # CM14 edit
 
 - type: entity
   id: RMCCrateSandbagsConstructionKit
@@ -15,6 +16,7 @@
   - type: StorageFill
     contents:
       - id: CMSandbagFull50
+        amount: 3 # CM14 edit
       - id: CMEntrenchingTool
         amount: 2
 
@@ -26,6 +28,7 @@
   - type: StorageFill
     contents:
       - id: CMSheetMetal
+        amount: 3 # CM14 edit
 
 - type: entity
   id: RMCCratePlasteelSheets
@@ -35,6 +38,7 @@
   - type: StorageFill
     contents:
       - id: CMSheetPlasteel
+        amount: 3 # CM14 edit
 
 - type: entity
   id: RMCCrateGlassSheets
@@ -44,6 +48,7 @@
   - type: StorageFill
     contents:
       - id: CMSheetGlass
+        amount: 3 # CM14 edit
 
 - type: entity
   id: RMCCrateWoodenPlanks
@@ -52,7 +57,8 @@
   components:
   - type: StorageFill
     contents:
-     - id: RMCPlankWood
+      - id: RMCPlankWood
+        amount: 3 # CM14 edit
 
 #- type: entity # TODO RMC14 add folding barricades
 #  id: RMCCrateFoldingBarricades
@@ -137,7 +143,7 @@
     contents:
       - id: PortableGeneratorPacmanMachineCircuitboard # TODO RMC14 use cm prototype
         amount: 2
-      - id: CapacitorStockPart # TODO RMC14 use cm prototype
+      - id: MicroManipulatorStockPart # TODO RMC14 use cm prototype
         amount: 2
 
 - type: entity
@@ -149,7 +155,7 @@
     contents:
       - id: PortableGeneratorSuperPacmanMachineCircuitboard # TODO RMC14 use cm prototype
         amount: 2
-      - id: CapacitorStockPart # TODO RMC14 use cm prototype
+      - id: MicroManipulatorStockPart # TODO RMC14 use cm prototype
         amount: 4
 
 - type: entity

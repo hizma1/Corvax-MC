@@ -5,24 +5,28 @@
   description: cm-job-description-senior-enlisted-advisor
   playTimeTracker: CMJobSeniorEnlistedAdvisor
   requirements:
-  - !type:DepartmentTimeRequirement
-    department: CMSquad
-    time: 54000 # 15 hours
+# CCM14 role timers [remove/start]
+#  - !type:DepartmentTimeRequirement
+#    department: CMSquad
+#    time: 54000 # 15 hours
+# CCM14 role timers [remove/end]
   - !type:TotalJobsTimeRequirement
     group: CMJobsEngineering
-    time: 36000 # 10 hours
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 36000 # 10 hours
   - !type:DepartmentTimeRequirement
     department: CMMilitaryPolice
-    time: 54000 # 15 hours
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 54000 # 15 hours
   - !type:TotalJobsTimeRequirement
     group: CMJobsMedical
-    time: 54000 # 15 hours
-  - !type:DepartmentTimeRequirement
-    department: CMCommand
-    time: 54000 # 15 hours
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 54000 # 15 hours
+# CCM14 role timers [remove/start]
+#  - !type:DepartmentTimeRequirement
+#    department: CMCommand
+#    time: 54000 # 15 hours
+# CCM14 role timers [remove/start]
   - !type:DepartmentTimeRequirement
     department: CMRequisitions
-    time: 36000 # 10 hours
+    time: 10800 # 3 hours. CCM14 role timers. RMC: 36000 # 10 hours
   ranks: # TODO Selectable Ranks for SEA
     RMCRankSergeantMajor:
     - !type:RoleTimeRequirement
@@ -37,16 +41,13 @@
   icon: "CMJobIconSEA"
   requireAdminNotify: true
   joinNotifyCrew: true
+  latejoinArrivalSound:
+    path: /Audio/_RMC14/Announcements/ARES/attention_jingle.ogg
+  marineAuthorityLevel: 5
   supervisors: cm-job-supervisors-co
-  whitelisted: true
+#  whitelisted: true #CCM
   accessGroups:
   - MarineMain
-  minimapIcon:
-    sprite: _RMC14/Interface/map_blips.rsi
-    state: sea
-  minimapBackground:
-   sprite: _RMC14/Interface/map_blips.rsi
-   state: background_medical
   roleWeight: 0.25
   special:
   - !type:AddComponentSpecial
@@ -72,12 +73,22 @@
         RMCSkillVehicles: 2
     - type: MarineOrders
     - type: CMVendorUser
+      id: CMSeniorEnlistedAdvisor
       points: 45
     - type: RMCPointing
     - type: JobPrefix
       prefix: cm-job-prefix-senior-enlisted-advisor
     - type: SeeNewPlayers
     - type: ViewIntelObjectives
+    - type: CommandAccent
+    - type: TacticalMapIcon
+      icon:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: sea
+      background:
+        sprite: /Textures/_RMC14/Interface/map_blips.rsi
+        state: background_medical
+    - type: RMCTrackable
 
 - type: startingGear
   id: CMGearSeniorEnlistedAdvisor

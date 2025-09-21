@@ -1,8 +1,10 @@
-﻿using Content.Shared._RMC14.Areas;
+using Content.Shared._RMC14.Areas;
 using Content.Shared._RMC14.Dropship.Utility.Components;
 using Content.Shared._RMC14.Dropship.Utility.Events;
 using Content.Shared._RMC14.Dropship.Weapon;
 using Content.Shared._RMC14.Marines.Skills;
+using Content.Shared._RMC14.Medical.Unrevivable;
+using Content.Shared._RMC14.Pulling;
 using Content.Shared._RMC14.Rules;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Coordinates;
@@ -35,6 +37,8 @@ public sealed class RMCFultonSystem : EntitySystem
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly RMCPullingSystem _rmcpulling = default!;
+    [Dependency] private readonly RMCUnrevivableSystem _unrevivable = default!;
 
     private int _fultonCount;
     private MapId? _fultonMap;
@@ -67,7 +71,8 @@ public sealed class RMCFultonSystem : EntitySystem
             return;
         }
 
-        if (HasComp<PerishableComponent>(target) && !_rotting.IsRotten(target))
+        if (HasComp<PerishableComponent>(target) && !_rotting.IsRotten(target) ||
+            HasComp<RMCRevivableComponent>(target) && !_unrevivable.IsUnrevivable(target))
         {
             _popup.PopupClient(Loc.GetString("rmc-fulton-not-unrevivable", ("fulton", used), ("target", target)), target, user);
             return;
@@ -87,7 +92,7 @@ public sealed class RMCFultonSystem : EntitySystem
 
         var delay = ent.Comp.Delay * _skills.GetSkillDelayMultiplier(user, ent.Comp.Skill);
         var ev = new RMCPrepareFultonDoAfterEvent();
-        var doAfter = new DoAfterArgs(EntityManager, user, delay, ev, ent, ent, used);
+        var doAfter = new DoAfterArgs(EntityManager, user, delay, ev, ent, ent, used) { BreakOnMove = true };
 
         if (_doAfter.TryStartDoAfter(doAfter))
         {
@@ -114,6 +119,7 @@ public sealed class RMCFultonSystem : EntitySystem
 
         var name = Name(target);
         _dropshipWeapon.MakeTarget(target, name, false);
+        _rmcpulling.TryStopAllPullsFromAndOn(target);
 
         var mapId = EnsureMap();
         _transform.SetMapCoordinates(target, new MapCoordinates(_fultonCount++ * 50, 0, mapId));
@@ -148,8 +154,8 @@ public sealed class RMCFultonSystem : EntitySystem
             if (time < comp.ReturnAt)
                 continue;
 
+            RemComp<DropshipTargetComponent>(uid);
             RemCompDeferred<RMCActiveFultonComponent>(uid);
-            RemCompDeferred<DropshipTargetComponent>(uid);
 
             _transform.SetCoordinates(uid, comp.ReturnTo);
             _audio.PlayPvs(comp.ReturnSound, comp.ReturnTo);

@@ -1,3 +1,3 @@
-ent-RMCDebugSoundDevice = unknown device
+ent-RMCDebugSoundDevice = неизвестное устройство
     .desc = ???
-    .suffix = DO NOT MAP
+    .suffix = НЕ МАППИТЬ

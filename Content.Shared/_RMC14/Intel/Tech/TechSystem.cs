@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared._RMC14.Dropship.Fabricator;
 using Content.Shared._RMC14.Marines.Announce;
 using Content.Shared._RMC14.Requisitions;
@@ -22,11 +22,8 @@ public sealed class TechSystem : EntitySystem
     [Dependency] private readonly SharedRequisitionsSystem _requisitions = default!;
     [Dependency] private readonly ScalingSystem _scaling = default!;
 
-    private MapId? _purchasesMap;
-
     public override void Initialize()
     {
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         SubscribeLocalEvent<TechAnnounceEvent>(OnTechAnnounce);
         SubscribeLocalEvent<TechUnlockTierEvent>(OnTechUnlockTier);
         SubscribeLocalEvent<TechRequisitionsBudgetEvent>(OnTechRequisitionsBudget);
@@ -42,15 +39,10 @@ public sealed class TechSystem : EntitySystem
             });
     }
 
-    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
-    {
-        _purchasesMap = null;
-    }
-
     private void OnTechAnnounce(TechAnnounceEvent ev)
     {
         var msg = Loc.GetString("rmc-announcement-message-raw", ("author", ev.Author), ("message", ev.Message));
-        _marineAnnounce.AnnounceToMarines(msg);
+        _marineAnnounce.AnnounceToMarines(msg, ev.Sound);
     }
 
     private void OnTechUnlockTier(TechUnlockTierEvent ev)
@@ -74,9 +66,7 @@ public sealed class TechSystem : EntitySystem
 
     private void OnTechWarhead(TechWarheadEvent ev)
     {
-        var map = EnsurePurchasesMap();
-        var warhead = Spawn(ev.Warhead, new MapCoordinates(Vector2.Zero, map));
-        EnsureComp<RequisitionsCustomDeliveryComponent>(warhead);
+        _requisitions.CreateSpecialDelivery(ev.Warhead);
     }
 
     private void OnControlConsoleBeforeOpen(Entity<TechControlConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args)
@@ -94,7 +84,7 @@ public sealed class TechSystem : EntitySystem
             return;
 
         var tree = _intel.EnsureTechTree();
-        if (args.Tier < tree.Comp.Tree.Tier ||
+        if (tree.Comp.Tree.Tier < args.Tier ||
             !tree.Comp.Tree.Options.TryGetValue(args.Tier, out var tier))
         {
             Log.Warning($"{ToPrettyString(args.Actor)} tried to buy tech option with invalid tier {args.Tier}");
@@ -116,7 +106,7 @@ public sealed class TechSystem : EntitySystem
 
         tier[args.Index] = option with
         {
-            CurrentCost = option.Cost + option.Increase,
+            CurrentCost = option.CurrentCost + option.Increase,
             Purchased = true,
         };
         Dirty(ent);
@@ -127,15 +117,5 @@ public sealed class TechSystem : EntitySystem
         }
 
         _intel.UpdateTree(tree);
-    }
-
-    private MapId EnsurePurchasesMap()
-    {
-        if (_purchasesMap != null)
-            return _purchasesMap.Value;
-
-        _map.CreateMap(out var map);
-        _purchasesMap = map;
-        return map;
     }
 }

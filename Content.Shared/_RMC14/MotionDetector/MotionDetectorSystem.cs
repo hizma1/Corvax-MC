@@ -1,5 +1,6 @@
 ﻿using Content.Shared._RMC14.Inventory;
 using Content.Shared._RMC14.Weapons.Ranged.Battery;
+using Content.Shared._RMC14.Xenonids.Parasite;
 using Content.Shared.Actions;
 using Content.Shared.Coordinates;
 using Content.Shared.Examine;
@@ -28,13 +29,14 @@ public sealed class MotionDetectorSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly RMCGunBatterySystem _rmcGunBattery = default!;
+    [Dependency] private readonly SharedCMInventorySystem _rmcInventory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<MotionDetectorComponent> _detectorQuery;
     private EntityQuery<StorageComponent> _storageQuery;
 
-    private readonly List<Entity<MotionDetectorTrackedComponent>> _toUpdate = new();
+    private readonly HashSet<Entity<MotionDetectorTrackedComponent>> _toUpdate = new();
     private readonly HashSet<Entity<MotionDetectorTrackedComponent>> _tracked = new();
 
     public override void Initialize()
@@ -42,6 +44,7 @@ public sealed class MotionDetectorSystem : EntitySystem
         _detectorQuery = GetEntityQuery<MotionDetectorComponent>();
         _storageQuery = GetEntityQuery<StorageComponent>();
 
+        SubscribeLocalEvent<XenoParasiteInfectEvent>(OnXenoInfect);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<MotionDetectorComponent, UseInHandEvent>(OnMotionDetectorUseInHand);
@@ -59,27 +62,25 @@ public sealed class MotionDetectorSystem : EntitySystem
         SubscribeLocalEvent<MotionDetectorTrackedComponent, MoveEvent>(OnMotionDetectorTracked);
     }
 
+    private void OnXenoInfect(XenoParasiteInfectEvent ev)
+    {
+        DisableDetectorsOnMob(ev.Target);
+    }
+
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (ev.NewMobState != MobState.Dead)
             return;
 
-        foreach (var held in _hands.EnumerateHeld(ev.Target))
-        {
-            DisableMotionDetectors(held);
-        }
-
-        var slots = _inventory.GetSlotEnumerator(ev.Target);
-        while (slots.MoveNext(out var slot))
-        {
-            if (slot.ContainedEntity is { } contained)
-                DisableMotionDetectors(contained);
-        }
+        DisableDetectorsOnMob(ev.Target);
     }
 
     private void OnMotionDetectorUseInHand(Entity<MotionDetectorComponent> ent, ref UseInHandEvent args)
     {
         if (!ent.Comp.HandToggleable)
+            return;
+
+        if (!_hands.IsHolding(args.User, ent))
             return;
 
         args.Handled = true;
@@ -91,6 +92,9 @@ public sealed class MotionDetectorSystem : EntitySystem
     private void OnMotionDetectorGetVerbs(Entity<MotionDetectorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!ent.Comp.CanToggleRange)
             return;
 
         var user = args.User;
@@ -187,6 +191,9 @@ public sealed class MotionDetectorSystem : EntitySystem
 
     private void OnMotionDetectorTracked(Entity<MotionDetectorTrackedComponent> ent, ref MoveEvent args)
     {
+        if (args.OldPosition == args.NewPosition)
+            return;
+
         _toUpdate.Add(ent);
     }
 
@@ -217,6 +224,21 @@ public sealed class MotionDetectorSystem : EntitySystem
             {
                 DisableMotionDetectors(stored);
             }
+        }
+    }
+
+    private void DisableDetectorsOnMob(EntityUid uid)
+    {
+        foreach (var held in _hands.EnumerateHeld(uid))
+        {
+            DisableMotionDetectors(held);
+        }
+
+        var slots = _inventory.GetSlotEnumerator(uid);
+        while (slots.MoveNext(out var slot))
+        {
+            if (slot.ContainedEntity is { } contained)
+                DisableMotionDetectors(contained);
         }
     }
 
@@ -296,16 +318,21 @@ public sealed class MotionDetectorSystem : EntitySystem
             detector.Blips.Clear();
             foreach (var tracked in _tracked)
             {
+                if (tracked.Owner == Transform(uid).ParentUid) // User of the MD isn't tracked
+                    continue;
+
                 if (tracked.Comp.LastMove < time - detector.MoveTime)
                     continue;
 
-                detector.Blips.Add(_transform.GetMapCoordinates(tracked));
+                detector.Blips.Add(new Blip(_transform.GetMapCoordinates(tracked), tracked.Comp.IsQueenEye));
             }
 
             UpdateAppearance((uid, detector));
             if (detector.Blips.Count == 0)
             {
-                _audio.PlayPvs(detector.ScanEmptySound, uid);
+                if (_rmcInventory.TryGetUserHoldingOrStoringItem(uid, out var user))
+                    _audio.PlayEntity(detector.ScanEmptySound, user, uid);
+
                 continue;
             }
 
