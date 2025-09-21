@@ -6,7 +6,7 @@
     map: /Maps/_RMC14/lv624.yml
     camouflage: Jungle
     announcement: "An automated distress signal has been received from the archaeological site of Lazarus Landing, on the border world of LV-624. A response team from the UNS Almayer will be dispatched shortly to investigate."
-    minPlayers: 15 # CCM14-mappool
+    minPlayers: 10 # CCM14-mappool
     nightmareScenarios:
     - scenarioName: fallen_ship
       scenarioProbability: 0.1
@@ -86,7 +86,7 @@
     map: /Maps/_RMC14/trijent.yml
     camouflage: Desert
     announcement: "We've lost contact with Weston-Yamada's extra-solar colony, \"Trijent Dam\", on the planet \"Raijin.\" The UNS Almayer has been dispatched to assist."
-    minPlayers: 50 # CCM14-mappool
+    minPlayers: 45 # CCM14-mappool
     survivorJobs:
     - CMSurvivor: -1
     - CMSurvivorCorporate: 2
