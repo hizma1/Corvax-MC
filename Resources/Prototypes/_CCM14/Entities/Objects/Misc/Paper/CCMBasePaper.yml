@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _RMC14/Objects/Misc/paper.rsi
   - type: NukeCodePaper
-    allNukesAvailable: false
+    allNukesAvailable: true
   - type: Corrodible
     isCorrodible: false
   - type: InteractedBlacklist

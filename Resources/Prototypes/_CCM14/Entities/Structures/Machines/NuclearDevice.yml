@@ -1,14 +1,13 @@
 - type: entity
   parent: [BaseStructure, StructureWheeled]
-  id: CCMBaseNuclearBomb
-  abstract: true
-  name: nuclear fission explosive
-  description: You probably shouldn't stick around to see if this is armed.
+  id: CCMNuclearDevice
+  name: Nuclear Device
+  description: It's the only way to be sure.
   components:
   - type: Transform
     anchored: true
   - type: Sprite
-    sprite: _CCM14/Objects/Devices/CCMnuke.rsi
+    sprite: _CCM14/Objects/Devices/RMCnuclearbomb.rsi
     noRot: true
     layers:
     - state: nuclearbomb_base
@@ -17,26 +16,9 @@
       map: ["enum.NukeVisualLayers.Unlit"]
       shader: unshaded
       visible: false
-    - state: nuclearbomb_gay
-      map: ["pride"]
-      visible: false
-    - state: nukefestive
-      map: ["christmas"]
-      visible: false
   - type: Appearance
-  - type: HolidayVisuals
-    holidays:
-      festive:
-      - FestiveSeason
-      pride:
-      - PrideMonth
   - type: GenericVisualizer
     visuals:
-      enum.HolidayVisuals.Holiday:
-        christmas:
-          festive: { visible: true }
-        pride:
-          pride: { visible: true }
       enum.NukeVisuals.Deployed:
         enum.NukeVisualLayers.Base:
           False: { state: nuclearbomb_base }
@@ -51,35 +33,34 @@
           YoureFucked: { state: nuclearbomb_exploding }
   - type: Physics
     bodyType: Static
+  - type: ClothingSpeedModifier
+    walkModifier: 3.5
+    sprintModifier: 3.5
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.45
-        density: 255 # Has "bluespace technology" to make it lighter, whatever that means. Don't mind the fact that this is lighter then a high capacity fuel tank.
+          radius: 0.50
+        density: 255
         mask:
         - MachineMask
         layer:
         - HalfWallLayer
   - type: PointLight
     enabled: false
-    radius: 4
-    energy: 2.0
+    radius: 2
+    energy: 1.0
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
-    speed: 120
-  - type: NavMapBeacon
-    color: "#ff0000"
-    text: nuclear fission explosive
-    enabled: false
+    speed: 30
   - type: NukeLabel
     blacklist:
   - type: Nuke
-    explosionType: Default
-    maxIntensity: 200 # CCM update to let XenoQueen die of nuke boom
-    intensitySlope: 5
+    explosionType: RMCOBXenoTunnel #CCMOBXenoTunnel
+    maxIntensity: 400 # CCM update to let XenoQueen/Defender/SteelDefender die of nuke boom
+    intensitySlope: 1
     totalIntensity: 5000000
     diskSlot:
       name: nuke-slot-component-slot-name-disk
@@ -90,8 +71,8 @@
       whitelist:
         components:
         - NukeDisk
-    alertLevelOnActivate: delta
-    alertLevelOnDeactivate: green
+    alertLevelOnActivate: Green
+    alertLevelOnDeactivate: Green
   - type: InteractionOutline
   - type: ActivatableUI
     key: enum.NukeUiKey.Key
@@ -99,8 +80,6 @@
     interfaces:
       enum.NukeUiKey.Key:
         type: NukeBoundUserInterface
-  - type: StaticPrice
-    price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
   - type: CargoSellBlacklist
   - type: ArrivalsBlacklist
   - type: ItemSlots
@@ -109,6 +88,10 @@
       Nuke: !type:ContainerSlot
   - type: StealTarget
     stealGroup: NuclearBomb
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: nuclear fission explosive
+    enabled: false
   - type: WarpPoint
     follow: true
     location: nuclear bomb
@@ -118,3 +101,20 @@
     blacklist:
       components:
       - Xeno
+  - type: TacticalMapIcon
+    icon:
+      sprite: _CCM14/Interface/map_blips.rsi
+      state: nuke
+  - type: TacticalMapTracked
+  - type: XenoMapTracked
+  - type: MarineMapTracked
+  - type: PowerLoaderGrabbable
+    virtualRight: RMCVirtualWarheadRightAegis
+    virtualLeft: RMCVirtualWarheadLeftAegis
+  - type: RMCExplosiveDelete
+    whitelist:
+      components:
+      - XenoTunnel
+  - type: SpawnOnTerminate
+    spawn: RMCOrbitalCannonExplosionAegis
+    projectileAdjust: false
