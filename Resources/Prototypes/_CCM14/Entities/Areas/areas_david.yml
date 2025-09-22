@@ -423,6 +423,16 @@
   - type: Area
     minimapColor: "#b8730cec"
 
+- type: entity
+  parent: CCMAreaDavidSquads
+  id: CCMAreaDavidGunshipBoardingPlatform
+  name: Gunship boarding platform
+  components:
+  - type: Sprite
+    state: req
+  - type: Area
+    minimapColor: "#b8730cec"
+
 #Помпы
 - type: entity
   parent: CCMAreaDavid
@@ -523,3 +533,53 @@
     hijackEvacuationWeight: 0.1
     hijackEvacuationType: Add
   - type: IntelRescueSurvivorArea
+
+#ladder
+
+- type: entity
+  parent: CCMAreaDavid
+  id: CCMAreaDavidGroundfloorladder
+  name: Ground floor - Ladder
+  components:
+  - type: Sprite
+    state: lifeboat_pump
+  - type: Area
+    minimapColor: '#C19504E7'
+    CAS: false
+    fulton: false
+    mortarPlacement: false
+    mortarFire: false
+    lasing: false
+    medevac: false
+    OB: false
+    supplyDrop: false
+    resinAllowed: false
+    avoidBioscan: False
+    noTunnel: True
+    unweedable: False
+    buildSpecial: false
+    paradropping: false
+
+- type: entity
+  parent: CCMAreaDavid
+  id: CCMAreaDavidSecondfloorladder
+  name: Second floor - Ladder
+  components:
+  - type: Sprite
+    state: lifeboat_pump
+  - type: Area
+    minimapColor: '#C19504E7'
+    CAS: false
+    fulton: false
+    mortarPlacement: false
+    mortarFire: false
+    lasing: false
+    medevac: false
+    OB: false
+    supplyDrop: false
+    resinAllowed: false
+    avoidBioscan: False
+    noTunnel: True
+    unweedable: False
+    buildSpecial: false
+    paradropping: false
