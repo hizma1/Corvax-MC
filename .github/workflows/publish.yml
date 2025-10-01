@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, Linux, username:runner-0, os:ubuntu-24.04]
+    runs-on: ubuntu-latest
 
     steps:
     - name: Fail if we are attempting to run on the master branch
@@ -25,19 +25,10 @@ jobs:
       with:
         submodules: 'recursive'
 
-    # Due to using self-hosted runner we need to setup .NET locally in runner temp directory.
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4.1.0
       with:
         dotnet-version: 9.0.x
-      env:
-        DOTNET_INSTALL_DIR: ${{ runner.temp }}/.dotnet
-
-    # After installation(?) We need to setup PATH for that .NET installation
-    - name: Set DOTNET_ROOT and PATH
-      run: |
-        echo "DOTNET_ROOT=${{ runner.temp }}/.dotnet" >> $GITHUB_ENV
-        echo "${{ runner.temp }}/.dotnet" >> $GITHUB_PATH
 
     - name: Check .NET installation
       run: dotnet --info
