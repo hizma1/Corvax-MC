@@ -8,7 +8,7 @@
   - type: Transform
     anchored: true
   - type: Sprite
-    sprite: _CCM14/Objects/Devices/ccmnuclearbomb.rsi
+    sprite: _CCM14/Objects/Nuke/ccmnuclearbomb.rsi
     noRot: true
     layers:
     - state: nuclearbomb_base
