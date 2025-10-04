@@ -1,0 +1,10 @@
+- type: entity
+  parent: MarkerBase
+  id: MCMarkerERTCrash
+  name: ERT marker crash
+  components:
+  - type: MCERTCrashMarker
+  - type: Sprite
+    layers:
+    - sprite: Markers/cross.rsi
+      state: pink

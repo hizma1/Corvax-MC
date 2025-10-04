@@ -1,0 +1,21 @@
+- type: entity
+  parent: RMCCommunicationsConsoleBase
+  id: MCCommunicationsConsole
+  name: communications console
+  description: This can be used for various important functions.
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: _RMC14/Structures/Machines/computer.rsi
+    state: security
+    layers: [ ]
+  - type: ActivatableUI
+    key: enum.MCCommunicationsConsoleUi.Key
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [ [ "MCAccessBridge" ] ]
+  - type: UserInterface
+    interfaces:
+      enum.MCCommunicationsConsoleUi.Key:
+        type: MCCommunicationsConsoleBui
+  - type: MCCommunicationsConsole
