@@ -1,21 +1,21 @@
 - type: entity
   parent: RMCCommunicationsConsoleBase
-  id: MCCommunicationsConsole
-  name: communications console
+  id: CCMCommunicationsConsole
+  name: emergency communication console
   description: This can be used for various important functions.
   components:
   - type: Sprite
     drawdepth: SmallObjects
     sprite: _RMC14/Structures/Machines/computer.rsi
-    state: security
+    state: operating
     layers: [ ]
   - type: ActivatableUI
-    key: enum.MCCommunicationsConsoleUi.Key
+    key: enum.CCMCommunicationsConsoleUi.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [ [ "MCAccessBridge" ] ]
+    access: [ [ "RMCAccessCommand" ] ]
   - type: UserInterface
     interfaces:
-      enum.MCCommunicationsConsoleUi.Key:
-        type: MCCommunicationsConsoleBui
-  - type: MCCommunicationsConsole
+      enum.CCMCommunicationsConsoleUi.Key:
+        type: CCMCommunicationsConsoleBui
+  - type: CCMCommunicationsConsole

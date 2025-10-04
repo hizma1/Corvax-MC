@@ -1,9 +1,9 @@
 - type: entity
   parent: MarkerBase
-  id: MCMarkerERTCrash
+  id: CCMMarkerERTCrash
   name: ERT marker crash
   components:
-  - type: MCERTCrashMarker
+  - type: CCMERTCrashMarker
   - type: Sprite
     layers:
     - sprite: Markers/cross.rsi
