@@ -59,7 +59,7 @@ public sealed class MentorManager : IPostInjectInit
                 flags |= AdminFlagsHelper.NamesToFlags(dbData.Flags.Select(p => p.Flag));
             }
 
-            isMentor = flags.HasFlag(AdminFlags.MentorHelp);
+            isMentor = flags.HasFlag(AdminFlags.Host);
         }
 
         _mentors[player.UserId] = isMentor;

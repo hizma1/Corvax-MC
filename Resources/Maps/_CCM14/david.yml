@@ -21003,12 +21003,12 @@ entities:
       parent: 1
 - proto: CMDropshipDestination
   entities:
-  - uid: 249
-    components:
-    - type: Transform
-      name: Ангар Штурмовика(не садить Dropship)
-      pos: 45.5,81.5
-      parent: 1
+#  - uid: 249
+#    components:
+#    - type: Transform
+#      name: Ангар Штурмовика(не садить Dropship)
+#      pos: 45.5,81.5
+#      parent: 1
   - uid: 1396
     components:
     - type: MetaData
