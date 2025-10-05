@@ -25,6 +25,6 @@ public sealed partial class CCMCommunicationsConsoleComponent : Component
     };
 
     [DataField, AutoNetworkedField]
-    public TimeSpan FTLFlyTime = TimeSpan.FromSeconds(60);
+    public TimeSpan FTLFlyTime = TimeSpan.FromSeconds(200);
 }
 // thanks to _gadmin1 (discord) for the provided code

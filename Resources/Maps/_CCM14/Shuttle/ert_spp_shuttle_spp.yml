@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 264.0.2
+  engineVersion: 264.0.2-fix-physics
   forkId: ""
   forkVersion: ""
-  time: 10/04/2025 21:11:43
+  time: 10/05/2025 04:56:21
   entityCount: 81
 maps:
 - 1
@@ -181,6 +181,7 @@ entities:
         0,2: RMCAreaShuttleERT
         -1,0: RMCAreaShuttleERT
     - type: ImplicitRoof
+    - type: CCMERTShuttle
 - proto: CMAdvFirstAidKitFilled
   entities:
   - uid: 3
