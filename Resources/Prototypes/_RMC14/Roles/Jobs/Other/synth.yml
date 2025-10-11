@@ -10,7 +10,7 @@
   dummyStartingGear: RMCGearSyntheticEquipped
   icon: "RMCJobIconSynth"
   joinNotifyCrew: true
-  whitelisted: true
+  whitelisted: false #ccm-edit
   supervisors: cm-job-supervisors-co
   accessGroups:
   - ShipMasterAccess
@@ -101,7 +101,7 @@
       - type: IVDripTarget
       - type: RMCSuicide
         damage: { }
-  hidden: true
+  hidden: false #ccm-edit
 
 - type: startingGear
   id: RMCGearSynthetic
