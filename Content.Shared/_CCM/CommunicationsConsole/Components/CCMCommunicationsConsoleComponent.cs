@@ -17,10 +17,11 @@ public sealed partial class CCMCommunicationsConsoleComponent : Component
     public List<ResPath> MapPaths = new()
     {
         new ResPath("/Maps/_CCM14/Shuttle/ert_spp_shuttle_spp.yml"),
-        new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_weya.yml"),
-        new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_weya.yml"),
+        new ResPath("/Maps/_CCM14/Shuttle/ert_spp_shuttle_spp.yml"),
+        new ResPath("/Maps/_CCM14/Shuttle/ert_spp_shuttle_spp.yml"),
         new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_freelancer.yml"),
-        new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_freelancer.yml")
+        new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_weya.yml"),
+        new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_weya.yml")
         //new ResPath("/Maps/_CCM14/Shuttle/ert_pmc_shuttle_enemies.yml")
     };
 

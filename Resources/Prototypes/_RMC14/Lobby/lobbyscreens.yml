@@ -26,14 +26,36 @@
   id: Battered
   background: /Textures/_RMC14/Lobby/Battered.png
 
+#CCM-14 Lobby Screens
+#- type: lobbyBackground
+#  id: FriendlySkies
+#  background: /Textures/_RMC14/Lobby/Fly_the_Friendly_Skies.png
+
+#- type: lobbyBackground
+#  id: LoneMedevac
+#  background: /Textures/_RMC14/Lobby/Lone_Medevac.png
+
+#- type: lobbyBackground
+#  id: MoveOut
+#  background: /Textures/_RMC14/Lobby/Move_Out.png
+
 - type: lobbyBackground
   id: Cornered
   background: /Textures/_RMC14/Lobby/Cornered.png
 
-- type: lobbyBackground
-  id: LetniCCM
-  background: /Textures/_RMC14/Lobby/Letni_CCM.png
+#CCM-14 Lobby Screens
+#- type: lobbyBackground
+#  id: EyesUp
+#  background: /Textures/_RMC14/Lobby/Eyes_Up.png
 
-- type: lobbyBackground
-  id: CCMNew
-  background: /Textures/_RMC14/Lobby/CCM_New.png
+#- type: lobbyBackground
+#  id: FocusFire
+#  background: /Textures/_RMC14/Lobby/Focus_Fire.png
+
+#- type: lobbyBackground
+#  id: Evac
+#  background: /Textures/_RMC14/Lobby/Evac.png
+
+#- type: lobbyBackground
+#  id: Intelligence
+#  background: /Textures/_RMC14/Lobby/Intelligence.png
