@@ -6,3 +6,4 @@
 
 - type: playTimeTracker
   id: CCMJobXenoRouny
+  isXeno: true
