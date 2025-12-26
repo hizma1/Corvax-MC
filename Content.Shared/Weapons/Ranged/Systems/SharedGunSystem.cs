@@ -7,6 +7,8 @@ using Content.Shared._RMC14.Random;
 using Content.Shared._RMC14.Weapons.Ranged;
 using Content.Shared._RMC14.Weapons.Ranged.Flamer;
 using Content.Shared._RMC14.Weapons.Ranged.Prediction;
+using Content.Shared._CCM.Vehicle;
+using Content.Shared._CCM.Attachables;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -65,7 +67,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
-    [Dependency] private   readonly SharedHandsSystem _hands = default!;
+    [Dependency] protected   readonly SharedHandsSystem Hands = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
@@ -94,6 +96,9 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private readonly AttachableHolderSystem _attachableHolder = default!;
     [Dependency] private readonly SharedRMCFlamerSystem _flamer = default!;
 
+    // Corvax
+    [Dependency] private readonly VehicleAttachableHolderSystem _vehicleHolder = default!;
+
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
@@ -120,6 +125,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeClothing();
         InitializeContainer();
         InitializeSolution();
+
+        InitializeVehicleGun(); // Corvax-Vehicle-Content
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -203,7 +210,19 @@ public abstract partial class SharedGunSystem : EntitySystem
         gunEntity = default;
         gunComp = null;
 
-        if (_hands.GetActiveItem(entity) is { } held &&
+        // Corvax-Vehicle-Content-Start
+        if (TryComp<VehiclePilotComponent>(entity, out var pilot) &&
+            HasComp<VehicleComponent>(pilot.Vehicle) &&
+            pilot.Gun is { } vehGun &&
+            TryComp<GunComponent>(vehGun, out var vehGunComp))
+        {
+            gunEntity = vehGun;
+            gunComp = vehGunComp;
+            return true;
+        }
+        // Corvax-Vehicle-Gun-Content-End
+
+        if (Hands.GetActiveItem(entity) is { } held &&
             TryComp(held, out GunComponent? gun))
         {
             gunEntity = held;
@@ -362,6 +381,24 @@ public abstract partial class SharedGunSystem : EntitySystem
             return null;
         }
 
+        // Corvax-Vehicle-Content-Start
+        var userXform = Transform(user);
+        fromCoordinates = userXform.Coordinates;
+
+        if (TryComp<VehicleAttachableComponent>(gunUid, out var vehicleAttachable))
+        {
+            var rotation = userXform.WorldRotation;
+            if (_vehicleHolder.TryGetHolder(gunUid, out var holder) && TryComp<TransformComponent>(holder, out var holderXform))
+            {
+                fromCoordinates = holderXform.Coordinates;
+                rotation = holderXform.WorldRotation;
+            }
+
+            var rotatedOffset = rotation.RotateVec(vehicleAttachable.Offset);
+            fromCoordinates = fromCoordinates.Offset(rotatedOffset);
+        }
+        // Corvax-Vehicle-Content-End
+
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
 
@@ -392,12 +429,14 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                PopupSystem.PopupCursor(ev.Reason ?? Loc.GetString("gun-magazine-fired-empty"));
+                // Corvax | Prediction kicked my ass
+                if (!HasComp<VehicleGunComponent>(gunUid))
+                {
+                    PopupSystem.PopupCursor(ev.Reason ?? Loc.GetString("gun-magazine-fired-empty"));
+                    gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
+                    Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                }
 
-                // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
-                // May cause prediction issues? Needs more tweaking
-                gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                 return null;
             }
 
