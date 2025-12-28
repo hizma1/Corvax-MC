@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.2
   forkId: ""
   forkVersion: ""
-  time: 12/14/2025 13:30:29
-  entityCount: 11104
+  time: 12/28/2025 04:54:14
+  entityCount: 11106
 maps:
 - 1
 grids:
@@ -15993,6 +15993,20 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
+- proto: CCMSpawnerAlamo
+  entities:
+  - uid: 2847
+    components:
+    - type: Transform
+      pos: 70.5,40.5
+      parent: 1
+- proto: CCMSpawnerNormandy
+  entities:
+  - uid: 2846
+    components:
+    - type: Transform
+      pos: 70.5,86.5
+      parent: 1
 - proto: CCMTargetDroneRight
   entities:
   - uid: 1730
@@ -27629,7 +27643,7 @@ entities:
     - type: CMDoubleDoor
       lastOpeningAt: 1721.1982788
     - type: Door
-      secondsUntilStateChange: -3822.6152
+      secondsUntilStateChange: -3891.5217
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -27643,7 +27657,7 @@ entities:
     - type: CMDoubleDoor
       lastOpeningAt: 1721.1982788
     - type: Door
-      secondsUntilStateChange: -3822.6152
+      secondsUntilStateChange: -3891.5217
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
