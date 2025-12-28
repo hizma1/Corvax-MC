@@ -174,7 +174,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             // Only allow specific species
-            var allowedSpecies = new[] { "Human", "Avali", "Arachnid", "Nian", "Felinid", "Dwarf" };
+            var allowedSpecies = new[] { "Human", "Avali", "Arachnid", "Moth", "Felinid", "Dwarf" };
             Species = allowedSpecies.Contains(species) ? species : "Human";
             Age = age;
             Sex = sex;
