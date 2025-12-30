@@ -2,7 +2,7 @@
   id: Herfjoetur
   mapName: Herfjoetur
   mapPath: /Maps/_CCM14/herfjoetur.yml
-  minPlayers: 0 # После плейтеста поменять на 20+
+  minPlayers: 30 # После плейтеста поменять на 20+
   maxRandomOffset: 0
   randomRotation: false
   stations:
