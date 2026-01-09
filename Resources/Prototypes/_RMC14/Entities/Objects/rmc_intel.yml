@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: RMCIntelBase
@@ -168,8 +168,8 @@
     tree:
       options:
       -
-        - name: Разблокировать 1 тир
-          description: повысить уровень поддержки до 1.
+        - name: Unlock Tier 1
+          description: Transitions the tree to another tier.
           cost: 0
           events:
           - !type:TechUnlockTierEvent
@@ -178,8 +178,8 @@
             sprite: _RMC14/Interface/tech_tree.rsi
             state: upgrade
       -
-        - name: Пополнение Бюджета Отдела поставок
-          description: Пополнить баланс в Отделе поставок.
+        - name: Requisition Budget Increase
+          description: Distributes resources to requisitions for spending.
           cost: 7
           increase: 1
           repurchasable: true
@@ -187,13 +187,13 @@
           - !type:TechRequisitionsBudgetEvent
             amount: 5000
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Баланс в Отделе поставок был пополнен.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional supply budget has been authorised for this operation.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: budget_req
-        - name: детли в изготовитель
-          description: пополнить детали в изготовителе десантного шатла.
+        - name: Dropship Budget Increase
+          description: Distributes resources to the dropship fabricator.
           cost: 6
           increase: 1
           repurchasable: true
@@ -201,29 +201,29 @@
           - !type:TechDropshipBudgetEvent
             amount: 2000
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: В изготовитель деталей десантного шатла были добавлены поинты.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional dropship part fabricator points have been authorised for this operation.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: budget_ds
-        - name: Разблокировать 2 тир
-          description: повысить уровень поддержки до 2.
+        - name: Unlock Tier 2
+          description: Transitions the tree to another tier.
           cost: 5
           events:
           - !type:TechUnlockTierEvent
             tier: 2
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: "УРОВЕНЬ ОЦЕНКИ УГРОЗЫ ПОВЫШЕН ДО УРОВНЯ 2.
+            author: ALMAYER DEFCON LEVEL INCREASED
+            message: "THREAT ASSESSMENT LEVEL INCREASED TO LEVEL 2.
 
-                2 СТУПЕНЬ поддержки была разблокирована."
+              LEVEL 2 assets have been authorised to handle the situation."
             sound: /Audio/_RMC14/AI/commandreport.ogg
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: upgrade
       -
-        - name: Дополнительные снаряды ОБ - Фугасная
-          description: Высоковзрывчатые бомбардировочные боеприпасы, которые будут загружены в орбитальную пушку.
+        - name: Additional OB projectiles - HE
+          description: Highly explosive bombardment ammo, to be loaded into the orbital cannon.
           cost: 5
           increase: 2
           repurchasable: true
@@ -231,13 +231,13 @@
           - !type:TechLogisticsDeliveryEvent
             object: RMCOrbitalCannonWarheadExplosive
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Дополнительные боеголовки для орбитальной бомбардировки (Фугасная) были доставлены в Отдел поставок.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional Orbital Bombardment warheads (HE) have been delivered to Requisitions' ASRS.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: ob_he
-        - name: Дополнительные снаряды ОБ - Зажигательные
-          description: Легковоспламеняющиеся бомбардировочные боеприпасы, которые будут загружены в орбитальную пушку.
+        - name: Additional OB projectiles - Incendiary
+          description: Highly flammable bombardment ammo, to be loaded into the orbital cannon.
           cost: 5
           increase: 2
           repurchasable: true
@@ -245,13 +245,13 @@
           - !type:TechLogisticsDeliveryEvent
             object: RMCOrbitalCannonWarheadIncendiary
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Дополнительные боеголовки для орбитальной бомбардировки (зажигательные) были доставлены в Отдел поставок.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional Orbital Bombardment warheads (Incendiary) have been delivered to Requisitions' ASRS.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: ob_incend
-        - name: Дополнительные снаряды ОБ - кластерая
-          description: Осколочно-фугасные боеприпасы для бомбардировки должны быть загружены в орбитальную пушку.
+        - name: Additional OB projectiles - Cluster
+          description: Highly explosive bombardment ammo that fragments, to be loaded into the orbital cannon.
           cost: 5
           increase: 2
           repurchasable: true
@@ -259,77 +259,77 @@
           - !type:TechLogisticsDeliveryEvent
             object: RMCOrbitalCannonWarheadCluster
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Дополнительные боеголовки для орбитальной бомбардировки (кластерные) были доставлены в Отдел поставок.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional Orbital Bombardment warheads (Cluster) have been delivered to Requisitions' ASRS.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: ob_cluster
-        - name: Разблокировать 3 тир
-          description: повысить уровень поддержки до 3.
+        - name: Unlock Tier 3
+          description: Transitions the tree to another tier.
           cost: 5
           events:
           - !type:TechUnlockTierEvent
             tier: 3
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: "УРОВЕНЬ ОЦЕНКИ УГРОЗЫ ПОВЫШЕН ДО УРОВНЯ 3.
+            author: ALMAYER DEFCON LEVEL INCREASED
+            message: "THREAT ASSESSMENT LEVEL INCREASED TO LEVEL 3.
 
-              3 СТУПЕНЬ поддержки была разблокирована."
+              LEVEL 3 assets have been authorised to handle the situation."
             sound: /Audio/_RMC14/AI/commandreport.ogg
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: upgrade
       -
-        - name: Пробудить отряд фокстрод
-          description: Пробуждает дополнительные войска для борьбы с любыми угрозами.
+        - name: Wake Up Additional Troops
+          description: Wakes up additional troops to fight against any threats.
           cost: 6
           increase: 6
           repurchasable: true
           events:
           - !type:TechCryoMarinesEvent
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Пробуждается дополнительный отряд для борьбы с угрозой.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: Additional troops are being taken out of cryo.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: cryotroops
-        - name: Пробудить специалиста от криосна
-          description: Пробуждается дополнительный специалист для борьбы с любыми угрозами.
+        - name: Wake Up Additional Specialist
+          description: Wakes up an additional specialist to fight against any threats.
           cost: 8
           events:
           - !type:TechCryoSpecEvent
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Специалист был пробуждён от криосна.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: An additional specialist is being taken out of cryo.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: overshield
-        - name: Разблокировать 4 тир
-          description: повысить уровень поддержки до 4.
+        - name: Unlock Tier 4
+          description: Transitions the tree to another tier.
           cost: 5
           events:
           - !type:TechUnlockTierEvent
             tier: 4
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: "УРОВЕНЬ ОЦЕНКИ УГРОЗЫ ПОВЫШЕН ДО УРОВНЯ 4.
+            author: ALMAYER DEFCON LEVEL INCREASED
+            message: "THREAT ASSESSMENT LEVEL INCREASED TO LEVEL 4.
 
-              4 СТУПЕНЬ поддержки была разблокирована."
+              LEVEL 4 assets have been authorised to handle the situation."
             sound: /Audio/_RMC14/AI/commandreport.ogg
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: upgrade
       -
-        - name: Ядерная боеголовка
-          description: 	Приобретите ядерную боеголовку. Её можно приобрести только через 80 минут после начала операции. Это единственный способ убедиться.
+        - name: Nuclear Device
+          description: 	Purchase a nuclear device. Only purchasable 116 minutes into the operation. It's the only way to be sure.
           cost: 5
-          timeLock: 80m
+          timeLock: 115m
           events:
           - !type:TechLogisticsDeliveryEvent
             object: RMCNuke
           - !type:TechAnnounceEvent
-            author: РАЗРЕШЕНИЕ НА ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ АКТИВОВ ДАВИДА
-            message: Развертывание ядерной боеголовки санкционировано, и она будет доставлена в Отдел поставок через ASRS.
+            author: ALMAYER SPECIAL ASSETS AUTHORIZED
+            message: The deployment of Nuclear Ordnance have been authorized and will be delivered to the Requisitions Department, via ASRS.
           icon:
             sprite: _RMC14/Interface/tech_tree.rsi
             state: nuke
