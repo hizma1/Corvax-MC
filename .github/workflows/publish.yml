@@ -60,14 +60,11 @@ jobs:
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
+    # --- Исправленный шаг определения форка ---
     - name: Determine Fork
-      run: |
-        if [[ "${GITHUB_REF_NAME}" == "master" ]]; then
-          echo "FORK_ID=colonialmarines" >> $GITHUB_ENV
-        else
-          echo "FORK_ID=colonialmarines-pathogen" >> $GITHUB_ENV
-        fi
+      run: echo "FORK_ID=${{ github.ref_name == 'master' && 'colonialmarines' || 'colonialmarines-pathogen' }}" >> $GITHUB_ENV
 
+    # --- Публикация с явной передачей форка в скрипт ---
     - name: Publish version
       run: python3 Tools/publish_multi_request.py --fork-id ${{ env.FORK_ID }}
       env:
