@@ -17,8 +17,8 @@ jobs:
     environment: ${{ github.ref_name == 'master' && 'production' || 'mapper' }}
 
     steps:
-    - name: Fail if we are attempting to run on the master branch
-      if: ${{GITHUB.REF_NAME == 'master' && github.repository == 'space-wizards/space-station-14'}}
+    - name: Fail if we are attempting to run on the master branch of upstream
+      if: ${{ github.ref_name == 'master' && github.repository == 'space-wizards/space-station-14' }}
       run: exit 1
 
     - name: Install dependencies
@@ -60,22 +60,19 @@ jobs:
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
-    # БЛЯ ПРОСТО БЛЯ
     - name: Determine Fork
-      id: fork
       run: |
-        if [ "${GITHUB_REF_NAME}" = "master" ]; then
+        if [[ "${GITHUB_REF_NAME}" == "master" ]]; then
           echo "FORK_ID=colonialmarines" >> $GITHUB_ENV
         else
           echo "FORK_ID=colonialmarines-pathogen" >> $GITHUB_ENV
         fi
 
     - name: Publish version
-      run: Tools/publish_multi_request.py
+      run: python3 Tools/publish_multi_request.py --fork-id ${{ env.FORK_ID }}
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ github.repository }}
-        FORK_ID: ${{ env.FORK_ID }}
 
     - name: Publish changelog (Discord)
       continue-on-error: true
