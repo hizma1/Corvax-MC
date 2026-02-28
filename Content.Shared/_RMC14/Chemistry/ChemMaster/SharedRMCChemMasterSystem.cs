@@ -73,7 +73,6 @@ public abstract class SharedRMCChemMasterSystem : EntitySystem
                 subs.Event<RMCChemMasterSetPillAmountMsg>(OnSetPillAmountMsg);
                 subs.Event<RMCChemMasterSetPillTypeMsg>(OnSetPillTypeMsg);
                 subs.Event<RMCChemMasterCreatePillsMsg>(OnCreatePillsMsg);
-                subs.Event<RMCChemMasterPillBottleSelectAllMsg>(OnPillBottleSelectAllMsg);
                 subs.Event<RMCChemMasterAutoSelectToggleMsg>(OnAutoSelectToggleMsg);
                 subs.Event<RMCChemMasterApplyPresetMsg>(OnApplyPresetMsg);
             });
