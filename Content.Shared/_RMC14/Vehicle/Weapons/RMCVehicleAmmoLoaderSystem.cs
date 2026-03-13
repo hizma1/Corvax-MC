@@ -426,8 +426,6 @@ public sealed class RMCVehicleAmmoLoaderSystem : EntitySystem
                 continue;
 
             var item = itemSlot.Item!.Value;
-            AppendTurretAmmoEntries(entries, item, slot.Id, loaderComp, box);
-
             if (!TryComp(item, out BallisticAmmoProviderComponent? ammoProvider))
                 continue;
 
@@ -456,6 +454,8 @@ public sealed class RMCVehicleAmmoLoaderSystem : EntitySystem
                 hardpointAmmo.StoredMagazines,
                 hardpointAmmo.MaxStoredMagazines,
                 canLoad));
+
+            AppendTurretAmmoEntries(entries, item, slot.Id, loaderComp, box);
         }
 
         _ui.SetUiState(loader, RMCVehicleAmmoLoaderUiKey.Key, new RMCVehicleAmmoLoaderUiState(entries, box.Amount, box.Max));

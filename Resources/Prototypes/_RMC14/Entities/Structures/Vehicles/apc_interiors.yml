@@ -551,9 +551,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_front_top_1
 
@@ -565,9 +562,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_front_top_2
 
@@ -603,6 +597,10 @@
   - type: WallMount
     arc: 360
   - type: VehiclePortGunController
+  - type: UserInterface
+    interfaces:
+      enum.RMCVehiclePortGunUiKey.Key:
+        type: RMCVehiclePortGunBoundUserInterface
 
 - type: entity
   parent: RMCVehicleAPCM56FPWInterior
@@ -719,9 +717,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_front_top_1
   - type: Occluder
@@ -735,9 +730,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_front_top_2
 
@@ -756,9 +748,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_back_top_2
   - type: Occluder
@@ -772,11 +761,7 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Sprite
     state: wheel_back_top_1
   - type: Occluder
     enabled: false
-

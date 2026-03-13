@@ -7,6 +7,7 @@
     sprite: _RMC14/Structures/Vehicles/hardpoints/tank.rsi
   - type: Item
     size: Large
+  - type: RMCHardpointIntegrity
 
 - type: entity
   parent: RMCVehicleTankHardpointBase
@@ -18,9 +19,6 @@
     state: ltb_cannon
   - type: RMCHardpointItem
     hardpointType: Turret
-    damageMultiplier: 0.05
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 450
   - type: Tag
     tags:
     - RMCVehicleHardpointTurret
@@ -63,9 +61,6 @@
     state: treads
   - type: RMCHardpointItem
     hardpointType: Wheel
-    damageMultiplier: 0.15
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 300
   - type: Tag
     tags:
     - RMCVehicleHardpointWheel
@@ -82,14 +77,13 @@
     state: treads
   - type: RMCHardpointItem
     hardpointType: Wheel
-    damageMultiplier: 0.15
   - type: Tag
     tags:
     - RMCVehicleHardpointWheel
     - RMCVehicleHardpointTreads
   - type: RMCVehicleWheelItem
   - type: RMCHardpointIntegrity
-    maxIntegrity: 500
+    maxIntegrity: 150
   - type: RMCHardpointDamageModifier
     modifierSets:
     - RMCVehicleArmorCaustic
@@ -106,9 +100,6 @@
     state: tires
   - type: RMCHardpointItem
     hardpointType: Wheel
-    damageMultiplier: 0.15
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 100
   - type: Tag
     tags:
     - RMCVehicleHardpointWheel
@@ -125,9 +116,6 @@
     state: ballistic_armor
   - type: RMCHardpointItem
     hardpointType: Armor
-    damageMultiplier: 0.5
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorBallistic
@@ -144,9 +132,6 @@
     state: concussive_armor
   - type: RMCHardpointItem
     hardpointType: Armor
-    damageMultiplier: 0.5
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
   - type: RMCVehicleArmorHardpoint
     explosionCoefficient: 0.5
   - type: RMCHardpointVisual
@@ -162,9 +147,6 @@
     state: caustic_armor
   - type: RMCHardpointItem
     hardpointType: Armor
-    damageMultiplier: 0.5
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorCaustic
@@ -181,9 +163,6 @@
     state: paladin_armor
   - type: RMCHardpointItem
     hardpointType: Armor
-    damageMultiplier: 0.5
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorPaladin
@@ -201,9 +180,6 @@
     state: snowplow
   - type: RMCHardpointItem
     hardpointType: Armor
-    damageMultiplier: 0.5
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 150
   - type: RMCHardpointVisual
     vehicleState: snowplow_0
 
@@ -217,9 +193,6 @@
     state: ltb_cannon
   - type: RMCHardpointItem
     hardpointType: Cannon
-    damageMultiplier: 0.125
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointCannon
@@ -253,7 +226,7 @@
     capacity: 4
   - type: RMCVehicleHardpointAmmo
     magazineSize: 4
-    maxStoredMagazines: 3
+    maxStoredMagazines: 2
   - type: GunFireArc
     arc: 120
   - type: RefillableByBulletBox
@@ -282,9 +255,6 @@
     state: ltaaap_minigun
   - type: RMCHardpointItem
     hardpointType: Cannon
-    damageMultiplier: 0.125
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 350
   - type: Tag
     tags:
     - RMCVehicleHardpointCannon
@@ -333,7 +303,7 @@
     accuracyMultiplierUnwielded: 4
   - type: BallisticAmmoProvider
     cycleable: false
-    proto: RMCVehicleCartridgeLTAAAP
+    proto: CMCartridge10x20mmAP
     capacity: 500
   - type: RMCVehicleHardpointAmmo
     magazineSize: 500
@@ -365,9 +335,6 @@
     state: ace_autocannon
   - type: RMCHardpointItem
     hardpointType: Cannon
-    damageMultiplier: 0.125
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointCannon
@@ -421,9 +388,6 @@
     state: drgn_flamer
   - type: RMCHardpointItem
     hardpointType: Cannon
-    damageMultiplier: 0.125
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 400
   - type: Tag
     tags:
     - RMCVehicleHardpointCannon
@@ -456,9 +420,9 @@
   - type: BallisticAmmoProvider
     cycleable: false
     proto: RMCVehicleCartridgeDragonFlame
-    capacity: 60
+    capacity: 150
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 60
+    magazineSize: 150
     maxStoredMagazines: 1
   - type: GunFireArc
     arc: 120
@@ -484,9 +448,6 @@
     state: flamer
   - type: RMCHardpointItem
     hardpointType: Launcher
-    damageMultiplier: 0.0
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 300
   - type: Tag
     tags:
     - RMCVehicleHardpointLauncher
@@ -555,9 +516,6 @@
     state: glauncher
   - type: RMCHardpointItem
     hardpointType: Launcher
-    damageMultiplier: 0.0
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointLauncher
@@ -596,14 +554,14 @@
   - type: BallisticAmmoProvider
     cycleable: false
     proto: CMGrenadeHighExplosive
-    capacity: 10
+    capacity: 3
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 10
-    maxStoredMagazines: 3
+    magazineSize: 3
+    maxStoredMagazines: 10
   - type: GunFireArc
     arc: 120
   - type: RefillableByBulletBox
-    bulletType: RMCVehicleAmmoBoxSmokeLauncher
+    bulletType: RMCVehicleAmmoBoxGrenadeLauncher
   - type: GunMuzzleOffset
     offset: "0,0"
     useDirectionalOffsets: true
@@ -624,9 +582,6 @@
     state: tow_launcher
   - type: RMCHardpointItem
     hardpointType: Launcher
-    damageMultiplier: 0.0
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointLauncher
@@ -664,7 +619,7 @@
     capacity: 5
   - type: RMCVehicleHardpointAmmo
     magazineSize: 5
-    maxStoredMagazines: 1
+    maxStoredMagazines: 3
   - type: GunFireArc
     arc: 120
   - type: RefillableByBulletBox
@@ -689,9 +644,6 @@
     state: m56_cupola
   - type: RMCHardpointItem
     hardpointType: Launcher
-    damageMultiplier: 0.0
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 350
   - type: Tag
     tags:
     - RMCVehicleHardpointLauncher
@@ -757,9 +709,6 @@
     state: m56_cupola
   - type: RMCHardpointItem
     hardpointType: Launcher
-    damageMultiplier: 0.0
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 350
   - type: Tag
     tags:
     - RMCVehicleHardpointLauncher
@@ -795,10 +744,10 @@
   - type: BallisticAmmoProvider
     cycleable: false
     proto: RMCVehicleCartridgeSentry10x50mm
-    capacity: 500
+    capacity: 100
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 500
-    maxStoredMagazines: 2
+    magazineSize: 100
+    maxStoredMagazines: 3
   - type: GunFireArc
     arc: 180
   - type: RefillableByBulletBox
@@ -823,9 +772,6 @@
     state: warray
   - type: RMCHardpointItem
     hardpointType: Support
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 250
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -845,9 +791,6 @@
     state: odrive_enhancer
   - type: RMCHardpointItem
     hardpointType: Support
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 250
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -866,9 +809,6 @@
     state: slauncher_0
   - type: RMCHardpointItem
     hardpointType: Support
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 100
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -923,9 +863,6 @@
     state: slauncher_1
   - type: RMCHardpointItem
     hardpointType: Support
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -949,7 +886,7 @@
   - type: ShootAtFixedPoint
   - type: BallisticAmmoProvider
     cycleable: false
-    capacity: 10
+    capacity: 8
     whitelist:
       tags:
       - Flare
@@ -957,12 +894,12 @@
       - RMCFlareCAS
     proto: CMFlare
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 10
-    maxStoredMagazines: 3
+    magazineSize: 8
+    maxStoredMagazines: 2
   - type: GunFireArc
     arc: 360
   - type: RefillableByBulletBox
-    bulletType: RMCVehicleAmmoBoxFlareLauncher
+    bulletType: RMCFlarePackAmmo
   - type: GunMuzzleOffset
     offset: "0,0"
     useDirectionalOffsets: true
@@ -983,9 +920,6 @@
     state: artillery
   - type: RMCHardpointItem
     hardpointType: Support
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 250
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment

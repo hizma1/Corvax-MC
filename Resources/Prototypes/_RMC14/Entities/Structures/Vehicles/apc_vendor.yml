@@ -9,8 +9,6 @@
     needsPower: false
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: _RMC14/Structures/Machines/VendingMachines/ColMarTech/guns.rsi
     drawdepth: Overdoors
@@ -126,4 +124,3 @@
         amount: 0
       - id: CMPackFlare
         amount: 1
-

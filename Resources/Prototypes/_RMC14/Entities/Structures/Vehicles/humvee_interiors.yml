@@ -121,18 +121,13 @@
     state: car_seat_destroyed
 
 - type: entity
-  parent: RMCVehicleHumveeWallMountedBase
+  parent: RMCVehicleHumveeInteriorBase
   id: RMCVehicleHumveeAmmoLoader
   name: humvee ammo loader
   description: A loader for humvee hardpoint ammunition.
   components:
   - type: Sprite
     state: weapons_loader
-  - type: Clickable
-  - type: InteractionOutline
-  - type: RemoveComponents
-    components:
-    - type: InteractionTransparency
   - type: RMCVehicleAmmoLoader
   - type: UserInterface
     interfaces:
@@ -206,8 +201,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Static
   - type: WallMount
     arc: 360
   - type: Sprite
@@ -333,4 +326,3 @@
         - LowImpassable
   - type: Sprite
     visible: false
-

@@ -72,8 +72,6 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
-      inherent: True
-      enabled: True
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -83,7 +81,7 @@ entities:
       mixture:
         volume: 2500
         immutable: True
-        temperature: 293.15
+        temperature: 290
         moles:
         - 0
         - 0

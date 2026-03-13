@@ -80,9 +80,6 @@ public sealed partial class GridVehicleMoverComponent : Component
     [DataField, AutoNetworkedField]
     public RMCSizes? XenoMoveMinimumSize;
 
-    [DataField, AutoNetworkedField]
-    public bool AllowXenoPush = true;
-
     [AutoNetworkedField]
     public float SmashSlowdownMultiplier = 1f;
 

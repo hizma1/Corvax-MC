@@ -17,8 +17,5 @@ public sealed partial class BulletBoxComponent : Component
     public EntProtoId BulletType;
 
     [DataField, AutoNetworkedField]
-    public string? UsedIn;
-
-    [DataField, AutoNetworkedField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1.5);
 }

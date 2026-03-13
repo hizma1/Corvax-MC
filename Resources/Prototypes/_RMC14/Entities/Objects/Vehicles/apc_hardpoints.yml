@@ -7,6 +7,7 @@
     sprite: _RMC14/Structures/Vehicles/hardpoints/apc.rsi
   - type: Item
     size: Large
+  - type: RMCHardpointIntegrity
 
 - type: entity
   parent: RMCAPCHardpointBase
@@ -18,9 +19,6 @@
     state: tires
   - type: RMCHardpointItem
     hardpointType: Wheel
-    damageMultiplier: 0.15
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointWheel
@@ -36,9 +34,6 @@
     state: front_cannon
   - type: RMCHardpointItem
     hardpointType: Cannon
-    damageMultiplier: 0.11
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 350
   - type: Tag
     tags:
     - RMCVehicleHardpointCannon
@@ -46,18 +41,18 @@
   - type: GunUseGunOrigin
   - type: GunIgnoreContainerOwnerCollision
   - type: Gun
-    fireRate: 3.3333333
+    fireRate: 2.5
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    soundGunshot: /Audio/_RMC14/Weapons/Guns/Gunshots/gun_ml66a_2.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
     cameraRecoilScalar: 0
   - type: BallisticAmmoProvider
     cycleable: false
-    proto: RMCVehicleCartridgeAPCFrontalCannon10x50mm
-    capacity: 500
+    proto: CMCartridgeSentry10x50mm
+    capacity: 200
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 500
+    magazineSize: 200
     maxStoredMagazines: 1
   - type: GunFireArc
     arc: 180
@@ -80,9 +75,6 @@
     state: dual_cannon
   - type: RMCHardpointItem
     hardpointType: Turret
-    damageMultiplier: 0.2
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointTurret
@@ -90,7 +82,7 @@
   - type: GunUseGunOrigin
   - type: GunIgnoreContainerOwnerCollision
   - type: Gun
-    fireRate: 2
+    fireRate: 2.5
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -98,7 +90,7 @@
     cameraRecoilScalar: 0
   - type: BallisticAmmoProvider
     cycleable: false
-    proto: RMCVehicleCartridgeBoyarsDualCannon10x50mm
+    proto: CMCartridgeSentry10x50mm
     capacity: 60
   - type: RMCVehicleHardpointAmmo
     magazineSize: 60
@@ -129,9 +121,6 @@
     state: comms_relay
   - type: RMCHardpointItem
     hardpointType: SupportAttachment
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 100
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -148,9 +137,6 @@
     state: flare_launcher
   - type: RMCHardpointItem
     hardpointType: SupportAttachment
-    damageMultiplier: 0.1
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 500
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -169,7 +155,7 @@
   - type: ShootAtFixedPoint
   - type: BallisticAmmoProvider
     cycleable: false
-    capacity: 10
+    capacity: 8
     whitelist:
       tags:
       - Flare
@@ -177,12 +163,12 @@
       - RMCFlareCAS
     proto: CMFlare
   - type: RMCVehicleHardpointAmmo
-    magazineSize: 10
-    maxStoredMagazines: 3
+    magazineSize: 8
+    maxStoredMagazines: 2
   - type: GunFireArc
     arc: 360
   - type: RefillableByBulletBox
-    bulletType: RMCVehicleAmmoBoxFlareLauncher
+    bulletType: RMCFlarePackAmmo
   - type: GunMuzzleOffset
     offset: "0,0"
     muzzleOffset: "0,0"
@@ -200,9 +186,6 @@
     state: freighter_storage
   - type: RMCHardpointItem
     hardpointType: SupportAttachment
-    damageMultiplier: 0.075
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 100
   - type: Tag
     tags:
     - RMCVehicleHardpointSupportAttachment
@@ -221,8 +204,6 @@
     state: m56_FPW
   - type: Item
     size: Huge
-  - type: RMCHardpointIntegrity
-    maxIntegrity: 100
   - type: VehiclePortGun
   - type: GunUseGunOrigin
   - type: GunIgnoreContainerOwnerCollision

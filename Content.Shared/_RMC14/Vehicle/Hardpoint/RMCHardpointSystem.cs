@@ -32,7 +32,6 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared._RMC14.Xenonids;
 
 namespace Content.Shared._RMC14.Vehicle;
 
@@ -764,7 +763,7 @@ public sealed class RMCHardpointSystem : EntitySystem
         if (!TryComp(ent.Owner, out ItemSlotsComponent? itemSlots))
             return;
 
-        var intactHardpoints = new List<(EntityUid Item, RMCHardpointIntegrityComponent Integrity, float Weight)>();
+        var intactHardpoints = new List<(EntityUid Item, RMCHardpointIntegrityComponent Integrity)>();
         var visited = new HashSet<EntityUid>();
         CollectIntactHardpoints(ent.Owner, ent.Comp, itemSlots, intactHardpoints, visited);
 
@@ -772,13 +771,10 @@ public sealed class RMCHardpointSystem : EntitySystem
 
         if (anyIntact)
         {
-            var hardpointFraction = ent.Comp.HardpointDamageMultiplier / intactHardpoints.Count;
-            foreach (var (item, integrity, weight) in intactHardpoints)
-            {
-                if (weight <= 0f)
-                    continue;
+            var hardpointDamage = ScaleDamage(args.Damage, ent.Comp.HardpointDamageMultiplier);
 
-                var hardpointDamage = ScaleDamage(args.Damage, hardpointFraction * weight);
+            foreach (var (item, integrity) in intactHardpoints)
+            {
                 ApplyDamageToHardpoint(ent.Owner, item, integrity, hardpointDamage);
             }
         }
@@ -793,7 +789,7 @@ public sealed class RMCHardpointSystem : EntitySystem
         EntityUid owner,
         RMCHardpointSlotsComponent slots,
         ItemSlotsComponent itemSlots,
-        List<(EntityUid Item, RMCHardpointIntegrityComponent Integrity, float Weight)> intactHardpoints,
+        List<(EntityUid Item, RMCHardpointIntegrityComponent Integrity)> intactHardpoints,
         HashSet<EntityUid> visited)
     {
         foreach (var slot in slots.Slots)
@@ -808,7 +804,7 @@ public sealed class RMCHardpointSystem : EntitySystem
                 continue;
 
             if (TryComp(item, out RMCHardpointIntegrityComponent? integrity) && integrity.Integrity > 0f)
-                intactHardpoints.Add((item, integrity, GetHardpointDamageWeight(item)));
+                intactHardpoints.Add((item, integrity));
 
             if (TryComp(item, out RMCHardpointSlotsComponent? childSlots) &&
                 TryComp(item, out ItemSlotsComponent? childItemSlots))
@@ -816,14 +812,6 @@ public sealed class RMCHardpointSystem : EntitySystem
                 CollectIntactHardpoints(item, childSlots, childItemSlots, intactHardpoints, visited);
             }
         }
-    }
-
-    private float GetHardpointDamageWeight(EntityUid hardpoint)
-    {
-        if (TryComp<RMCHardpointItemComponent>(hardpoint, out var hardpointItem))
-            return MathF.Max(hardpointItem.DamageMultiplier, 0f);
-
-        return 1f;
     }
 
     private DamageSpecifier ScaleDamage(DamageSpecifier source, float fraction)
@@ -852,35 +840,25 @@ public sealed class RMCHardpointSystem : EntitySystem
     private float GetHardpointDamageAmount(EntityUid hardpoint, DamageSpecifier damage)
     {
         var total = MathF.Max(damage.GetTotal().Float(), 0f);
-        var modifierSets = new List<DamageModifierSet>();
-        CollectHardpointDamageModifierSets(hardpoint, modifierSets);
+
+        if (!TryComp(hardpoint, out RMCHardpointDamageModifierComponent? hardpointModifiers) ||
+            hardpointModifiers.ModifierSets.Count == 0)
+        {
+            return total;
+        }
+
+        var modifierSets = new List<DamageModifierSet>(hardpointModifiers.ModifierSets.Count);
+        foreach (var modifierSetId in hardpointModifiers.ModifierSets)
+        {
+            if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(modifierSetId, out var modifierSet))
+                modifierSets.Add(modifierSet);
+        }
 
         if (modifierSets.Count == 0)
             return total;
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage, modifierSets);
         return MathF.Max(modifiedDamage.GetTotal().Float(), 0f);
-    }
-
-    private void CollectHardpointDamageModifierSets(EntityUid hardpoint, List<DamageModifierSet> modifierSets)
-    {
-        if (TryComp(hardpoint, out RMCHardpointDamageModifierComponent? hardpointModifiers))
-        {
-            foreach (var modifierSetId in hardpointModifiers.ModifierSets)
-            {
-                if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(modifierSetId, out var modifierSet))
-                    modifierSets.Add(modifierSet);
-            }
-        }
-
-        if (TryComp(hardpoint, out RMCVehicleArmorHardpointComponent? armorHardpoint))
-        {
-            foreach (var modifierSetId in armorHardpoint.ModifierSets)
-            {
-                if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(modifierSetId, out var modifierSet))
-                    modifierSets.Add(modifierSet);
-            }
-        }
     }
 
     private void OnHardpointIntegrityInit(Entity<RMCHardpointIntegrityComponent> ent, ref ComponentInit args)
@@ -895,54 +873,9 @@ public sealed class RMCHardpointSystem : EntitySystem
     {
         var current = ent.Comp.Integrity;
         var max = ent.Comp.MaxIntegrity;
-        var percent = max > 0f ? current / max : 0f;
+        var percent = max > 0f ? MathF.Round(current / max * 100f) : 0f;
 
-        if (HasComp<XenoComponent>(args.Examiner))
-        {
-            args.PushMarkup(Loc.GetString(GetHardpointConditionString(percent)));
-            return;
-        }
-
-        var color = GetHardpointIntegrityColor(percent);
-        args.PushMarkup(Loc.GetString("rmc-hardpoint-integrity-examine",
-            ("color", color),
-            ("current", (int)MathF.Ceiling(current)),
-            ("max", (int)MathF.Ceiling(max)),
-            ("percent", (int)MathF.Round(percent * 100f))));
-    }
-
-    private string GetHardpointIntegrityColor(float percent)
-    {
-        if (percent >= 0.9f)
-            return "green";
-
-        if (percent >= 0.7f)
-            return "yellow";
-
-        if (percent >= 0.4f)
-            return "orange";
-
-        if (percent >= 0.15f)
-            return "red";
-
-        return "crimson";
-    }
-
-    private string GetHardpointConditionString(float percent)
-    {
-        if (percent >= 0.9f)
-            return "rmc-hardpoint-condition-pristine";
-
-        if (percent >= 0.7f)
-            return "rmc-hardpoint-condition-good";
-
-        if (percent >= 0.4f)
-            return "rmc-hardpoint-condition-worn";
-
-        if (percent >= 0.15f)
-            return "rmc-hardpoint-condition-bad";
-
-        return "rmc-hardpoint-condition-critical";
+        args.PushMarkup(Loc.GetString("rmc-hardpoint-integrity-examine", ("current", MathF.Round(current, 1)), ("max", MathF.Round(max, 1)), ("percent", percent)));
     }
 
     public bool DamageHardpoint(EntityUid vehicle, EntityUid hardpoint, float amount, RMCHardpointIntegrityComponent? integrity = null)

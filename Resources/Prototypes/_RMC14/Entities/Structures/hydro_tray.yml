@@ -4,7 +4,6 @@
   id: CMHydroponicsTray
   description: Used for growing plants.
   components:
-  - type: RMCVehicleSmashable
   - type: Fixtures
     fixtures:
       fix1:
