@@ -61,10 +61,12 @@ jobs:
 
     - name: Package server
       run: dotnet run --project Content.Packaging server -c Release \
-        --platforms win-x64,linux-x64,osx-x64,linux-arm64
+        --platforms win-x64,linux-x64,osx-x64,linux-arm64 \
+        /p:PublishTrimmed=false /p:EnableTrimAnalyzer=false
 
     - name: Package client
-      run: dotnet run --project Content.Packaging client --no-wipe-release
+      run: dotnet run --project Content.Packaging client --no-wipe-release \
+        /p:PublishTrimmed=false /p:EnableTrimAnalyzer=false
 
     # ---  форк ---
     - name: Determine Fork
