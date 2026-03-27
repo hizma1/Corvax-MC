@@ -56,6 +56,9 @@ jobs:
 
     - name: Package server
       run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64 -c Release /p:PublishTrimmed=false
+      env:
+        DOTNET_PublishTrimmed: false
+        DOTNET_EnableTrimAnalyzer: false
 
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
