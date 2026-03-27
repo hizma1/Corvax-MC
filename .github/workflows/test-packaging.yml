@@ -53,7 +53,7 @@ jobs:
         with:
           dotnet-version: 9.0.x
         env:
-          dotnet-install-dir: ${{ runner.temp }}/.dotnet
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/.dotnet
 
       - name: Set DOTNET_ROOT and PATH
         run: |
