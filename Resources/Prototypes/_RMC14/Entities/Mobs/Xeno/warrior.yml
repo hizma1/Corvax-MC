@@ -117,7 +117,7 @@
   suffix: Boxer
   components:
   - type: Sprite
-    sprite: _RMC14/Mobs/Xenonids/Warrior_Boxer/warrior_boxer.rsi
+    sprite: _RMC14/Mobs/Xenonids/Warrior/boxer.rsi
   - type: XenoStrain
     name: ccm-xeno-boxer-name
     description: ccm-xeno-boxer-description
