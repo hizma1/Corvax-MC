@@ -63,3 +63,52 @@
     lifetime: 0.6
   - type: SprayExtinguishTileFire
     extinguishAmount: 13
+
+- type: entity
+  id: CCMXenoGreatSlowingSpitProjectile
+  parent: XenoBaseProjectile
+  name: greater slowing spit
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Xeno/xeno_projectiles.rsi
+    layers:
+    - state: neurotoxin
+      shader: unshaded
+  - type: XenoSlowingSpitProjectile
+    armorResistsKnockdown: true
+  - type: XenoProjectile
+    deleteOnFriendlyXeno: true
+  - type: DrainOnHit
+  - type: ProjectileMaxRange
+    max: 8
+  - type: Projectile
+    impactEffect: XenoProjectileImpactEffect
+    damage:
+      types:
+        Heat: 10 # TODO RMC14 damage fall-off and higher at close range
+
+- type: entity
+  id: CCMXenoGreatScatteredSpitProjectile
+  parent: XenoBaseProjectile
+  name: great scattered spit
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Xeno/xeno_projectiles.rsi
+    layers:
+    - state: neurotoxin
+      shader: unshaded
+  - type: XenoSlowingSpitProjectile
+    slow: 0
+    paralyze: 1.25
+    armorResistsKnockdown: false
+  - type: XenoProjectile
+    deleteOnFriendlyXeno: true
+  - type: ProjectileMaxRange
+    max: 6
+  - type: Projectile
+    impactEffect: XenoProjectileImpactEffect
+    damage:
+      types:
+        Heat: 5 # TODO RMC14 damage fall-off and higher at close range
