@@ -66,6 +66,9 @@
     - CMXenoSpitter
     evolvesToWithoutPoints:
     - CMXenoQueen
+    strains: #CCM Change
+    - CCMXenoMeleeSentinel #CCM Change
+    - CCMXenoRangerSentinel #CCM Change
   - type: XenoAcid
   - type: XenoParalyzingSlash
   - type: XenoSlowingSpit
@@ -104,3 +107,110 @@
     ventCrawlIcon: sentinel
   - type: RMCActionOrder
     id: CMXenoSentinel
+
+# // CCM Melee Sentinel Strain
+- type: entity
+  parent: CMXenoSentinel
+  id: CCMXenoMeleeSentinel
+  components:
+  - type: Sprite
+    sprite: _RMC14/Mobs/Xenonids/Sentinel/melee.rsi
+  - type: XenoStrain
+    name: ccm-xeno-meleesent-name
+    description: ccm-xeno-meleesent-description
+    popup: ccm-xeno-meleesent-popup
+  - type: Xeno
+    actionIds:
+    - ActionXenoRest
+    - ActionXenoRegurgitate
+    - ActionXenoWatch
+    - ActionXenoTailStab
+    - ActionXenoAcidWeak
+    - ActionXenoPunch
+    - CCMActionXenoLightNeuroEmpower
+    - CCMActionXenoGreaterParalyzingSlash
+    - ActionXenoDevolve
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 27.5
+  - type: XenoTailStab
+    tailDamage:
+      groups:
+        Brute: 35
+  - type: XenoPunch
+    range: 3
+    damage:
+      types:
+        Blunt: 20
+  - type: XenoParalyzingSlash
+    stunDelay: 1
+    stunDuration: 2
+  - type: XenoCripplingStrike
+    activateText: rmc-xeno-apprehend-activate
+    deactivateText: rmc-xeno-apprehend-deactivate
+    expireText: rmc-xeno-apprehend-expire
+    removeOnHit: true
+    preventTackle: true
+    resetMeleeCooldown: true
+    auraColor: "#9ACD32FF"
+    damageMult: 1
+    speed: 1.2
+  - type: CMArmor
+    xenoArmor: 15
+    explosionArmor: 35
+  - type: XenoEvolution
+    canEvolveWithoutGranter: true
+    max: 200
+    evolvesTo:
+    - CMXenoSpitter
+    evolvesToWithoutPoints:
+    - CMXenoQueen
+    strains: []
+
+# // CCM Ranger sentinel strain
+- type: entity
+  parent: CMXenoSentinel
+  id: CCMXenoRangerSentinel
+  components:
+  - type: Sprite
+    sprite: _RMC14/Mobs/Xenonids/Sentinel/ranger.rsi
+  - type: XenoStrain
+    name: ccm-xeno-rangersent-name
+    description: ccm-xeno-rangersent-description
+    popup: ccm-xeno-rangersent-popup
+  - type: Xeno
+    actionIds:
+    - ActionXenoRest
+    - ActionXenoRegurgitate
+    - ActionXenoWatch
+    - ActionXenoTailStab
+    - ActionXenoAcidWeak
+    - ActionXenoSlowingSpit
+    - ActionXenoScatteredSpit
+    - ActionXenoSprayAcid
+    - ActionXenoDevolve
+  - type: XenoSlowingSpit
+    projectileId: CCMXenoGreatSlowingSpitProjectile
+  - type: XenoScatteredSpit
+    maxDeviation: 45
+    maxProjectiles: 8
+    projectileId: CCMXenoGreatScatteredSpitProjectile
+  - type: XenoSprayAcid
+    acid: CCMXenoAcidSprayRanger
+    barricadeDamage:
+      types:
+        Heat: 5
+  - type: XenoEvolution
+    canEvolveWithoutGranter: true
+    max: 200
+    evolvesTo:
+    - CMXenoSpitter
+    evolvesToWithoutPoints:
+    - CMXenoQueen
+    strains: []
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      400: Critical
+      500: Dead
