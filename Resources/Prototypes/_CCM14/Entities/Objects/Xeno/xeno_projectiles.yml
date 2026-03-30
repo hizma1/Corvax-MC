@@ -112,3 +112,25 @@
     damage:
       types:
         Heat: 5 # TODO RMC14 damage fall-off and higher at close range
+
+- type: entity
+  parent: XenoAcidSprayWeak
+  id: CCMXenoAcidSprayRanger
+  name: weak splatter
+  description: It burns! It burns, but not as much!
+  components:
+  - type: Sprite
+    layers:
+    - state: acid2-weak
+  - type: DamageOnCollide
+    paralyze: 1
+    damage:
+      types:
+        Heat: 10
+    chainDamage:
+      types:
+        Heat: 5
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: SprayExtinguishTileFire
+    extinguishAmount: 13
