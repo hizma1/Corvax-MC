@@ -12,12 +12,54 @@ namespace Content.Client.Administration.UI
     public sealed partial class AdminAnnounceWindow : DefaultWindow
     {
         [Dependency] private readonly ILocalizationManager _localization = default!;
+        
+        // CCM14-start
+        private const int MaxSenderLength = 32;
+
+        private void UpdateColorPreview()
+        {
+            if (ColorPreview == null || ColorHex == null) return;
+
+            var hex = ColorHex.Text.Trim().Replace("#", "");
+            if (hex.Length != 3 && hex.Length != 6)
+            {
+                ColorPreview.ModulateSelfOverride = null;
+                return;
+            }
+
+            try
+            {
+                ColorPreview.ModulateSelfOverride = Color.FromHex("#" + hex);
+            }
+            catch
+            {
+                ColorPreview.ModulateSelfOverride = null;
+            }
+        }
+
+        public string ColorHexText => ColorHex.Text.Trim().Replace("#", "");
+        public string SoundPathText => SoundPath.Text.Trim();
+        public string SenderText 
+        {
+            get 
+            {
+                var t = Sender.Text.Trim();
+                return t.Length > MaxSenderLength ? t[..MaxSenderLength] : t;
+            }
+        }
+        // CCM14-end
 
         public AdminAnnounceWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
+            // CCM14-start
+            ColorHex.Text = "1d8bad";
+            ColorHex.OnTextChanged += _ => UpdateColorPreview();
+            SoundPath.Text = "/Audio/_RMC14/Announcements/Marine/notice2.ogg";
+            UpdateColorPreview();
+            // CCM14-end
             Announcement.Placeholder = new Rope.Leaf(_localization.GetString("admin-announce-announcement-placeholder"));
             AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-station"));
             AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
