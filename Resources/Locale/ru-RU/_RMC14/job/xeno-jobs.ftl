@@ -25,8 +25,6 @@ cm-job-name-xeno-praetorian = Преторианец
 CMJobXenoPraetorian = Преторианец
 cm-job-name-xeno-queen = Королева
 CMJobXenoQueen = Королева
-cm-job-name-xeno-king = Король
-CMJobXenoKing = Король
 cm-job-name-xeno-ravager = Разрушитель
 CMJobXenoRavager = Разрушитель
 cm-job-name-xeno-runner = Бегун
@@ -39,8 +37,6 @@ rmc-job-name-xeno-king = Король
 RMCJobXenoKing = Король
 cm-job-name-xeno-warrior = Воин
 CMJobXenoWarrior = Воин
-ccm-job-name-xeno-swarmer = Роевик
-CCMXenoSwarmer = Роевик
 # TODO RMC14
 department-CMXeno = Ксеноморфы
 cm-department-Xeno-description = ""

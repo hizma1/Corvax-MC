@@ -127,7 +127,6 @@ cm-chatsan-replacement-engineer = tall builder
 cm-chatsan-word-comtech = comtech
 cm-chatsan-replacement-comtech = tall builder
 cm-chatsan-word-combat-technician = combat technician
-cm-chatsan-word-combat-technitian = combat technician
 cm-chatsan-replacement-combat-technician = tall builder
 cm-chatsan-word-corpsman = corpsman
 cm-chatsan-replacement-corpsman = tall healer

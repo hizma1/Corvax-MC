@@ -25,7 +25,7 @@ rmc-dropship-weapons-weapon-selected-ammo =
     Снаряды: { $rounds } / { $maxRounds }
 rmc-dropship-weapons-target-strike =
     ЗАХВАТ ЦЕЛИ
-
+    
     Режим удара: { $mode }
     Конфиг. удара: { $weapon }
     Выбранная цель: { $target }
@@ -67,7 +67,6 @@ rmc-dropship-weapons-fire-not-skilled = У вас нет квалификаци�
 rmc-dropship-weapons-fire-no-ammo = Боезапас { $weapon } исчерпан.
 rmc-dropship-weapons-fire-cooldown = Перегрев { $weapon }. Ожидайте охлаждения.
 rmc-dropship-attached = Установлено: { $attachment }.
-rmc-dropship-weapons-point-gun = Установлено: { $weapon }.
 rmc-dropship-weapons-point-ammo = Заряжено: { $ammo }.
 rmc-dropship-weapons-rounds-left = Заряжено { $current } из { $max } снарядов.
 rmc-dropship-utility-activate-not-flying = Вспомогательные системы доступны только в полёте.
@@ -77,8 +76,8 @@ rmc-dropship-utility-cooldown = { $utility } на перезарядке. Пов
 rmc-dropship-flyby-no-skill = У вас нет квалификации для выполнения маневра пролёта.
 rmc-dropship-fabricator-title = Фабрикатор компонентов
 rmc-dropship-fabricator-points = Очки: { $points }
-rmc-dropship-fabricator-equipment = %ERASE_NEWLINE%[bold]Снаряжение[/bold]
-rmc-dropship-fabricator-ammo = %ERASE_NEWLINE%[bold]Боеприпасы[/bold]
+rmc-dropship-fabricator-equipment =  [bold]Снаряжение[/bold]
+rmc-dropship-fabricator-ammo =  [bold]Боеприпасы[/bold]
 rmc-dropship-fabricator-fabricate = Создать ({ $cost })
 rmc-dropship-fabricator-busy = Фабрикатор занят выполнением операции.
 rmc-dropship-firemission-warning = ЯРКИЕ ВСПЫШКИ В НЕБЕ НА { $direction }!
@@ -116,7 +115,7 @@ rmc-dropship-equipment-destroyed = УНИЧТОЖЕНО
 rmc-dropship-launch-bay-screen-text = LAG-14 Внутренняя пусковая установка турелей
 rmc-dropship-launch-bay-screen-text-loaded =
     LAG-14 Внутренняя пусковая установка турелей
-
+    
     Загружено: { $loaded }
-
+    
     Боеприпасы: { $current } / { $max }
