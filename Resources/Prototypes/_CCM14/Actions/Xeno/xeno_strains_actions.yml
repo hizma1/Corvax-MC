@@ -19,108 +19,40 @@
 
 - type: entity
   id: CCMActionXenoBoxerTailKnock
-  parent: ActionXenoBase
+  parent: ActionXenoTailSweep
   name: Tail Knock (10) # TODO RMC14 proper plasma costs
   description: Use your yail to smash ground and enemies around you, and deal damage, a lil fling them
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: tail_sweep
-    useDelay: 15
-  - type: InstantAction
-    event: !type:XenoTailSweepActionEvent
-  - type: RMCDazeableAction
   
 - type: entity
-  parent: ActionXenoBase
+  parent: ActionXenoScissorCut
   id: CCMActionXenoBoxerWidePunch
   name: Wide weak punch (25)
   description: Punch in 1x1 area (or bigger) and deal damage to enemy in that area
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: rav_scissor_cut
-    useDelay: 6
-  - type: TargetAction
-    checkCanAccess: false
-    range: 15
-  - type: WorldTargetAction
-    event: !type:XenoScissorCutActionEvent
-  - type: ActionBlockIfResting
-  - type: XenoActionPlasma
-    cost: 25
 
 # // CCM - Sniper spitter strain
 
 - type: entity
-  parent: ActionXenoBase
+  parent: ActionXenoBombard
   id: CCMActionXenoSniperSnipe
   name: Snipe (300)
   description: After a short delay fire a strong spit that deal a lot of damage
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: bombard
-    useDelay: 1
-  - type: TargetAction
-    range: 20
-    checkCanAccess: false
-  - type: WorldTargetAction
-    event: !type:XenoBombardActionEvent
-  - type: ActionBlockIfResting
 
 - type: entity
   id: CCMActionXenoSniperWalker
-  parent: ActionXenoBase
+  parent: ActionXenoResinWalker
   name: Walk Recover (50) # TODO RMC14 proper plasma costs
   description: Recover to your normal speed. [color=cyan]Consumes 30 plasma per second.[/color]
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: toggle_speed
-    useDelay: 0.25
-  - type: InstantAction
-    event: !type:XenoResinWalkerActionEvent
 
 # // CCM - Melee sentinel strain
 
 - type: entity
   id: CCMActionXenoGreaterParalyzingSlash
-  parent: ActionXenoBase
+  parent: ActionXenoParalyzingSlash
   name: Greater Paralyzing Slash (50) # TODO RMC14 proper plasma costs
   description: Temporarily charge up a melee attack that will stun a short time enemy after very shor delay
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: lurker_inject_neuro
-    useDelay: 12
-  - type: InstantAction
-    event: !type:XenoParalyzingSlashActionEvent
-  - type: XenoActionPlasma
-    cost: 50
 
 - type: entity
-  parent: ActionXenoBase
+  parent: ActionXenoCripplingStrike
   id: CCMActionXenoLightNeuroEmpower
   name: Light Neuro Empower
   description: Increases your movement speed and applies a slow on the next target you slash.
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: _RMC14/Actions/xeno_actions.rsi
-      state: rav_enrage
-    useDelay: 18
-  - type: InstantAction
-    event: !type:XenoCripplingStrikeActionEvent
-  - type: ActionBlockIfResting
