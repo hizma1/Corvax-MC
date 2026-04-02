@@ -42,7 +42,7 @@
                                             Margin="0 0 4 0" MinWidth="44" MinHeight="22" />
                 <controls:TacticalMapButton Name="ResetViewButton" Access="Public" Text="{Loc ui-tactical-map-reset-button}"
                                             Margin="0 0 4 0" MinWidth="44" MinHeight="22" />
-                <controls:TacticalMapButton Name="ObjectivesToggleButton" Access="Public" Text="Hide"
+                <controls:TacticalMapButton Name="ObjectivesToggleButton" Access="Public" Text="{Loc ui-tactical-map-layer-visibility-hide}"
                                             Margin="0 0 4 0" MinWidth="52" MinHeight="22" />
                 <TextureRect Name="HoverAreaIcon" Access="Public"
                              MinSize="16 16" MaxSize="16 16" Stretch="KeepAspectCentered"
@@ -56,7 +56,7 @@
                                             Margin="0 0 4 0" MinWidth="24" MinHeight="22" />
                 <controls:TacticalMapButton Name="FocusModeButton" Access="Public" Text="{Loc ui-tactical-map-focus-button}"
                                             Margin="0 0 4 0" MinWidth="44" MinHeight="22" />
-                <controls:TacticalMapButton Name="PopoutButton" Access="Public" Text="Pop Out"
+                <controls:TacticalMapButton Name="PopoutButton" Access="Public" Text="{Loc ui-tactical-map-popout-button}"
                                             Margin="0 0 4 0" MinWidth="50" MinHeight="22" />
                 <controls:TacticalMapButton Name="CloseButton" Access="Public" Text="X"
                                             MinWidth="22" MinHeight="22" />
