@@ -37,6 +37,8 @@ rmc-job-name-xeno-king = Король
 RMCJobXenoKing = Король
 cm-job-name-xeno-warrior = Воин
 CMJobXenoWarrior = Воин
+ccm-job-name-xeno-swarmer = Роевик
+CCMXenoSwarmer = Роевик
 # TODO RMC14
 department-CMXeno = Ксеноморфы
 cm-department-Xeno-description = ""

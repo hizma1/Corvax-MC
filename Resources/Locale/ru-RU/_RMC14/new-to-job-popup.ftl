@@ -1,6 +1,6 @@
 rmc-new-to-job-popup-title = RMC14: Окно новой роли
-rmc-new-to-job-popup-job-name = %ERASE_NEWLINE%[bold]Добро пожаловать на роль: { $name }![/bold]
-rmc-new-to-job-additional = %ERASE_NEWLINE%[color=#aaaaaa][italic]Если вы не знаете, что делать, обратитесь за помощью к старшим по званию или нажмите F1 > Помощь менторов, чтобы связаться с менторами, которые всегда готовы помочь.[/italic][/color]
+rmc-new-to-job-popup-job-name = [bold]Добро пожаловать на роль: { $name }![/bold]
+rmc-new-to-job-additional = [color=#aaaaaa][italic]Если вы не знаете, что делать, обратитесь за помощью к старшим по званию или нажмите F1 > Помощь менторов, чтобы связаться с менторами, которые всегда готовы помочь.[/italic][/color]
 rmc-new-to-job-popup-close-button = Готов!
 rmc-new-to-job-popup-close-button-wait = Кнопка закрытия станет активна через { $time } сек.
 
