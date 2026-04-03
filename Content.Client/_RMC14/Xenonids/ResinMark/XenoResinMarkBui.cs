@@ -59,10 +59,9 @@ public sealed class XenoResinMarkBui : BoundUserInterface
         if (string.IsNullOrEmpty(selectedName))
             selectedName = s.SelectedType.Id;
 
-        window.InstructionLabel.Text =
-            "Select a marker type, then middle-click to place.";
+        window.InstructionLabel.Text = Loc.GetString("rmc-resin-mark-instruction"); // CCM14
 
-        window.SelectedMarkLabel.Text = $"Type: {selectedName}";
+        window.SelectedMarkLabel.Text = Loc.GetString("rmc-resin-mark-selected-type", ("type", selectedName)); // CCM14
 
         window.MarkTypeContainer.DisposeAllChildren();
         foreach (var type in s.Types)
@@ -93,8 +92,9 @@ public sealed class XenoResinMarkBui : BoundUserInterface
                                  s.Marks.FirstOrDefault(m => m.Marker == selectedMarker) is { } selectedMark &&
                                  selectedMark.Marker == selectedMarker
             ? $"{selectedMark.Name} - {selectedMark.LocationName}"
-            : "None";
-        window.SelectedPlacedLabel.Text = $"Selected: {selectedPlacedText}";
+            
+            : Loc.GetString("rmc-resin-mark-selected-none"); // CCM14
+        window.SelectedPlacedLabel.Text = Loc.GetString("rmc-resin-mark-selected-placed", ("mark", selectedPlacedText)); // CCM14
 
         window.PlacedMarksContainer.DisposeAllChildren();
         foreach (var mark in s.Marks)
@@ -154,9 +154,16 @@ public sealed class XenoResinMarkBui : BoundUserInterface
             : default;
 
         if (_selectedPlacedMarker != null && selected.Marker == _selectedPlacedMarker.Value)
-            window.SelectedPlacedLabel.Text = $"Selected: {selected.Name} ({selected.LocationName})";
+        // CCM14-start
+        {
+            var markText = $"{selected.Name} ({selected.LocationName})";
+            window.SelectedPlacedLabel.Text = Loc.GetString("rmc-resin-mark-selected-placed", ("mark", markText));
+        }
         else
-            window.SelectedPlacedLabel.Text = "Selected: None";
+        {
+            window.SelectedPlacedLabel.Text = Loc.GetString("rmc-resin-mark-selected-placed", ("mark", Loc.GetString("rmc-resin-mark-selected-none")));
+        }
+        // CCM14-end
 
         for (var i = 0; i < window.PlacedMarksContainer.ChildCount && i < marks.Count; i++)
         {

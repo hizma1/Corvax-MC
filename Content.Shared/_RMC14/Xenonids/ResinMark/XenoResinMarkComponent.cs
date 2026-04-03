@@ -1,9 +1,10 @@
 using Robust.Shared.Prototypes;
 using System;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._RMC14.Xenonids.ResinMark;
 
-[RegisterComponent]
+[NetworkedComponent, RegisterComponent] // CCM14
 public sealed partial class XenoResinMarkComponent : Component
 {
     [DataField]

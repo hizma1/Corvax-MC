@@ -70,7 +70,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
 
         if (_hive.GetHive(ent.Owner) is not { } hive)
         {
-            _popup.PopupEntity("You must be in a hive to place marks.", ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-not-in-hive"), ent, ent, PopupType.SmallCaution); // CCM14
             return;
         }
 
@@ -106,7 +106,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
     {
         if (!ent.Comp.PlacementEnabled)
         {
-            _popup.PopupEntity("Select a marker in the Mark Resin menu first.", ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-select-first"), ent, ent, PopupType.SmallCaution); // CCM14
             return false;
         }
 
@@ -115,13 +115,13 @@ public sealed class XenoResinMarkSystem : EntitySystem
 
         if (!IsValidCoordinates(coordinates))
         {
-            _popup.PopupEntity("Invalid target location.", ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-invalid-location"), ent, ent, PopupType.SmallCaution); // CCM14
             return false;
         }
 
         if (!TryGetMarkType(ent.Comp.SelectedPingType, out var pingData))
         {
-            _popup.PopupEntity("Invalid mark type selected.", ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-invalid-type"), ent, ent, PopupType.SmallCaution); // CCM14
             return false;
         }
 
@@ -157,7 +157,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
 
         ent.Comp.LastPlacedAt = _timing.CurTime;
         Dirty(ent);
-        _popup.PopupEntity($"Placed {pingData.Name} mark.", ent, ent, PopupType.Small);
+        _popup.PopupEntity(Loc.GetString("rmc-resin-mark-placed", ("name", pingData.Name)), ent, ent, PopupType.Small); // CCM14
 
         RefreshUi(ent, hive);
         return true;
@@ -223,7 +223,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
     {
         if (!HasComp<XenoWordQueenComponent>(ent.Owner))
         {
-            _popup.PopupEntity("Only the Queen can force marker tracking.", ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-only-queen"), ent, ent, PopupType.SmallCaution); // CCM14
             return;
         }
 
@@ -250,7 +250,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
             _resinMarkerTracker.ForceTrackTarget(uid, markerUid);
         }
 
-        _popup.PopupEntity("Forced the hive to track this marker.", ent, ent, PopupType.Small);
+        _popup.PopupEntity(Loc.GetString("rmc-resin-mark-forced-track"), ent, ent, PopupType.Small); // CCM14
     }
 
     private void OnMarkerShutdown(Entity<XenoResinMarkerComponent> ent, ref ComponentShutdown args)
@@ -280,7 +280,8 @@ public sealed class XenoResinMarkSystem : EntitySystem
         if (TryGetMarkType(ent.Comp.PingType, out var pingData))
             typeName = pingData.Name;
 
-        var locationName = _areas.TryGetArea(Transform(ent).Coordinates, out _, out var area) ? area.Name : "Unknown Area";
+        var unknownArea = Loc.GetString("rmc-resin-mark-unknown-area"); // CCM14
+        var locationName = _areas.TryGetArea(Transform(ent).Coordinates, out _, out var area) ? area.Name : unknownArea; // CCM14
         args.Name = $"{typeName} ({locationName})";
         args.Handled = true;
     }
@@ -317,7 +318,8 @@ public sealed class XenoResinMarkSystem : EntitySystem
         if (_timing.CurTime < nextPlaceAt)
         {
             var remaining = nextPlaceAt - _timing.CurTime;
-            _popup.PopupEntity($"Mark is on cooldown for {Math.Ceiling(remaining.TotalSeconds)}s.", ent, ent, PopupType.SmallCaution);
+            var seconds = Math.Ceiling(remaining.TotalSeconds); // CCM14
+            _popup.PopupEntity(Loc.GetString("rmc-resin-mark-cooldown", ("seconds", seconds)), ent, ent, PopupType.SmallCaution); // CCM14
             return false;
         }
 
@@ -358,7 +360,8 @@ public sealed class XenoResinMarkSystem : EntitySystem
                 continue;
 
             var name = TryGetMarkType(markerComp.PingType, out var pingData) ? pingData.Name : markerComp.PingType;
-            var locationName = _areas.TryGetArea(xform.Coordinates, out _, out var area) ? area.Name : "Unknown Area";
+            var unknownArea = Loc.GetString("rmc-resin-mark-unknown-area"); // CCM14
+            var locationName = _areas.TryGetArea(xform.Coordinates, out _, out var area) ? area.Name : unknownArea; // CCM14
             marks.Add(new XenoResinPlacedMark(GetNetEntity(uid), name, locationName));
         }
 
@@ -484,8 +487,10 @@ public sealed class XenoResinMarkSystem : EntitySystem
         if (!TryComp<XenoResinMarkWatchingComponent>(watcher, out var watchingComp))
             return;
 
-        if (watchingComp.Marker is { } marker &&
-            Exists(marker))
+        if (watchingComp.LifeStage >= ComponentLifeStage.Stopping)
+            return;
+
+        if (watchingComp.Marker is { } marker && Exists(marker))
         {
             _viewSubscriber.RemoveViewSubscriber(marker, session);
 
@@ -497,7 +502,7 @@ public sealed class XenoResinMarkSystem : EntitySystem
         }
 
         _eye.SetTarget(watcher, null);
-        RemCompDeferred<XenoResinMarkWatchingComponent>(watcher);
+        RemComp<XenoResinMarkWatchingComponent>(watcher);
     }
 
     private bool IsValidCoordinates(EntityCoordinates coordinates)

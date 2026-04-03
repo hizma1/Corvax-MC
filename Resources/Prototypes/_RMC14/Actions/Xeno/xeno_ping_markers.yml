@@ -28,10 +28,10 @@
     state: rally
     color: "#00FF00"
   - type: XenoPingData
-    name: Move
-    description: Direct sisters to move to this location
-    chatMessage: Move to
-    popupMessage: Move Here!
+    name: Движение
+    description: Приказ сородичам двигаться в эту точку
+    chatMessage: Двигайтесь к
+    popupMessage: Всем сюда!
     priority: 100
     categories: [ tactical ]
 
@@ -44,10 +44,10 @@
     state: attack
     color: "#FF0000"
   - type: XenoPingData
-    name: Attack
-    description: Target this location for attack
-    chatMessage: Attack
-    popupMessage: Attack Here!
+    name: Атака
+    description: Цель для нападения
+    chatMessage: Атакуйте
+    popupMessage: Убить здесь!
     priority: 95
     categories: [ tactical, offensive ]
 
@@ -60,10 +60,10 @@
     state: defend
     color: "#0080FF"
   - type: XenoPingData
-    name: Defend
-    description: Mark this position for defense
-    chatMessage: Defend
-    popupMessage: Defend This Position!
+    name: Защита
+    description: Пометить позицию для обороны
+    chatMessage: Защищайте
+    popupMessage: Удерживать позицию!
     priority: 90
     categories: [ tactical, defensive ]
 
@@ -76,10 +76,10 @@
     state: rally
     color: "#FFFF00"
   - type: XenoPingData
-    name: Regroup
-    description: Rally sisters at this position
-    chatMessage: Regroup at
-    popupMessage: Regroup Here!
+    name: Сбор
+    description: Сбор сородичей в этой позиции
+    chatMessage: Собираемся в
+    popupMessage: Все ко мне!
     priority: 85
     categories: [ tactical ]
 
@@ -92,10 +92,10 @@
     state: danger
     color: "#FF8000"
   - type: XenoPingData
-    name: Danger
-    description: Warning! Dangerous area
-    chatMessage: Danger at
-    popupMessage: Danger!
+    name: Опасность
+    description: Внимание! Опасная зона
+    chatMessage: Опасность в
+    popupMessage: Опасно!
     priority: 99
     categories: [ warning ]
 
@@ -108,10 +108,10 @@
     state: hosts
     color: "#FF69B4"
   - type: XenoPingData
-    name: Hosts
-    description: Potential hosts detected
-    chatMessage: Hosts at
-    popupMessage: Hosts Detected!
+    name: Носители
+    description: Обнаружены потенциальные носители
+    chatMessage: Носители в
+    popupMessage: Вижу носителей!
     priority: 88
     categories: [ hunting ]
 
@@ -124,10 +124,10 @@
     state: hold
     color: "#8000FF"
   - type: XenoPingData
-    name: Hold
-    description: Hold this position
-    chatMessage: Hold
-    popupMessage: Hold Position!
+    name: Сдерживание
+    description: Удерживать эту позицию
+    chatMessage: Сдерживать
+    popupMessage: Ни шагу назад!
     priority: 80
     categories: [ tactical, defensive ]
 
@@ -140,10 +140,10 @@
     state: ambush
     color: "#800080"
   - type: XenoPingData
-    name: Ambush
-    description: Set up ambush here
-    chatMessage: Ambush at
-    popupMessage: Ambush Here!
+    name: Засада
+    description: Устроить здесь засаду
+    chatMessage: Засада в
+    popupMessage: Ждем здесь...
     priority: 75
     categories: [ tactical, stealth ]
 
@@ -156,10 +156,10 @@
     state: aide
     color: "#00FFFF"
   - type: XenoPingData
-    name: Aide
-    description: Need assistance here
-    chatMessage: Help at
-    popupMessage: Need Assistance!
+    name: Помощь
+    description: Требуется помощь сородичей
+    chatMessage: Помогите в
+    popupMessage: Нужна помощь!
     priority: 70
     categories: [ tactical ]
 
@@ -173,10 +173,10 @@
     state: fortify
     color: "#808080"
   - type: XenoPingData
-    name: Fortify
-    description: Build defenses here
-    chatMessage: Fortify
-    popupMessage: Fortify This Area!
+    name: Укрепление
+    description: Строить оборону здесь
+    chatMessage: Укрепить
+    popupMessage: Стройте защиту!
     priority: 70
     categories: [ construction, defensive ]
 
@@ -189,10 +189,10 @@
     state: nest
     color: "#8B4513"
   - type: XenoPingData
-    name: Nest
-    description: Build nest structures here
-    chatMessage: Nest at
-    popupMessage: Build Nest Here!
+    name: Гнездо
+    description: Построить гнезда в этой зоне
+    chatMessage: Гнезда в
+    popupMessage: Нужно гнездо!
     priority: 65
     categories: [ construction ]
 
@@ -205,10 +205,10 @@
     state: weed
     color: "#008000"
   - type: XenoPingData
-    name: Weed
-    description: Spread weeds in this area
-    chatMessage: Weed
-    popupMessage: Spread Weeds Here!
+    name: Сорняки
+    description: Распространить сорняки в этой области
+    chatMessage: Сорняки в
+    popupMessage: Вырастите сорняки здесь!
     priority: 60
     categories: [ construction, expansion ]
 
@@ -225,10 +225,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Hive Core
-    description: Main hive structure location
-    chatMessage: Build hive core at
-    popupMessage: Hive Core Here!
+    name: Ядро улья
+    description: Место для главной структуры улья
+    chatMessage: Постройте ядро улья в
+    popupMessage: Ядро здесь!
     priority: 100
     isConstruction: true
     categories: [ construction, hive ]
@@ -245,10 +245,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Hive Cluster
-    description: Hive cluster that spreads weeds
-    chatMessage: Build hive cluster at
-    popupMessage: Hive Cluster Here!
+    name: Кластер улья
+    description: Кластер для распространения смолы
+    chatMessage: Постройте кластер в
+    popupMessage: Кластер здесь!
     priority: 90
     isConstruction: true
     categories: [ construction, hive ]
@@ -265,10 +265,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Hive Pylon
-    description: Hive pylon structure
-    chatMessage: Build hive pylon at
-    popupMessage: Hive Pylon Here!
+    name: Пилон улья
+    description: Структура пилона улья
+    chatMessage: Постройте пилон в
+    popupMessage: Пилон здесь!
     priority: 85
     isConstruction: true
     categories: [ construction, hive ]
@@ -285,10 +285,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Egg Morpher
-    description: Egg morpher structure location
-    chatMessage: Build egg morpher at
-    popupMessage: Egg Morpher Here!
+    name: Морфер яиц
+    description: Место для морфера яиц
+    chatMessage: Постройте морфер в
+    popupMessage: Морфер здесь!
     priority: 80
     isConstruction: true
     categories: [ construction, breeding ]
@@ -305,10 +305,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Recovery Node
-    description: Recovery node for healing
-    chatMessage: Build recovery node at
-    popupMessage: Recovery Node Here!
+    name: Узел восстановления
+    description: Узел для исцеления сородичей
+    chatMessage: Постройте узел восстановления в
+    popupMessage: Исцеление здесь!
     priority: 75
     isConstruction: true
     categories: [ construction, support ]
@@ -325,10 +325,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Tunnel
-    description: Tunnel entrance location
-    chatMessage: Build tunnel at
-    popupMessage: Tunnel Here!
+    name: Тоннель
+    description: Вход в систему тоннелей
+    chatMessage: Выкопайте тоннель в
+    popupMessage: Тоннель здесь!
     priority: 70
     isConstruction: true
     categories: [ construction, mobility ]
@@ -342,10 +342,10 @@
     state: fortify
     color: "#696969"
   - type: XenoPingData
-    name: Resin Wall
-    description: Resin wall construction
-    chatMessage: Build resin wall at
-    popupMessage: Resin Wall Here!
+    name: Смоляная стена
+    description: Возведение смоляной стены
+    chatMessage: Постройте стену в
+    popupMessage: Стену здесь!
     priority: 60
     isConstruction: true
     categories: [ construction, defensive ]
@@ -359,10 +359,10 @@
     state: fortify
     color: "#A0522D"
   - type: XenoPingData
-    name: Resin Door
-    description: Resin door construction
-    chatMessage: Build resin door at
-    popupMessage: Resin Door Here!
+    name: Смоляная дверь
+    description: Возведение смоляной двери
+    chatMessage: Постройте дверь в
+    popupMessage: Дверь здесь!
     priority: 55
     isConstruction: true
     categories: [ construction, defensive ]
@@ -379,10 +379,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Resin Hole
-    description: Resin trap hole location
-    chatMessage: Build resin hole at
-    popupMessage: Resin Hole Here!
+    name: Смоляная ловушка
+    description: Место для смоляной ловушки
+    chatMessage: Сделайте ловушку в
+    popupMessage: Ловушка здесь!
     priority: 50
     isConstruction: true
     categories: [ construction, trap ]
@@ -399,10 +399,10 @@
     drawdepth: Effects
     scale: 1.5, 1.5
   - type: XenoPingData
-    name: Fruit
-    description: Resin fruit location
-    chatMessage: Build fruit at
-    popupMessage: Fruit Here!
+    name: Фрукт
+    description: Выращивание смоляного фрукта
+    chatMessage: Вырастите фрукт в
+    popupMessage: Фрукт здесь!
     priority: 45
     isConstruction: true
     categories: [ construction, support ]
@@ -416,9 +416,9 @@
     state: no_direction
     color: "#FFFFFF"
   - type: XenoPingData
-    name: General
-    description: General purpose marker
-    chatMessage: Look at
-    popupMessage: Follow Orders!
+    name: Общий
+    description: Маркер общего назначения
+    chatMessage: Внимание на
+    popupMessage: Слушайте приказы!
     priority: 50
     categories: [ general ]
