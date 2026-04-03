@@ -24,7 +24,7 @@
       choices: { CMArmour: 1 }
       entries:
       - id: RMCArmorVestSquad
-        name: armor vest
+        name: бронежилет # CCM14
       - id: RMCArmorM3LightVariants
         name: лёгкая броня # CCM14
       - id: RMCArmorM3MediumVariants
@@ -37,10 +37,10 @@
       entries:
       - id: CMBackpackMarine
         replaceSlot: back
-        name: backpack
+        name: рюкзак # CCM14
       - id: CMSatchelMarine
         replaceSlot: back
-        name: satchel
+        name: сумка # CCM14
         recommended: true
       - id: RMCScabbardShotgun
     - name: Пояса # CCM14

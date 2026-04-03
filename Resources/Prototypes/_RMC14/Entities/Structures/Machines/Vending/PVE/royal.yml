@@ -26,7 +26,7 @@
       # - id: RMCBreachingHammerD2
       #   name: Breaching Hammer
       - id: RMCXM51Case
-        name: пробивное ружьё # CCM14
+        name: кейс пробивного ружья XM51 # CCM14
     - name: Рюкзаки # CCM14
       choices: { CMBackpack: 1 }
       entries:

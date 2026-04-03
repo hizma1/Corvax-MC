@@ -571,13 +571,13 @@
       - id: RMCGunCasePistolHG45Marina
       - id: RMCD18Case
       - id: RMCSawtoothDaggerB
-        name: Кинжал Фиорина (Тип Б) #Knife Fiorina B
+        name: кинжал Фиорина (Тип Б) #Knife Fiorina B
       - id: RMCSawtoothDaggerA
-        name: Кинжал Фиорина (Тип А) #Knife Fiorina A
+        name: кинжал Фиорина (Тип А) #Knife Fiorina A
       - id: RMCCombatUtilityKnifeB
-        name: Штык нож Дружина (Тип Б) #Knife USSP B
+        name: штык нож Дружина (Тип Б) #Knife USSP B
       - id: RMCCombatUtilityKnifeA
-        name: Штык нож Дружина (Тип А) #Knife USSP B
+        name: штык нож Дружина (Тип А) #Knife USSP B
       - id: CMCrowbar
 # Music & Cassetes
     - name: Музыка #Music

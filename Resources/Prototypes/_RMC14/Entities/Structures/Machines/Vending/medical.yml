@@ -304,10 +304,10 @@
     - name: Разное # CCM14
       entries:
       - id: CMBeaker
-        name: Beaker (60 units)
+        name: мензурка (60u)
         amount: 3
       - id: CMBeakerLarge
-        name: Beaker, Large (120 units)
+        name: большая мензурка (120u)
         amount: 3
       - id: RMCBoxPillCanister
         amount: 2
@@ -360,7 +360,7 @@
         amount: 5
 #      - id: CMPainStopAutoinjector
 #        amount: 5
-    - name: Devices
+    - name: Мединструменты # CCM14
       entries:
       - id: CMHealthAnalyzer
         amount: 3
@@ -491,7 +491,7 @@
     - name: Утилиты # CCM14
       entries:
       - id: CMHealthAnalyzer
-        name: HF2 Health Analyzer
+#        name: HF2 Health Analyzer
         amount: 2
     - name: Bobda
       entries:

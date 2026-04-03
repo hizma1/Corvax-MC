@@ -251,7 +251,7 @@
       takeOne: CMPrimary
       entries:
       - id: RMCM54CMK1CaseAP
-        name: штурмовая винтовка M54C MK1 # CCM14
+        name: кейс штурмовой винтовки M54C MK1 # CCM14
       - id: RMCVendorBundleXOShotgun
     - name: Основные боеприпасы # CCM14
       entries:
@@ -564,7 +564,7 @@
       takeOne: CMProtagGun
       entries:
       - id: RMCM59ACaseAP
-        name: прототип винтовки M59A # CCM14
+        name: кейс прототипа винтовки M59A # CCM14
       - id: CMCOSmartGunOperatorEquipmentCaseBelt
         name: смартган командира # CCM14
         recommended: true # TODO RMC14 Make choices: colour the options brown
@@ -1184,11 +1184,11 @@
       choices: { CMWeaponPrimary: 1 }
       entries:
       - id: RMCM42A2ShotgunCase
-        name: M42A2 pump shotgun
+        name: кейс помпового дробовика M42A2 # CCM14
       - id: RMCM54CMK2Case
-        name: M54C assault rifle MK2
+        name: кейс штурмовой винтовки M54C MK2 # CCM14
       - id: RMCCaseFlamer
-        name: M34 incinerator unit
+        name: кейс огнемёта M34 # CCM14
     - name: Запасное снаряжение # CCM14
       jobs:
       - CMChiefEngineer

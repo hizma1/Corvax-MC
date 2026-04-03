@@ -195,7 +195,7 @@
         name: листы пластали (10 шт.) # CCM14
         points: 7
       - id: CMSandbagEmpty25
-        name: мешки с песком (25 шт.) # CCM14
+        name: мешки с песком (пустые, 25 шт.) # CCM14
         points: 7
       - id: RMCExplosivePlastic
         points: 3
