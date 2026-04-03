@@ -252,4 +252,4 @@
   suffix: Medbay
   components:
   - type: RMCChemicalDispenser
-    network: RMCChemStorageGround
+    network: RMCChemStorageMedbay # CCM14

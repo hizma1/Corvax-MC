@@ -157,7 +157,7 @@
   - type: RMCVehicleWheelSlots
     slotCount: 1
   - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
+    maxIntegrity: 800 # CCM14
     repairFuelCost: 20
     bypassEntryOnZero: true
   - type: Appearance

@@ -50,6 +50,8 @@ rmc-xeno-evolution-cant-evolve-caste-cooldown = Мы пока не можем э
 rmc-xeno-evolution-failed-bad-location = Мы не можем эволюционировать здесь.
 rmc-xeno-evolution-start-self = Мы начинаем извиваться и деформироваться.
 rmc-xeno-evolution-start-others = { $xeno } начинает извиваться и деформироваться.
+rmc-xeno-evolution-queen = Время пришло. Улью нужно, чтобы Королева откладывала яйца для начала эволюции.
+
 # Fortify
 cm-xeno-fortify-cant-headbutt = Мы не можем совершить Удар головой пока мы в Укреплении!
 cm-xeno-fortify-cant-rest = Мы не можем отдыхать пока мы в Укреплении!
