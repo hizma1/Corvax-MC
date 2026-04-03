@@ -20,13 +20,13 @@ public sealed class XenoPickerWindow : DefaultWindow
         Func<EntProtoId?, Texture?> getTexture,
         Action<NetEntity> onPicked)
     {
-        Title = "Select Xenonid";
+        Title = Loc.GetString("rmc-hive-xeno-picker-title"); // CCM14
         SetSize = new Vector2(300, 400);
 
         var vbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical };
         Contents.AddChild(vbox);
 
-        _searchBar = new LineEdit { PlaceHolder = "Search..." };
+        _searchBar = new LineEdit { PlaceHolder = Loc.GetString("rmc-hive-xeno-picker-search") }; // CCM14
         _searchBar.OnTextChanged += OnSearch;
         vbox.AddChild(_searchBar);
 

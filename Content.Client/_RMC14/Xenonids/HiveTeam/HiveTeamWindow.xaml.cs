@@ -74,7 +74,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
         // Team title
         vbox.AddChild(new Label
         {
-            Text = $"HiveTeam {team.Index + 1}",
+            Text = Loc.GetString("rmc-hive-teams-team-name", ("index", team.Index + 1)), // CCM14
             HorizontalAlignment = HAlignment.Center,
             Margin = new Thickness(0, 4, 0, 2),
         });
@@ -87,7 +87,12 @@ public sealed partial class HiveTeamWindow : DefaultWindow
             Margin = new Thickness(0, 0, 0, 4),
         };
         for (var i = 0; i < HiveTeamsComponent.RoleNames.Length; i++)
-            roleBox.AddItem(HiveTeamsComponent.RoleNames[i], i);
+        // CCM14-start
+        {
+            var text = Loc.GetString(HiveTeamsComponent.RoleNames[i]);
+            roleBox.AddItem(text, i);
+        }
+        // CCM14-end
         roleBox.SelectId(team.Role);
         var capturedIndex = team.Index;
         roleBox.OnItemSelected += args => onSetRole(capturedIndex, args.Id);
@@ -109,7 +114,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
 
         leaderVbox.AddChild(new Label
         {
-            Text = "Hive Leader",
+            Text = Loc.GetString("rmc-hive-squad-leader"), // CCM14
             HorizontalAlignment = HAlignment.Center,
             FontColorOverride = Color.FromHex("#aaaaaa"),
             Margin = new Thickness(0, 0, 0, 4),
@@ -135,7 +140,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
             hbox.AddChild(new Label { Text = leader.Name, VerticalAlignment = VAlignment.Center });
             btn.AddChild(hbox);
             btn.OnPressed += _ => onRemoveLeader(team.Index);
-            btn.ToolTip = "Click to remove as leader";
+            btn.ToolTip = Loc.GetString("rmc-hive-teams-remove-leader-tooltip"); // CCM14
             leaderVbox.AddChild(btn);
         }
         else
@@ -174,7 +179,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
 
         membersVbox.AddChild(new Label
         {
-            Text = "Members",
+            Text = Loc.GetString("rmc-hive-squad-members"), // CCM14
             HorizontalAlignment = HAlignment.Center,
             FontColorOverride = Color.FromHex("#aaaaaa"),
             Margin = new Thickness(0, 0, 0, 4),
@@ -201,7 +206,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
             control.HorizontalExpand = true;
             var capturedMember = member;
             control.Button.OnPressed += _ => onRemoveMember(team.Index, capturedMember.Entity);
-            control.Button.ToolTip = "Click to remove from team";
+            control.Button.ToolTip = Loc.GetString("rmc-hive-teams-remove-member-tooltip"); // CCM14
             membersGrid.AddChild(control);
         }
 
@@ -211,7 +216,7 @@ public sealed partial class HiveTeamWindow : DefaultWindow
         // Add member button inside the members panel
         var addMemberBtn = new Button
         {
-            Text = "+ Add Member",
+            Text = Loc.GetString("rmc-hive-squad-add-member"), // CCM14
             HorizontalExpand = true,
             Margin = new Thickness(0, 4, 0, 0),
             StyleClasses = { "ButtonSquare" },

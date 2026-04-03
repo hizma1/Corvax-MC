@@ -49,7 +49,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
         var allXenos = state.AllXenos;
 
         Title = roleName;
-        AnnounceBox.PlaceHolder = $"Announce to {roleName}...";
+        AnnounceBox.PlaceHolder = Loc.GetString("rmc-hive-squad-announce-to", ("role", roleName)); // CCM14
 
         // --- Leader bordered box ---
         var leaderPanel = new PanelContainer
@@ -72,7 +72,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
 
         leaderVbox.AddChild(new Label
         {
-            Text = "Hive Leader",
+            Text = Loc.GetString("rmc-hive-squad-leader"), // CCM14
             HorizontalAlignment = HAlignment.Center,
             FontColorOverride = Color.FromHex("#aaaaaa"),
             Margin = new Thickness(0, 0, 0, 4),
@@ -90,7 +90,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
         {
             leaderVbox.AddChild(new Label
             {
-                Text = "No leader assigned",
+                Text = Loc.GetString("rmc-hive-squad-no-leader"), // CCM14
                 HorizontalAlignment = HAlignment.Center,
                 FontColorOverride = Color.FromHex("#666666"),
             });
@@ -119,7 +119,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
 
         membersVbox.AddChild(new Label
         {
-            Text = "Members",
+            Text = Loc.GetString("rmc-hive-squad-members"), // CCM14
             HorizontalAlignment = HAlignment.Center,
             FontColorOverride = Color.FromHex("#aaaaaa"),
             Margin = new Thickness(0, 0, 0, 4),
@@ -138,7 +138,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
             control.HorizontalExpand = true;
             var capturedMember = member;
             control.Button.OnPressed += _ => _onRemoveMember?.Invoke(capturedMember.Entity);
-            control.Button.ToolTip = "Click to remove from team";
+            control.Button.ToolTip = Loc.GetString("rmc-hive-squad-remove-tooltip"); // CCM14
             membersGrid.AddChild(control);
         }
 
@@ -146,7 +146,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
         {
             membersVbox.AddChild(new Label
             {
-                Text = "No members assigned",
+                Text = Loc.GetString("rmc-hive-squad-no-members"), // CCM14
                 HorizontalAlignment = HAlignment.Center,
                 FontColorOverride = Color.FromHex("#666666"),
             });
@@ -158,7 +158,7 @@ public sealed partial class HiveLeaderSquadWindow : DefaultWindow
 
         var addMemberBtn = new Button
         {
-            Text = "+ Add Member",
+            Text = Loc.GetString("rmc-hive-squad-add-member"), // CCM14
             HorizontalExpand = true,
             Margin = new Thickness(0, 4, 0, 0),
             StyleClasses = { "ButtonSquare" },

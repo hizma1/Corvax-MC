@@ -237,9 +237,7 @@ public sealed class HiveTeamSystem : EntitySystem
                 members.Add(mx);
         }
 
-        var roleName = myEntry.Role >= 0 && myEntry.Role < HiveTeamsComponent.RoleNames.Length
-            ? HiveTeamsComponent.RoleNames[myEntry.Role]
-            : "?";
+        var roleName = Loc.GetString($"rmc-hive-role-{myEntry.Role}"); // CCM14
         var teamData = new HiveTeamData(myIndex, leaderXeno, members, myEntry.Role);
         _ui.SetUiState(leader, HiveLeaderSquadUIKey.Key, new HiveLeaderSquadBuiState(teamData, roleName, allXenos));
     }
@@ -298,8 +296,8 @@ public sealed class HiveTeamSystem : EntitySystem
             }
         }
 
-        var roleName = myEntry.Role >= 0 && myEntry.Role < HiveTeamsComponent.RoleNames.Length
-            ? HiveTeamsComponent.RoleNames[myEntry.Role]
+        var roleName = Loc.TryGetString($"rmc-hive-role-{myEntry.Role}", out var name) // CCM14
+            ? name // CCM14
             : "?";
         var message = $"{Name(xeno.Owner)} [{roleName}]: {args.Message}";
         var escapedMessage = FormattedMessage.EscapeText(message);
