@@ -528,6 +528,6 @@
 
 - type: speechVerb
   id: Xeno
-  name: chat-speech-verb-name-default
+  name: chat-speech-verb-name-xeno # CCM14
   speechVerbStrings:
-  - hisses
+  - chat-speech-verb-xeno-1 # CCM14

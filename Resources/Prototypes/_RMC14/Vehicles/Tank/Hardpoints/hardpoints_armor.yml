@@ -13,7 +13,7 @@
     damageMultiplier: 0.5
     repairRate: 0.007
   - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
+    maxIntegrity: 400 # RMC14
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorBallistic
@@ -35,7 +35,7 @@
     damageMultiplier: 0.5
     repairRate: 0.007
   - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
+    maxIntegrity: 400 # RMC14
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorConcussive
@@ -58,7 +58,7 @@
     damageMultiplier: 0.5
     repairRate: 0.007
   - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
+    maxIntegrity: 400 # RMC14
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorCaustic
@@ -80,7 +80,7 @@
     damageMultiplier: 0.5
     repairRate: 0.007
   - type: RMCHardpointIntegrity
-    maxIntegrity: 1000
+    maxIntegrity: 400 # RMC14
   - type: RMCVehicleArmorHardpoint
     modifierSets:
     - RMCVehicleArmorPaladin
