@@ -29,8 +29,6 @@
   name: Wide weak punch (25)
   description: Punch in 1x1 area (or bigger) and deal damage to enemy in that area
 
-# // CCM - Sniper spitter strain
-
 - type: entity
   parent: ActionXenoBombard
   id: CCMActionXenoSniperSnipe
@@ -42,8 +40,6 @@
   parent: ActionXenoResinWalker
   name: Walk Recover (50) # TODO RMC14 proper plasma costs
   description: Recover to your normal speed. [color=cyan]Consumes 30 plasma per second.[/color]
-
-# // CCM - Melee sentinel strain
 
 - type: entity
   id: CCMActionXenoGreaterParalyzingSlash
