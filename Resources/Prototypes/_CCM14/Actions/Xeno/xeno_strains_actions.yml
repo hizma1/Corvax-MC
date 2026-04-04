@@ -30,10 +30,17 @@
   description: Punch in 1x1 area (or bigger) and deal damage to enemy in that area
 
 - type: entity
-  parent: ActionXenoBombard
+  parent: ActionXenoSpit
   id: CCMActionXenoSniperSnipe
   name: Snipe (300)
   description: After a short delay fire a strong spit that deal a lot of damage
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _RMC14/Actions/xeno_actions.rsi
+      state: bombard
+    useDelay: 4
 
 - type: entity
   id: CCMActionXenoSniperWalker
