@@ -424,7 +424,7 @@
   - type: CMAutomatedVendor
     hackable: true
     sections:
-    - name: Supplies
+    - name: Медикаменты # CCM14
       entries:
       - id: CMTricordrazineAutoInjectorNoSkill
         amount: 2
@@ -474,16 +474,16 @@
     - name: Supplies
       entries:
       - id: CMTricordrazineAutoInjectorNoSkill
-        name: First-Aid Autoinjector
+        name: автоинъектор первой помощи # CCM14
         amount: 2
 #      - id: CMPainStopAutoinjector
 #        name: Pain-Stop Autoinjector
 #        amount: 2
       - id: CMGauze10
-        name: Roll of Gauze
+        name: рулон бинта # CCM14
         amount: 4
       - id: CMOintment10
-        name: Ointment
+        name: мазь # CCM14
         amount: 4
       #- id: CMMedicalSplints5
       #  name: Medical Splints
@@ -493,25 +493,25 @@
       - id: CMHealthAnalyzer
 #        name: HF2 Health Analyzer
         amount: 2
-    - name: Bobda
+    - name: Бобда
       entries:
       - id: CMDrinkCanBobdaClassic
-        name: Bobda Classic
+        name: Бобда классик # CCM14
         amount: 1
       - id: CMDrinkCanBobdaClassicDiet
-        name: Diet Bobda Classic
+        name: диетическая Бобда Классик # CCM14
         amount: 1
       - id: CMDrinkCanBobdaCranberry
-        name: Bobda Cranberry
+        name: Бобда Клюква # CCM14
         amount: 1
       - id: CMDrinkCanBobdaCranberryDiet
-        name: Diet Bobda Cranberry
+        name: диетическая Бобда Клюква # CCM14
         amount: 1
       - id: CMDrinkCanBobdaGrape
-        name: Bobda Grape
+        name: Бобда Виноград # CCM14
         amount: 1
       - id: CMDrinkCanBobdaGrapeDiet
-        name: Diet Bobda Grape
+        name: диетическая Бобда Виноград # CCM14
         amount: 1
 
 - type: entity
@@ -549,4 +549,4 @@
       entries:
       - id: CMBloodPack
         amount: 5
-        name: empty blood pack
+        name: пустой пакет крови # CCM14
