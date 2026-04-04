@@ -41,6 +41,8 @@
       dazeTime: 3.4
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
+  - type: SpawnOnTerminate
+    spawn: CCMXenoAcidSpraySniper
 
 - type: entity
   parent: XenoAcidSprayWeak
