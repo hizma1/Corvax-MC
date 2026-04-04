@@ -2247,11 +2247,14 @@
         layer:
         - MachineLayer
         density: 200
+  # CCM14-start
   - type: ActivatableUI
     key: enum.RMCVehicleFabricatorUi.Key # CCM14
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [["CMAccessCrewman"]]
   - type: UserInterface
     interfaces:
-  # CCM14-start
       enum.RMCVehicleFabricatorUi.Key:
         type: RMCVehicleFabricatorBui
   - type: RMCVehicleFabricator
