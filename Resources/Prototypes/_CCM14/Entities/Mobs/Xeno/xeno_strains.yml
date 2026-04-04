@@ -43,6 +43,7 @@
       types:
         Slash: 30
   - type: XenoScissorCut
+    range: 1
     attackEffect: RMCEffectSlam
     telegraphEffectEdge: RMCEffectXenoTelegraphRed
     damage:
@@ -53,14 +54,9 @@
         params:
           variation: 0.15
   - type: MeleeWeapon
-    animation: CMEffectPunch
     damage:
       groups:
         Brute: 35
-    soundHit:
-        collection: Punch
-        params:
-          variation: 0.15
   - type: XenoPlasma
     plasma: 100
     maxPlasma: 100
