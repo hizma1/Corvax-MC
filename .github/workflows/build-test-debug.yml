@@ -60,5 +60,5 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: CI succeeded
-        run: exit 0
+    - name: CI succeeded
+      run: exit 0
