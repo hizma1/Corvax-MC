@@ -67,6 +67,7 @@
     - RMCXenoCrusher
     - CMXenoPraetorian
     strains: []
+  - type: XenoHidden
 # // CCM Xeno Strain - Boxer Warrior
 
 # // CCM Xeno Strain - Melee & Ranger Sentinels
@@ -128,6 +129,7 @@
     evolvesToWithoutPoints:
     - CMXenoQueen
     strains: []
+  - type: XenoHidden
 
 - type: entity
   parent: CMXenoSentinel
@@ -174,6 +176,7 @@
       0: Alive
       400: Critical
       500: Dead
+  - type: XenoHidden
 # // CCM Xeno Strain - Melee & Ranger Sentinels
 
 # // CCM Xeno Strain - Sniper Spitter
@@ -229,4 +232,5 @@
       0: Alive
       460: Critical
       560: Dead
+  - type: XenoHidden
 # // CCM Xeno Strain - Sniper Spitter
