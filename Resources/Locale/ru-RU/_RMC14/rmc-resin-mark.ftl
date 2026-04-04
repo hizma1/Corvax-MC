@@ -1,4 +1,4 @@
-﻿rmc-resin-mark-window-title = Метки улья
+rmc-resin-mark-window-title = Метки улья
 rmc-resin-mark-available-types = Доступные типы меток
 rmc-resin-mark-placed-markers = Размещенные метки
 rmc-resin-mark-button-watch = Наблюдать
