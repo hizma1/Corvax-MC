@@ -28,7 +28,7 @@
     key: enum.RMCVehicleSupplyUIKey.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [ [ "CMAccessRequisitions" ] ]
+    access: [ [ "CMAccessCrewman" ] ] # CCM14
   - type: UserInterface
     interfaces:
       enum.RMCVehicleSupplyUIKey.Key:
