@@ -1,8 +1,10 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using Content.Shared._RMC14.CCVar;
+using Content.Shared._RMC14.Marines.Skills;
 using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Prototypes;
 using Robust.Shared.Audio.Systems;
@@ -25,6 +27,8 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SkillsSystem _skills = default!;
 
     private int _startingPoints;
     private TimeSpan _gainEvery;
@@ -36,6 +40,7 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         SubscribeLocalEvent<RMCVehicleFabricatorComponent, MapInitEvent>(OnFabricatorMapInit);
+        SubscribeLocalEvent<RMCVehicleFabricatorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<RMCVehicleFabricatorComponent, RMCVehicleFabricatoreRecycleDoafterEvent>(OnVehiclePartRecycled);
 
         Subs.BuiEvents<RMCVehicleFabricatorComponent>(RMCVehicleFabricatorUi.Key,
@@ -62,9 +67,34 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
             ent.Comp.Account = EnsurePoints();
     }
 
+    private void OnInteractUsing(Entity<RMCVehicleFabricatorComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp(args.Used, out RMCVehicleFabricatorPrintableComponent? printable))
+            return;
+
+        args.Handled = true;
+
+        var delay = printable.Delay;
+        var multiplier = _skills.GetSkillDelayMultiplier(args.User, printable.RecycleSkill);
+        delay *= multiplier;
+
+        var ev = new RMCVehicleFabricatoreRecycleDoafterEvent();
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, ev, ent, ent, args.Used)
+        {
+            BreakOnMove = true,
+            DuplicateCondition = DuplicateConditions.SameEvent,
+            NeedHand = true
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
     private void OnVehiclePartRecycled(Entity<RMCVehicleFabricatorComponent> ent, ref RMCVehicleFabricatoreRecycleDoafterEvent args)
     {
-        if (args.Cancelled || args.Handled)
+        if (args.Cancelled || args.Handled || args.Used == null)
             return;
 
         if (!TryComp(args.Used, out RMCVehicleFabricatorPrintableComponent? printable) ||
@@ -78,9 +108,10 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
         var refund = printable.Cost;
         points.Points += (int) (refund * printable.RecycleMultiplier);
         Dirty(ent.Comp.Account.Value, points);
-        Del(args.Used);
+        Del(args.Used.Value);
 
         _audio.PlayPvs(ent.Comp.RecycleSound, ent);
+        _popup.PopupEntity(Loc.GetString("rmc-vehicle-fabricator-points", ("points", points.Points)), ent, args.User);
     }
 
     private void OnPrintMsg(Entity<RMCVehicleFabricatorComponent> ent, ref RMCVehicleFabricatorPrintMsg args)
