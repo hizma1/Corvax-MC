@@ -177,8 +177,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      400: Critical
-      500: Dead
+      350: Critical
+      450: Dead
   - type: XenoHidden
 # // CCM Xeno Strain - Melee & Ranger Sentinels
 
@@ -233,7 +233,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      460: Critical
-      560: Dead
+      420: Critical
+      520: Dead
   - type: XenoHidden
 # // CCM Xeno Strain - Sniper Spitter
