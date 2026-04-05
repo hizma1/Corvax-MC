@@ -16,7 +16,7 @@
   - type: ModifyTargetOnHit
     add:
     - type: UserAcided
-      armorPiercing: 40
+      armorPiercing: 20
       damage:
         types:
           Heat: 1
@@ -38,6 +38,7 @@
       knockBackSpeed: 5
       forceKnockBack: true
       slowsEffectBigXenos: true
+      losesEffectWithRange: false
       dazeTime: 3.4
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
@@ -45,6 +46,8 @@
     spawn: CCMXenoAcidSpraySniper
   - type: CMArmorPiercing
     amount: 10
+  - type: RMCProjectileAccuracy
+    accuracy: 125
 
 - type: entity
   parent: XenoAcidSprayWeak
