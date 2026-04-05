@@ -1,0 +1,10 @@
+ent-CCMXenoSniperSpitProjectile = { ent-XenoSpitProjectile }
+    .desc = { ent-XenoSpitProjectile.desc }
+ent-CCMXenoAcidSpraySniper = слабые брызги
+    .desc = Жжёт! Жжёт, но не так сильно!
+ent-CCMXenoGreatSlowingSpitProjectile = усиленный замедляющий плевок
+    .desc = { ent-XenoBaseProjectile.desc }
+ent-CCMXenoGreatScatteredSpitProjectile = усиленный разрывной плевок
+    .desc = { ent-XenoBaseProjectile.desc }
+ent-CCMXenoAcidSprayRanger = слабые брызги
+    .desc = Жжёт! Жжёт, но не так сильно!

@@ -99,6 +99,12 @@
         points: 2
       - id: RMCWhistle
         points: 5
+    # CCM14-start
+    - name: Досуг
+      choices: {CMGuitar: 1}
+      entries:
+      - id: CCMGuitarBagFilled
+    # CCM14-end
 
 # Armoury Vend
 
@@ -350,6 +356,12 @@
         points: 10
       - id: RMCVisorWelding
         points: 5
+    # CCM14-start
+    - name: Досуг
+      choices: {CMGuitar: 1}
+      entries:
+      - id: CCMGuitarBagFilled
+    # CCM14-end
 
 # Commanding Officer #
 
@@ -542,7 +554,12 @@
         name: плечевая нашивка с флагом ОПЗ # CCM14
       - id: RMCPatchUnitedNations
         name: плечевая нашивка ОПЗ # CCM14
-
+    # CCM14-start
+    - name: Досуг
+      choices: {CMGuitar: 1}
+      entries:
+      - id: CCMGuitarBagFilled
+    # CCM14-end
 
 # Weapon Vend
 - type: entity
@@ -1588,3 +1605,16 @@
       - id: RMCWebbingDropPouchBlack
       - id: CMWebbingHolster
       - id: RMCWebbingHolsterBlack
+    # CCM14-start
+    - name: Досуг
+      jobs:
+      - CMExecutiveOfficer
+      - CMChiefMP
+      - CMChiefEngineer
+      - CMQuartermaster
+      - CMCMO
+      - CMAuxiliarySupportOfficer
+      choices: { CMGuitar: 1 }
+      entries:
+      - id: CCMGuitarBagFilled
+    # CCM14-end

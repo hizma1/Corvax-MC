@@ -2,6 +2,7 @@ cm-ui-rmc14 = RMC14 \ ККМ
 rmc-ui-options-cassettes-volume = Громкость кассет:
 rmc-ui-options-hijack-song-volume = Громкость музыки при захвате:
 rmc-ui-options-xeno-ability-previews = Показывать предпросмотр способностей ксеноморфов
+rmc-ui-options-show-pings = Показывать пинги
 rmc-ui-voicelines = Голосовые реплики
 rmc-ui-options-tab-voicelines = Голосовые реплики
 rmc-ui-audio-voicelines-yourself = Проигрывать свои голосовые реплики

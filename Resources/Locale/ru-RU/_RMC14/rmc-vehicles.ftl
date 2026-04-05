@@ -5,7 +5,7 @@ command-description-rmcvehiclesupply-addstoragelift = Добавляет ука�
 command-help-rmcvehiclesupply-addstoragelift = Использование: rmcvehiclesupply:addstoragelift <vehicleId> <lift_uid>
 
 rmc-vehicle-fabricator-window-title = Фабрикатор модулей техники
-rmc-vehicle-fabricator-points-label = Доступно очков: 
+rmc-vehicle-fabricator-points-label = Доступно очков:
 rmc-vehicle-fabricator-points = Очки: { $points }
 rmc-vehicle-fabricator-printing = Печать: { $item }
 rmc-vehicle-fabricator-print = Печать ({ $cost })

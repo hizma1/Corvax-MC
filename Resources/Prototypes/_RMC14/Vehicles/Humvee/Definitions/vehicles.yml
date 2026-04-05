@@ -25,8 +25,8 @@
     runningSoundCooldown: 2
     hornSound: /Audio/_RMC14/Vehicle/sound_vehicles_humvee_horn.ogg
     hornCooldown: 1
-#    collisionSound: /Audio/_RMC14/Structures/metalhit.ogg
-#    collisionSoundCooldown: 0.4
+    #    collisionSound: /Audio/_RMC14/Structures/metalhit.ogg
+    #    collisionSoundCooldown: 0.4
     mobCollisionSound: /Audio/_RMC14/Xeno/alien_claw_block.ogg
   - type: RMCVehicleSpotlight
     radius: 6
@@ -39,7 +39,7 @@
       world:
         shape:
           !type:PhysShapeAabb
-          bounds: -0.9, -1.2, 0.9, 1.2 # CCM14
+          bounds: -0.425,-1.2,0.425,1.2
         density: 1000
         mask:
         - Impassable
@@ -51,7 +51,7 @@
       mob:
         shape:
           !type:PhysShapeAabb
-          bounds: -0.9, -1.2, 0.9, 1.2 # CCM14
+          bounds: -0.425,-1.2,0.425,1.2
         density: 1000
         mask:
         - MidImpassable
