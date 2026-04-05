@@ -57,6 +57,8 @@
     thresholds:
     - range: 19
       falloff: 10
+  - type: TimedDespawn
+    lifetime: 6
 
 - type: entity
   parent: XenoAcidSprayWeak
