@@ -885,11 +885,11 @@ public sealed class CMDistressSignalRuleSystem : GameRuleSystem<CMDistressSignal
                     continue;
 
                 var gridOffset = new Vector2(shipIndex * 100, shipIndex * 100);
+                shipIndex++;
 
                 if (!_mapLoader.TryLoadGrid(dropshipMap, destination.Spawn.Value, out var shipGrids, offset: gridOffset))
                     continue;
 
-                shipIndex++;
                 // if (shipIndex >= ships.Length)
                 //     shipIndex = 0;
                 // CCM14-end
