@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared._RMC14.Marines.Skills;
 using Content.Shared._RMC14.Teleporter;
@@ -7,6 +8,7 @@ using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
@@ -37,6 +39,7 @@ public sealed class RMCVehicleSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly VehicleSystem _vehicles = default!;
     [Dependency] private readonly RMCVehicleLockSystem _vehicleLock = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!; // CCM14
 
     public override void Initialize()
     {
@@ -121,16 +124,26 @@ public sealed class RMCVehicleSystem : EntitySystem
         var isXeno = HasComp<XenoComponent>(user);
         if (isXeno)
         {
-            if (ent.Comp.MaxXenos > 0 && !interior.Xenos.Contains(user) && interior.Xenos.Count >= ent.Comp.MaxXenos)
+            // CCM14-start
+            if (ent.Comp.MaxXenos > 0 && !interior.Xenos.Contains(user))
             {
+                var aliveXenos = interior.Xenos.Count(xeno => _mobState.IsAlive(xeno));
+
+                if (aliveXenos >= ent.Comp.MaxXenos) 
+            // CCM14-end
                 _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-xeno-full"), user, user);
                 return false;
             }
         }
         else
         {
-            if (ent.Comp.MaxPassengers > 0 && !interior.Passengers.Contains(user) && interior.Passengers.Count >= ent.Comp.MaxPassengers)
+            // CCM14-start
+            if (ent.Comp.MaxPassengers > 0 && !interior.Passengers.Contains(user))
             {
+                var alivePassengers = interior.Passengers.Count(passenger => _mobState.IsAlive(passenger));
+
+                if (alivePassengers >= ent.Comp.MaxPassengers)
+            // CCM14-end
                 _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-passenger-full"), user, user);
                 return false;
             }
