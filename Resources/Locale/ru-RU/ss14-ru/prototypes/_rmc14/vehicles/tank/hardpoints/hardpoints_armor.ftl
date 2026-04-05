@@ -6,5 +6,5 @@ ent-RMCVehicleTankArmorCaustic = коррозионная броня
     .desc = Каустическая броня для танка.
 ent-RMCVehicleTankArmorPaladin = броня «паладин»
     .desc = Броня «паладин» для танка.
-ent-RMCVehicleTankSnowplow = снегоуборочный отвал для танка
-    .desc = Усиленный снегоуборочный отвал для танка.
+ent-RMCVehicleTankSnowplow = снегоочиститель танка
+    .desc = Усиленное навесное оборудование для расчистки дорог и преодоления препятствий.
