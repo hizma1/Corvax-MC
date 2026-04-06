@@ -13,7 +13,7 @@
     impactEffect: XenoProjectileImpactEffect
     damage:
       types:
-        Heat: 50 # TODO RMC14 damage fall-off and higher at close range
+        Heat: 60 # TODO RMC14 damage fall-off and higher at close range
   - type: ModifyTargetOnHit
     add:
     - type: UserAcided
