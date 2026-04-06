@@ -129,11 +129,13 @@ public sealed class RMCVehicleSystem : EntitySystem
             {
                 var aliveXenos = interior.Xenos.Count(xeno => _mobState.IsAlive(xeno));
 
-                if (aliveXenos >= ent.Comp.MaxXenos) 
-            // CCM14-end
-                _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-xeno-full"), user, user);
-                return false;
+                if (aliveXenos >= ent.Comp.MaxXenos)
+                {
+                    _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-xeno-full"), user, user);
+                    return false;
+                }
             }
+            // CCM14-end
         }
         else
         {
@@ -143,10 +145,12 @@ public sealed class RMCVehicleSystem : EntitySystem
                 var alivePassengers = interior.Passengers.Count(passenger => _mobState.IsAlive(passenger));
 
                 if (alivePassengers >= ent.Comp.MaxPassengers)
-            // CCM14-end
-                _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-passenger-full"), user, user);
-                return false;
+                {
+                    _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-passenger-full"), user, user);
+                    return false;
+                }
             }
+            // CCM14-end
         }
 
         var coords = interior.Entry;
@@ -610,7 +614,13 @@ public sealed class RMCVehicleSystem : EntitySystem
     {
         if (_net.IsClient)
             return;
-
+        // CCM14-start
+        if (!_skills.HasSkills(args.Buckle.Owner, ent.Comp.Skills))
+        {
+            _popup.PopupClient(Loc.GetString("rmc-skills-cant-operate", ("target", ent.Owner)), args.Buckle.Owner, args.Buckle.Owner);
+            return; 
+        }
+        // CCM14-end
         if (!TryGetVehicleFromInterior(ent.Owner, out var vehicle) ||
             !TryComp(vehicle, out VehicleComponent? vehicleComp))
         {
