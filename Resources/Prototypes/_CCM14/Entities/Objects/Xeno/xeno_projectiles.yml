@@ -10,7 +10,7 @@
     - state: xeno_acid_strong
       shader: unshaded
   - type: Projectile
-    impactEffect: null
+    impactEffect: XenoProjectileImpactEffect
     damage:
       types:
         Heat: 50 # TODO RMC14 damage fall-off and higher at close range
@@ -27,8 +27,6 @@
       - Marine
   - type: ProjectileMaxRange
     max: 18
-  - type: XenoProjectile
-    deleteOnFriendlyXeno: false
   - type: RMCProjectileDamageFalloff
     thresholds:
     - range: 20
@@ -50,6 +48,7 @@
   description: It burns! It burns, but not as much!
   components:
   - type: Sprite
+    scale: 0.8, 0.8
     layers:
     - state: acid2-weak
   - type: DamageOnCollide
@@ -138,7 +137,7 @@
       types:
         Heat: 5 # TODO RMC14 damage fall-off and higher at close range
   - type: CMArmorPiercing
-    amount: 10
+    amount: 5
 
 - type: entity
   parent: XenoAcidSprayWeak
