@@ -226,7 +226,7 @@
     speed: 33
   - type: XenoResinWalker
     plasmaCost: 100
-    speedMultiplier: 4.2
+    speedMultiplier: 5
   - type: XenoSprayAcid
     acid: CCMXenoAcidSpraySniper
     barricadeDamage:
