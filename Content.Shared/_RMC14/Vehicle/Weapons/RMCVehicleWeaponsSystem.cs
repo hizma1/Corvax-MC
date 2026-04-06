@@ -79,7 +79,13 @@ public sealed partial class RMCVehicleWeaponsSystem : EntitySystem
     {
         if (_net.IsClient)
             return;
-
+        // CCM14-start
+        if (!_skills.HasSkills(args.Buckle.Owner, ent.Comp.Skills))
+        {
+            _popup.PopupClient(Loc.GetString("rmc-skills-cant-operate", ("target", ent.Owner)), args.Buckle.Owner, args.Buckle.Owner);
+            return; 
+        }
+        // CCM14-end
         if (!_vehicleSystem.TryGetVehicleFromInterior(ent.Owner, out var vehicle) || vehicle == null)
         {
             return;
