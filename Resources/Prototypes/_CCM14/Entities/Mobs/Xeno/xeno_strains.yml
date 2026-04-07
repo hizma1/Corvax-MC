@@ -58,10 +58,9 @@
     soundHit:
       collection: Punch
     animation: CCMWeaponArcXenoPunch
-    attackRate: 1.4
     damage:
       groups:
-        Brute: 25
+        Brute: 35
   - type: XenoEvolution
     max: 500
     evolvesTo:
