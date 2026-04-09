@@ -43,6 +43,9 @@
     damage:
       groups:
         Brute: 35
+  - type: Tackle
+    max: 6
+    min: 3
   - type: XenoRage
     maxRage: 10
     armorPerRage: 0
