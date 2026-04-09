@@ -53,8 +53,6 @@
     stunTime: 0.25
     lifeStealPerMarine: 175
     maxLifeSteal: 175
-    hitSound: 
-      collection: CCMBoxingBell
     rageHitSound: 
       collection: CCMBoxingBell
     damageAtRageLevels:
