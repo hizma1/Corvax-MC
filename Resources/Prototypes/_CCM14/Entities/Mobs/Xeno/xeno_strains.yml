@@ -42,7 +42,7 @@
     animation: CCMWeaponArcXenoPunch
     damage:
       groups:
-        Brute: 35
+        Brute: 28
   - type: Tackle
     max: 6
     min: 3
@@ -89,7 +89,7 @@
     strains: []
   - type: XenoHidden
   - type: XenoLifesteal
-    maxHeal: 80
+    maxHeal: 60
     minHeal: 40
 
 # // CCM Xeno Punch Attack Effect
