@@ -231,24 +231,6 @@
   - type: FTLSmashImmune
   - type: NoFTL
 
-  # CCM14-start
-- type: entity
-  parent: CMDropshipDestination
-  id: CMDropshipDestinationAlamo
-  suffix: Alamo
-  components:
-  - type: DropshipDestination
-    spawn: "/Maps/_RMC14/alamo.yml"
-
-- type: entity
-  parent: CMDropshipDestination
-  id: CMDropshipDestinationNormandy
-  suffix: Normandy
-  components:
-  - type: DropshipDestination
-    spawn: "/Maps/_RMC14/normandy.yml"
-  # CCM14-end
-
 - type: entity
   parent: CMDropshipDestination
   id: CMDropshipDestinationAlamo
