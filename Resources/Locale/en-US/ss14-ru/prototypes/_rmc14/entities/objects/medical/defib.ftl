@@ -15,3 +15,7 @@ ent-RMCSynthResetKey = WeYa synthetic reset key
     .desc = This device can fix major glitches or programming errors of synthetic units, as well as being able to restart a synthetic that has suffered critical failure. It can only be used once before being reset.
 ent-RMCSynthResetKeySMART = SMART WeYa synthetic reset key
     .desc = This device can fix major glitches or programming errors of synthetic units, as well as being able to restart a synthetic that has suffered critical failure. It can only be used once before being reset. This one has a microfunction AI and can be operated by anyone.
+ent-RMCSynthResetKeyNovaris = Novaris synthetic reset key
+    .desc = An independent Novaris design, based on a previous collaboration with Weston-Yamada. This device can fix major glitches or programming errors of synthetic units, as well as being able to restart a synthetic that has suffered critical failure. It can only be used once before being reset.
+ent-RMCSynthResetKeyNovarisSMART = SMART Novaris synthetic reset key
+    .desc = An independent Novaris design, based on a previous collaboration with Weston-Yamada. This device can fix major glitches or programming errors of synthetic units, as well as being able to restart a synthetic that has suffered critical failure. It can only be used once before being reset. This one has a micro-function AI and can be operated by anyone.

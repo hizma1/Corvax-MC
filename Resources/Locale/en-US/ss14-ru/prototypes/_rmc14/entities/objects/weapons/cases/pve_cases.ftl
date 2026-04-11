@@ -29,5 +29,7 @@ ent-RMCPVECaseFlamerFuel = M34 fuel canister case
     .desc = A heavy case containing six fuel canisters for the M34 incinerator unit.
 ent-RMCPVECaseFlamerFuelLPO80 = LPO80 fuel canister case
     .desc = A heavy case containing six fuel canisters for the LPO80 incinerator unit.
+ent-RMCPVECaseL104Fuel = L104 incinerator fuel tank case
+    .desc = A heavy case containing six fuel tanks for the L104 incinerator.
 ent-RMCPVECaseMotionDetector = motion detectors case
     .desc = A case containing four individual handheld motion detectors.

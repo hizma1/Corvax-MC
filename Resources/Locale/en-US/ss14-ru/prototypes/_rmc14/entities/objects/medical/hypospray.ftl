@@ -6,3 +6,6 @@ ent-CMHyposprayWithVial = { ent-CMHypospray }
 ent-CMHyposprayFilledTricord = { ent-CMHyposprayWithVial }
     .suffix = Filled, Tricordrazine
     .desc = { ent-CMHyposprayWithVial.desc }
+ent-RMCHyposprayFilledEpi = { ent-CMHypospray }
+    .suffix = Filled, Epinephrine
+    .desc = { ent-CMHypospray.desc }

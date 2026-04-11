@@ -8,3 +8,5 @@ ent-XenoFastResin = fast resin
     .desc = A layer of disgusting sleek slime.
 ent-XenoStickyResinWeakWeedbound = weak sticky resin
     .desc = A thin and weak layer of disgusting sticky slime.
+ent-XenoResinSpikes = resin spikes
+    .desc = A small cluster of bone spikes. Ouch.

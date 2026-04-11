@@ -18,3 +18,6 @@ ent-RMCTankFlamerUpgraded = M34 upgraded incinerator tank
     .desc = A fuel tank for use in the M34 incinerator unit. This one has been modified with a larger and more sophisticated internal propellant tank, allowing for larger capacity and stronger fuels.
 ent-RMCCaseFlamer = M34 incinerator case
     .desc = A gun case containing the M34 incinerator unit. It does come loaded, but you'll still have to find extra tanks as you go.
+ent-RMCWeaponFlamerExt = { ent-RMCWeaponFlamer }
+    .suffix = with extinguisher
+    .desc = { ent-RMCWeaponFlamer.desc }

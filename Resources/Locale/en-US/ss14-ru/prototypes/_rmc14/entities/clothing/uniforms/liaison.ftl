@@ -1,5 +1,8 @@
 ent-CMJumpsuitLiaison = liaison's tan suit
     .desc = A stiff, stylish tan suit commonly worn by businessmen from the We-Ya corporation. Expertly crafted to make you look like a prick.
+ent-RMCJumpsuitLiaisonShoulderHolster = { ent-CMJumpsuitLiaison }
+    .suffix = Shoulder Holster
+    .desc = { ent-CMJumpsuitLiaison.desc }
 ent-CMJumpsuitLiaisonCharcoal = liaison's charcoal suit
     .desc = A stiff, stylish charcoal suit commonly worn by businessmen from the We-Ya corporation. Expertly crafted to make you look like a prick.
 ent-RMCJumpsuitLiaisonCharcoalSuitskirt = liaison's charcoal suitskirt

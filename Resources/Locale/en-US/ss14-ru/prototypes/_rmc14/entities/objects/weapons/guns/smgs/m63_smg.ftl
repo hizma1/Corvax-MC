@@ -1,5 +1,11 @@
 ent-WeaponSMGM63 = M63 submachine gun
     .desc = The AEGIS Armaments M-63 submachinegun. Occasionally carried by light-infantry, scouts, engineers and medics.
+ent-RMCWeaponSMGM63WhiteNoLock = { ent-WeaponSMGM63 }
+    .desc = A Weston-Yamada creation, this M63 comes equipped in corporate white. Uses 10x20mm caseless ammunition. This one had its IFF electronics removed.
+    .suffix = Corporate, No ID lock
+ent-RMCWeaponSMGM63White = { ent-RMCWeaponSMGM63WhiteNoLock }
+    .desc = A Weston-Yamada creation, this M63 comes equipped in corporate white. Uses 10x20mm caseless ammunition.
+    .suffix = ID Lock
 ent-RMCWeaponSMGM63ExtendedFilled = { ent-WeaponSMGM63 }
     .suffix = Filled, Extended
     .desc = { ent-WeaponSMGM63.desc }

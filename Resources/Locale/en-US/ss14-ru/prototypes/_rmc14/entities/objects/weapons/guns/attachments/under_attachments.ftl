@@ -41,5 +41,7 @@ ent-RMCAttachmentL90GL = L90U3 grenade launcher
     .desc = A grenade launcher designed specifically for L90 pattern rifles. Holds three 30mm grenades.
 ent-RMCAttachmentL90UBS = L90U1 underbarrel shotgun
     .desc = An underbarrel shotgun designed specifically for L90 pattern rifles, capable of loading up to five buckshot shells.
+ent-RMCAttachmentL90UBF = L90U2 underbarrel flamethrower
+    .desc = An underbarrel flamethrower attachment designed specifically for L90 pattern rifles. Can be refueled from incinerator tanks.
 ent-RMCAttachmentL88Grip = L88 integrated foregrip
     .desc = Oi, you bloody galah! Put this back on your rifle and get back to it!
