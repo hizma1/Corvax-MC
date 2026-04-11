@@ -197,6 +197,7 @@ public sealed partial class CMDistressSignalRuleSystem
                 mind = _mind.CreateMind(playerId);
 
             _mind.TransferTo(mind.Value, xenoEnt);
+            comp.XenosSpawned++; // CCM14
             return playerId;
         }
 
@@ -372,6 +373,8 @@ public sealed partial class CMDistressSignalRuleSystem
 
         if (comp.SetHunger && TryComp(ev.SpawnResult, out HungerComponent? hunger))
             _hunger.SetHunger(ev.SpawnResult.Value, 50.0f, hunger);
+
+        comp.MarinesSpawned++; // CCM14
     }
 
     private void SpawnSquads(Entity<CMDistressSignalRuleComponent> rule)

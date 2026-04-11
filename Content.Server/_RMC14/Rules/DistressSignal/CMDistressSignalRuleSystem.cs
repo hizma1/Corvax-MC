@@ -346,7 +346,19 @@ public sealed partial class CMDistressSignalRuleSystem : GameRuleSystem<CMDistre
             _roundEnd.EndRound();
         }
     }
+    // CCM14-start
+    /// <summary>
+    /// Gets the current round result and hijack status for Discord notifications.
+    /// </summary>
+    public (DistressSignalRuleResult? Result, bool Hijack, int MarinesTotal, int XenosTotal) GetRoundEndInfo()
+    {
+        var rule = TryGetActiveRule();
+        if (rule == null)
+            return (null, false, 0, 0);
 
+        return (rule.Result, rule.Hijack, rule.MarinesSpawned, rule.XenosSpawned);
+    }
+    // CCM14-end
     /// <summary>
     /// Sets a custom operation name for the current round, overriding the randomly generated one.
     /// </summary>
