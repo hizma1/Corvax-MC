@@ -1,5 +1,7 @@
 ent-CCMXenoSniperSpitProjectile = { ent-XenoSpitProjectile }
     .desc = { ent-XenoSpitProjectile.desc }
+ent-CCMXenoAcidSprayProjectileSniper = слабые брызги
+    .desc = Жжёт! Жжёт, но не так сильно!
 ent-CCMXenoAcidSpraySniper = слабые брызги
     .desc = Жжёт! Жжёт, но не так сильно!
 ent-CCMXenoGreatSlowingSpitProjectile = усиленный замедляющий плевок

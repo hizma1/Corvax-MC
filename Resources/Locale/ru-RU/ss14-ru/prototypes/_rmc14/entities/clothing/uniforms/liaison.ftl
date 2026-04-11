@@ -1,5 +1,8 @@
 ent-CMJumpsuitLiaison = коричневый костюм связного
     .desc = Строгий и стильный коричневый костюм. В таких обычно ходят рекрутеры и агенты администрации Vitezstvi. Дизайн разработан специально для того, чтобы вы выглядели как редкостная сволочь.
+ent-RMCJumpsuitLiaisonShoulderHolster = { ent-CMJumpsuitLiaison }
+    .suffix = Наплечная кобура
+    .desc = { ent-CMJumpsuitLiaison.desc }
 ent-CMJumpsuitLiaisonCharcoal = угольно-серый костюм связного
     .desc = Строгий и стильный угольно-серый костюм. В таких обычно ходят рекрутеры и агенты администрации Vitezstvi. Дизайн разработан специально для того, чтобы вы выглядели как редкостная сволочь.
 ent-RMCJumpsuitLiaisonCharcoalSuitskirt = угольно-серый костюм с юбкой

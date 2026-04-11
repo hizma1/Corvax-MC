@@ -76,8 +76,8 @@ rmc-dropship-utility-cooldown = { $utility } на перезарядке. Пов
 rmc-dropship-flyby-no-skill = У вас нет квалификации для выполнения маневра пролёта.
 rmc-dropship-fabricator-title = Фабрикатор компонентов
 rmc-dropship-fabricator-points = Очки: { $points }
-rmc-dropship-fabricator-equipment =  [bold]Снаряжение[/bold]
-rmc-dropship-fabricator-ammo =  [bold]Боеприпасы[/bold]
+rmc-dropship-fabricator-equipment = [bold]Снаряжение[/bold]
+rmc-dropship-fabricator-ammo = [bold]Боеприпасы[/bold]
 rmc-dropship-fabricator-fabricate = Создать ({ $cost })
 rmc-dropship-fabricator-busy = Фабрикатор занят выполнением операции.
 rmc-dropship-firemission-warning = ЯРКИЕ ВСПЫШКИ В НЕБЕ НА { $direction }!
@@ -119,3 +119,4 @@ rmc-dropship-launch-bay-screen-text-loaded =
     Загружено: { $loaded }
 
     Боеприпасы: { $current } / { $max }
+rmc-dropship-launch-alarm-xeno-shutdown = Мы кромсаем {$console}, заставляя его замолкнуть!
