@@ -10,6 +10,10 @@ on:
     - ".github/map_checker/**"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
   RUST_LOG: Info # Avoid spamming the console.

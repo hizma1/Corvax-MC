@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
+using Content.Shared._RMC14.Construction;
 using Content.Shared._RMC14.Marines.Skills;
 using Content.Shared._RMC14.Teleporter;
 using Content.Shared._RMC14.Xenonids;
@@ -36,10 +36,10 @@ public sealed class RMCVehicleSystem : EntitySystem
     [Dependency] private readonly SharedRMCTeleporterSystem _rmcTeleporter = default!;
     [Dependency] private readonly SkillsSystem _skills = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly VehicleSystem _vehicles = default!;
     [Dependency] private readonly RMCVehicleLockSystem _vehicleLock = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!; // CCM14
 
     public override void Initialize()
     {
@@ -59,6 +59,8 @@ public sealed class RMCVehicleSystem : EntitySystem
         SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, ComponentRemove>(OnOccupantRemove);
         SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, MapUidChangedEvent>(OnOccupantMapChanged);
         SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, MetaFlagRemoveAttemptEvent>(OnOccupantMetaFlagRemoveAttempt);
+        SubscribeLocalEvent<RMCHardpointIntegrityComponent, VehicleCanRunEvent>(OnFrameVehicleCanRun);
+        SubscribeLocalEvent<RMCConstructionAttemptEvent>(OnConstructionAttempt);
     }
 
     private void OnVehicleEnterActivate(Entity<VehicleEnterComponent> ent, ref ActivateInWorldEvent args)
@@ -124,33 +126,23 @@ public sealed class RMCVehicleSystem : EntitySystem
         var isXeno = HasComp<XenoComponent>(user);
         if (isXeno)
         {
-            // CCM14-start
-            if (ent.Comp.MaxXenos > 0 && !interior.Xenos.Contains(user))
+            if (ent.Comp.MaxXenos > 0 &&
+                !interior.Xenos.Contains(user) &&
+                CountLivingOccupants(interior.Xenos) >= ent.Comp.MaxXenos)
             {
-                var aliveXenos = interior.Xenos.Count(xeno => _mobState.IsAlive(xeno));
-
-                if (aliveXenos >= ent.Comp.MaxXenos)
-                {
-                    _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-xeno-full"), user, user);
-                    return false;
-                }
+                _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-xeno-full"), user, user);
+                return false;
             }
-            // CCM14-end
         }
         else
         {
-            // CCM14-start
-            if (ent.Comp.MaxPassengers > 0 && !interior.Passengers.Contains(user))
+            if (ent.Comp.MaxPassengers > 0 &&
+                !interior.Passengers.Contains(user) &&
+                CountLivingOccupants(interior.Passengers) >= ent.Comp.MaxPassengers)
             {
-                var alivePassengers = interior.Passengers.Count(passenger => _mobState.IsAlive(passenger));
-
-                if (alivePassengers >= ent.Comp.MaxPassengers)
-                {
-                    _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-passenger-full"), user, user);
-                    return false;
-                }
+                _popup.PopupEntity(Loc.GetString("rmc-vehicle-enter-passenger-full"), user, user);
+                return false;
             }
-            // CCM14-end
         }
 
         var coords = interior.Entry;
@@ -596,6 +588,18 @@ public sealed class RMCVehicleSystem : EntitySystem
         }
     }
 
+    private int CountLivingOccupants(HashSet<EntityUid> occupants)
+    {
+        var count = 0;
+        foreach (var occupant in occupants)
+        {
+            if (!_mobState.IsDead(occupant))
+                count++;
+        }
+
+        return count;
+    }
+
     private void OnDriverSeatStrapAttempt(Entity<VehicleDriverSeatComponent> ent, ref StrapAttemptEvent args)
     {
         if (args.Cancelled)
@@ -694,6 +698,27 @@ public sealed class RMCVehicleSystem : EntitySystem
             return false;
 
         return HasComp<VehicleDriverSeatComponent>(buckle.BuckledTo);
+    }
+
+    private void OnFrameVehicleCanRun(Entity<RMCHardpointIntegrityComponent> ent, ref VehicleCanRunEvent args)
+    {
+        if (!args.CanRun || ent.Comp.Integrity > 0f)
+            return;
+
+        args.CanRun = false;
+    }
+
+    private void OnConstructionAttempt(ref RMCConstructionAttemptEvent ev)
+    {
+        if (ev.Cancelled ||
+            _net.IsClient ||
+            !TryGetVehicleFromInterior(ev.Location.EntityId, out _))
+        {
+            return;
+        }
+
+        ev.Cancelled = true;
+        ev.Popup = Loc.GetString("construction-system-inside-container");
     }
 
     private bool IsEntryBlockedByLock(EntityUid vehicle, EntityUid user)
