@@ -37,3 +37,6 @@ ent-RMCVial = vial
 ent-RMCVialTricordrazine = tricordrazine vial
     .desc = A small glass vial. Can hold up to 30 units. Contains Tricordrazine, a weak general use medicine for treating damage.
     .suffix = Filled, Tricordrazine
+ent-RMCVialEpinephrine = epinephrine vial
+    .desc = A small glass vial. Can hold up to 30 units. Contains Epinephrine, a cardiostimulant used to assist in revival.
+    .suffix = Filled, Epinephrine

@@ -48,3 +48,5 @@ ent-RMCSkillSurgery = Surgery
     .desc = { ent-RMCSkillBase.desc }
 ent-RMCSkillVehicles = Vehicles
     .desc = { ent-RMCSkillBase.desc }
+ent-RMCSkillVulture = Vulture
+    .desc = { ent-RMCSkillBase.desc }

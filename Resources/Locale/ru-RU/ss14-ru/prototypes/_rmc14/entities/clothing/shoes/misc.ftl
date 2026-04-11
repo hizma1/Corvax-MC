@@ -22,3 +22,7 @@ ent-RMCShoesSandals = сандалии
     .suffix = RMC
 ent-RMCShoesSnow = зимние ботинки
     .desc = Для тех случаев, когда ваши пятки холодны так же, как и ваше сердце.
+ent-RMCShoesSlippers = тапочки-зайчики
+    .desc = Пушистые!
+ent-RMCShoesSlippersWorn = поношенные тапочки-зайчики
+    .desc = Пушистые... но повидавшие жизнь.

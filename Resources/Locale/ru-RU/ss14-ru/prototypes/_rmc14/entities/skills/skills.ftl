@@ -48,3 +48,5 @@ ent-RMCSkillSurgery = Хирургия
     .desc = { ent-RMCSkillBase.desc }
 ent-RMCSkillVehicles = Транспорт
     .desc = { ent-RMCSkillBase.desc }
+ent-RMCSkillVulture = «Стервятник»
+    .desc = { ent-RMCSkillBase.desc }

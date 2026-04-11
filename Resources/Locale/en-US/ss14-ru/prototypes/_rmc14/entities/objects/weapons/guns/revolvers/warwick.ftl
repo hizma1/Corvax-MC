@@ -1,5 +1,9 @@
-ent-RMCWeaponRevolverWarwickMkVII = Warwick MkVII
-    .desc = A top-break revolver used by the RCM’s Paramarine regiments, and sometimes seen in the hands of other TSE military forces. Fires .44 Magnum. Archaic, yes, but brutally effective. Vacuum-sealed internals, Bakelite-style grips, and a recoil like getting kicked by a mule. Still puts things down Hard.
-ent-RMCWeaponRevolverWarwickMkVIIAlt = Warwick MkVII
-    .suffix = Alt
+ent-RMCWeaponRevolverWarwickMkVII = Warwick MkVII service revolver
+    .desc = The L187 Warwick MkVII top-break revolver is the standard-issue service revolver of the RCM’s Paramarine regiments. Despite the Warwick's archaic design, the MkVII's vacuum-sealed internals, bakelite grips, and .44 magnum chambering keep the weapon relevant and brutally effective.
+    .suffix = Paramarine
+ent-RMCWeaponRevolverWarwickMkVIIAlt = Warwick MkVII service revolver
+    .suffix = Paramarine, Alt
     .desc = { ent-RMCWeaponRevolverWarwickMkVII.desc }
+ent-RMCWeaponRevolverWarwickMkVIISnub = Warwick MkVII snubnose revolver
+    .desc = The L187 Warwick MkVII top-break revolver is the standard-issue service revolver of the RCM’s Paramarine regiments. This particular variant features a snubnose barrel and reduced profile grip, keeping the weapon compact and light.
+    .suffix = RCM, Loadout

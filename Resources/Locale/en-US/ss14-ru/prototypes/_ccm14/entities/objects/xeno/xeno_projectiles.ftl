@@ -1,5 +1,7 @@
 ent-CCMXenoSniperSpitProjectile = { ent-XenoSpitProjectile }
     .desc = { ent-XenoSpitProjectile.desc }
+ent-CCMXenoAcidSprayProjectileSniper = weak splatter
+    .desc = It burns! It burns, but not as much!
 ent-CCMXenoAcidSpraySniper = weak splatter
     .desc = It burns! It burns, but not as much!
 ent-CCMXenoGreatSlowingSpitProjectile = greater slowing spit

@@ -1,5 +1,11 @@
 ent-WeaponSMGM63 = пистолет-пулемёт M63
     .desc = Пистолет-пулемёт M63 от компании «Эгида Батлфилд Армаментс». Широко используется лёгкой пехотой, разведчиками, техниками и санитарами.
+ent-RMCWeaponSMGM63WhiteNoLock = { ent-WeaponSMGM63 }
+    .desc = Творение «Vitezstvi», этот M63 выполнен в корпоративном белом цвете. Использует безгильзовые патроны 10x20 мм. В этой модели удалена электроника системы Свой-Чужой.
+    .suffix = Корпоративный, Без ID-замка
+ent-RMCWeaponSMGM63White = { ent-RMCWeaponSMGM63WhiteNoLock }
+    .desc = Творение «Vitezstvi», этот M63 выполнен в корпоративном белом цвете. Использует безгильзовые патроны 10x20 мм.
+    .suffix = ID-замок
 ent-RMCWeaponSMGM63ExtendedFilled = { ent-WeaponSMGM63 }
     .suffix = Увеличенный, Снаряжен
     .desc = { ent-WeaponSMGM63.desc }

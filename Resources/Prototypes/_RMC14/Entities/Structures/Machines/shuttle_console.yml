@@ -231,14 +231,13 @@
   - type: FTLSmashImmune
   - type: NoFTL
 
-  # CCM14-start
 - type: entity
   parent: CMDropshipDestination
   id: CMDropshipDestinationAlamo
   suffix: Alamo
   components:
   - type: DropshipDestination
-    spawn: "/Maps/_RMC14/alamo.yml"
+    spawn: "/Maps/_RMC14/alamo.yml" # The actual Dropship files are private. These are debug versions to ensure tests pass.
 
 - type: entity
   parent: CMDropshipDestination
@@ -246,8 +245,7 @@
   suffix: Normandy
   components:
   - type: DropshipDestination
-    spawn: "/Maps/_RMC14/normandy.yml"
-  # CCM14-end
+    spawn: "/Maps/_RMC14/normandy.yml" # The actual Dropship files are private. These are debug versions to ensure tests pass.
 
 - type: entity
   parent: MarkerBase

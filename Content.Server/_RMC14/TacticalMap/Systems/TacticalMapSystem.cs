@@ -391,6 +391,10 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
 
     private void OnLayerTrackedSquadMemberUpdated(Entity<TacticalMapLayerTrackedComponent> ent, ref SquadMemberUpdatedEvent args)
     {
+        // CCM14-start
+        if (Terminating(ent) || Deleted(ent) || Terminating(args.Squad) || Deleted(args.Squad))
+            return;
+        // CCM14-end
         var changed = false;
         var allSquadLayers = GetAllSquadLayers();
         foreach (var layer in allSquadLayers)
@@ -1102,6 +1106,12 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
 
     private bool TryGetSquadLayer(EntityUid squadEntity, out ProtoId<TacticalMapLayerPrototype> layer)
     {
+        // CCM14-start
+        layer = default;
+
+        if (Terminating(squadEntity) || Deleted(squadEntity))
+            return false;
+        // CCM14-end
         var prototypeId = MetaData(squadEntity).EntityPrototype?.ID;
         if (prototypeId != null && _squadLayerMap.TryGetValue(prototypeId, out layer))
             return true;
@@ -1112,7 +1122,6 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
             return true;
         }
 
-        layer = default;
         return false;
     }
 
