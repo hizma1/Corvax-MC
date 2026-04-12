@@ -30,8 +30,8 @@ public sealed partial class CMDistressSignalRuleSystem
 
         var possibleJobs = CollectPossibleSurvivorJobs(comp);
         var (spawners, spawnersLeft) = FindSurvivorSpawners(possibleJobs);
-        var candidates = CollectSurvivorCandidates(comp, ev);
         var isAllowed = CreateSurvivorAllowedChecker();
+        var candidates = CollectSurvivorCandidates(comp, ev, isAllowed);
 
         SpawnSurvivorsFromCandidates(comp, ev, candidates, spawners, spawnersLeft, isAllowed);
     }
@@ -82,7 +82,8 @@ public sealed partial class CMDistressSignalRuleSystem
 
     private Dictionary<ProtoId<JobPrototype>, List<NetUserId>[]> CollectSurvivorCandidates(
         CMDistressSignalRuleComponent comp,
-        RulePlayerSpawningEvent ev)
+        RulePlayerSpawningEvent ev,
+        Func<NetUserId, ProtoId<JobPrototype>, bool> isAllowed)
     {
         var priorities = Enum.GetValues<JobPriority>().Length;
         var candidates = new Dictionary<ProtoId<JobPrototype>, List<NetUserId>[]>();
@@ -101,7 +102,7 @@ public sealed partial class CMDistressSignalRuleSystem
         {
             foreach (var (job, players) in candidates)
             {
-                TryAddSurvivorCandidate(player.UserId, job, players, comp, ev);
+                TryAddSurvivorCandidate(player.UserId, job, players, comp, ev, isAllowed);
             }
         }
 
@@ -113,9 +114,9 @@ public sealed partial class CMDistressSignalRuleSystem
         ProtoId<JobPrototype> job,
         List<NetUserId>[] players,
         CMDistressSignalRuleComponent comp,
-        RulePlayerSpawningEvent ev)
+        RulePlayerSpawningEvent ev,
+        Func<NetUserId, ProtoId<JobPrototype>, bool> isAllowed)
     {
-        var isAllowed = CreateSurvivorAllowedChecker();
         if (!isAllowed(id, comp.CivilianSurvivorJob) || !isAllowed(id, job))
             return;
 
@@ -254,14 +255,15 @@ public sealed partial class CMDistressSignalRuleSystem
     {
         stop = false;
         var spawnAsJob = job;
+        var selectRandomVariant = SelectedPlanetMap?.Comp.SelectRandomSurvivorVariant ?? false;
 
         if (TryGetScenarioJob(job, playerId, comp, isAllowed, ref spawnAsJob, ref stop))
             return spawnAsJob;
 
-        if (TryGetVariantJob(job, playerId, comp, isAllowed, ref spawnAsJob, ref stop))
+        if (TryGetVariantJob(job, playerId, comp, isAllowed, ref spawnAsJob, ref stop, selectRandomVariant))
             return spawnAsJob;
 
-        if (!DecrementSurvivorJobSlot(job, comp))
+        if (!DecrementSurvivorJobSlot(job, comp, selectRandomVariant, ref spawnAsJob))
         {
             stop = true;
         }
@@ -313,12 +315,38 @@ public sealed partial class CMDistressSignalRuleSystem
         CMDistressSignalRuleComponent comp,
         Func<NetUserId, ProtoId<JobPrototype>, bool> isAllowed,
         ref ProtoId<JobPrototype> spawnAsJob,
-        ref bool stop)
+        ref bool stop,
+        bool selectRandomVariant)
     {
         if (comp.SurvivorJobVariants == null ||
             !comp.SurvivorJobVariants.TryGetValue(job, out var variants))
         {
             return false;
+        }
+
+        if (selectRandomVariant)
+        {
+            var allowedIndices = new List<int>();
+            for (var j = 0; j < variants.Count; j++)
+            {
+                var (vJob, vAmount) = variants[j];
+                if (vAmount != -1 && vAmount <= 0)
+                    continue;
+
+                if (isAllowed(playerId, vJob))
+                    allowedIndices.Add(j);
+            }
+
+            if (allowedIndices.Count > 0)
+            {
+                var chosenIdx = _random.Pick(allowedIndices);
+                spawnAsJob = variants[chosenIdx].Variant;
+                if (variants[chosenIdx].Amount != -1)
+                    variants[chosenIdx] = (variants[chosenIdx].Variant, variants[chosenIdx].Amount - 1);
+                return true;
+            }
+            stop = true;
+            return true;
         }
 
         for (var i = 0; i < variants.Count; i++)
@@ -347,13 +375,23 @@ public sealed partial class CMDistressSignalRuleSystem
 
     private bool DecrementSurvivorJobSlot(
         ProtoId<JobPrototype> job,
-        CMDistressSignalRuleComponent comp)
+        CMDistressSignalRuleComponent comp,
+        bool selectRandomVariant,
+        ref ProtoId<JobPrototype> spawnAsJob)
     {
         for (var i = 0; i < comp.SurvivorJobs.Count; i++)
         {
             var (survJob, amount) = comp.SurvivorJobs[i];
             if (survJob != job)
                 continue;
+
+            if (selectRandomVariant &&
+                comp.SurvivorJobVariants != null &&
+                comp.SurvivorJobVariants.TryGetValue(job, out var randomInsertList) &&
+                randomInsertList.Count > 0)
+            {
+                spawnAsJob = _random.Pick(randomInsertList).Variant;
+            }
 
             if (amount == -1)
                 return true;
@@ -382,16 +420,16 @@ public sealed partial class CMDistressSignalRuleSystem
             return default;
         }
 
-        if (jobSpawners.Count == 0 &&
-            spawners.TryGetValue(comp.CivilianSurvivorJob, out var fallbackSpawners))
-        {
-            jobSpawners.AddRange(fallbackSpawners);
-        }
-
         if (jobSpawners.Count == 0)
         {
-            stop = true;
-            return default;
+            if (spawners.TryGetValue(comp.CivilianSurvivorJob, out var fallbackSpawners))
+                jobSpawners.AddRange(fallbackSpawners);
+
+            if (jobSpawners.Count == 0)
+            {
+                stop = true;
+                return default;
+            }
         }
 
         return _random.PickAndTake(jobSpawners);

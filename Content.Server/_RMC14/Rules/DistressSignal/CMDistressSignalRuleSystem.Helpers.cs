@@ -94,7 +94,7 @@ public sealed partial class CMDistressSignalRuleSystem
     }
 
     /// <summary>
-    /// Sets the hive of all loaded xeno friendly entities (e.g. weeds).
+    /// Sets the hive of all loaded xeno friendly entities (e.g., weeds).
     /// Only makes sense for distress signal with 1 hive, with multiple hives you would need to determine which weeds belong to which hive
     /// </summary>
     private void SetFriendlyHives(EntityUid hive)
