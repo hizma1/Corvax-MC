@@ -175,18 +175,18 @@ public sealed partial class CMDistressSignalRuleSystem
                 didCameraShake = true;
             }
 
-            StunAllMarinesOnAlmayer(xform);
+            StunAllEntitiesOnAlmayer(xform);
         }
     }
 
     /// <summary>
-    /// Stuns all marines on the Almayer.
+    /// Stuns all non-xeno on the Almayer.
     /// </summary>
-    private void StunAllMarinesOnAlmayer(TransformComponent xform)
+    private void StunAllEntitiesOnAlmayer(TransformComponent xform)
     {
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
-        GetMarinesOnAlmayer(xform, ref toKnock);
+        GetAllEntitiesOnAlmayer(xform, ref toKnock);
 
         foreach (var child in toKnock)
         {
@@ -198,9 +198,9 @@ public sealed partial class CMDistressSignalRuleSystem
     }
 
     /// <summary>
-    /// Gets all marines on the Almayer.
+    /// Gets all non-xeno on the Almayer.
     /// </summary>
-    private void GetMarinesOnAlmayer(TransformComponent xform, ref ValueList<EntityUid> reference)
+    private void GetAllEntitiesOnAlmayer(TransformComponent xform, ref ValueList<EntityUid> reference)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
