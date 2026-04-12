@@ -19,14 +19,11 @@ public sealed class RMCVehicleFabricatorWindow : DefaultWindow
     private Label PointsLabel => FindControl<Label>("PointsLabel");
     private Label PrintingLabel => FindControl<Label>("PrintingLabel");
     private BoxContainer PrintablesContainer => FindControl<BoxContainer>("PrintablesContainer");
-    private RichTextLabel WindowTitleLabel => FindControl<RichTextLabel>("WindowTitleLabel");
     private RichTextLabel CategoryTitleLabel => FindControl<RichTextLabel>("CategoryTitleLabel");
 
     public RMCVehicleFabricatorWindow()
     {
         RobustXamlLoader.Load(this);
-
-        WindowTitleLabel.SetMarkupPermissive($"[color=#3db83b][bold]{Loc.GetString("rmc-vehicle-fabricator-window-title")}[/bold][/color]");
 
         var primaryBtn = FindControl<Button>("PrimaryCategoryButton");
         var secondaryBtn = FindControl<Button>("SecondaryCategoryButton");

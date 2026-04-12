@@ -22,7 +22,6 @@
                         BackgroundColor="#252525" />
                 </PanelContainer.PanelOverride>
                 <BoxContainer Orientation="Vertical" Margin="4">
-                    <RichTextLabel Name="WindowTitleLabel" HorizontalAlignment="Center" />
                     <Label Name="PointsLabel" Access="Public" Margin="4 2" HorizontalAlignment="Center"
                            FontColorOverride="#3db83b" />
                     <Label Name="PrintingLabel" Access="Public" HorizontalAlignment="Center"
