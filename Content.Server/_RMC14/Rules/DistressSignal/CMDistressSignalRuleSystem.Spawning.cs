@@ -38,7 +38,6 @@ public sealed partial class CMDistressSignalRuleSystem
     /// </summary>
     private void OnRulePlayerSpawning(RulePlayerSpawningEvent ev)
     {
-        var spawnedDropships = false;
         var rule = TryGetActiveRuleEntity();
         if (!rule.HasValue)
             return;
@@ -55,7 +54,7 @@ public sealed partial class CMDistressSignalRuleSystem
 
         if (_spawnedDropships) return;
 
-        spawnedDropships = true;
+        _spawnedDropships = true;
         InitializeDropships(comp);
     }
 
@@ -369,7 +368,7 @@ public sealed partial class CMDistressSignalRuleSystem
         var specialFaxes = EntityQueryEnumerator<FaxMachineComponent, SpecialFaxComponent>();
         while (specialFaxes.MoveNext(out var faxId, out var faxComp, out var special))
         {
-            foreach ((var targetFaxId, var paper) in specialFaxesList)
+            foreach (var (targetFaxId, paper) in specialFaxesList)
             {
                 if (special.FaxId != targetFaxId)
                     continue;

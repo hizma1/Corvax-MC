@@ -49,16 +49,22 @@ public sealed partial class CMDistressSignalRuleSystem
         }
 
         //TODO RMC14 only do main hive
-        var xenos = EntityQueryEnumerator<XenoComponent, MobStateComponent, TransformComponent>();
+        var xenos = EntityQueryEnumerator<XenoComponent, MobStateComponent, InfectableComponent, TransformComponent>();
         var xenoAmount = 0;
         var larva = 0;
-        while (xenos.MoveNext(out var xeno, out var comp, out var mobstate, out var transformComp))
+        while (xenos.MoveNext(out var xeno, out var comp, out _, out _, out var transformComp))
         {
             if (_mobState.IsDead(xeno))
                 continue;
 
             if (transformComp.ParentUid != ev.Dropship && _rmcPlanet.IsOnPlanet(xeno.ToCoordinates()))
             {
+                if (_containers.TryGetOuterContainer(xeno, transformComp, out var outerContainer) &&
+                    outerContainer.Owner == ev.Dropship)
+                {
+                    continue;
+                }
+
                 if (comp.CountedInSlots)
                     larva++;
 
@@ -89,7 +95,7 @@ public sealed partial class CMDistressSignalRuleSystem
 
         //Queen Maturing - TODO only main hive
         var queens = EntityQueryEnumerator<XenoMaturingComponent, MobStateComponent>();
-        while (queens.MoveNext(out var queen, out var maturing, out var mobstate))
+        while (queens.MoveNext(out var queen, out var maturing, out _))
         {
             if (_mobState.IsDead(queen))
                 continue;
@@ -101,7 +107,7 @@ public sealed partial class CMDistressSignalRuleSystem
         var shipQuery = EntityQueryEnumerator<MarineComponent, MobStateComponent, InfectableComponent, TransformComponent>();
 
         float totalHostWeights = 0;
-        while (shipQuery.MoveNext(out var marine, out var mob, out var _, out var _, out var transformComp))
+        while (shipQuery.MoveNext(out var marine, out _, out _, out _, out var transformComp))
         {
             if (_mobState.IsDead(marine) || !_almayerMaps.Contains(transformComp.MapID))
                 continue;
@@ -109,8 +115,7 @@ public sealed partial class CMDistressSignalRuleSystem
             if (!TryComp<MindContainerComponent>(marine, out var mindContainer))
                 continue;
 
-            if (mindContainer is null ||
-                !TryComp<MindComponent>(mindContainer.Mind, out var mind))
+            if (!TryComp<MindComponent>(mindContainer.Mind, out var mind))
                 continue;
 
             foreach (var roleId in mind.MindRoles)
@@ -125,19 +130,16 @@ public sealed partial class CMDistressSignalRuleSystem
             }
         }
 
-        //Get the maximum of either remaining marines or minimum amount
         var surgeAmount = Math.Max((int)Math.Ceiling(totalHostWeights * _hijackShipWeight) - xenoAmount, _hijackMinBurrowed);
-        var rules = QueryActiveRules();
-        while (rules.MoveNext(out _, out var rule, out _))
-        {
-            // Reset Hivecore Cooldown
-            var hiveComp = EnsureComp<HiveComponent>(rule.Hive);
-            //Add all the stranded xenos up
-            _hive.IncreaseBurrowedLarva(larva); // TODO RMC14 should prob make sure it's only main hive
-            _hive.ResetHiveCoreCooldown((rule.Hive, hiveComp));
-            var surge = EnsureComp<HijackBurrowedSurgeComponent>(rule.Hive);
-            surge.PooledLarva = surgeAmount;
-        }
+        var rule = TryGetActiveRule();
+        if (rule == null)
+            return;
+
+        var hiveComp = EnsureComp<HiveComponent>(rule.Hive);
+        _hive.IncreaseBurrowedLarva(larva);
+        _hive.ResetHiveCoreCooldown((rule.Hive, hiveComp));
+        var surge = EnsureComp<HijackBurrowedSurgeComponent>(rule.Hive);
+        surge.PooledLarva = surgeAmount;
     }
 
     /// <summary>
@@ -146,20 +148,19 @@ public sealed partial class CMDistressSignalRuleSystem
     /// </summary>
     private void OnDropshipHijackLanded(ref DropshipHijackLandedEvent ev)
     {
-        var rules = QueryActiveRules();
-        var time = Timing.CurTime;
-        while (rules.MoveNext(out _, out var rule, out _))
-        {
-            if (rule.HijackSongPlayed)
-                break;
+        var rule = TryGetActiveRule();
+        if (rule == null)
+            return;
 
+        var time = Timing.CurTime;
+        if (!rule.HijackSongPlayed)
+        {
             rule.HijackSongPlayed = true;
             var song = _audio.PlayGlobal(rule.HijackSong, Filter.Broadcast(), true);
             if (song?.Entity is { } songEnt)
                 EnsureComp<RMCHijackSongComponent>(songEnt);
 
             rule.ForceEndAt = time + _forceEndHijackTime;
-            break;
         }
 
         var didCameraShake = false;

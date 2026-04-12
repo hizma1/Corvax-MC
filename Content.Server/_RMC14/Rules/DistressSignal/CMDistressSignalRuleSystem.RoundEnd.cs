@@ -226,32 +226,35 @@ public sealed partial class CMDistressSignalRuleSystem
 
     private void OnRoundEndMessage(RoundEndMessageEvent ev)
     {
-        var rules = QueryActiveRules();
-        while (rules.MoveNext(out _, out var distress, out _))
+        var distress = TryGetActiveRule();
+        if (distress == null)
+            return;
+
+        if (distress.Result == DistressSignalRuleResult.None)
+            return;
+
+        var audio = distress.Result switch
         {
-            if (distress.Result == DistressSignalRuleResult.None)
-                continue;
+            DistressSignalRuleResult.MajorMarineVictory => distress.MajorMarineAudio,
+            DistressSignalRuleResult.MinorMarineVictory => distress.MinorMarineAudio,
+            DistressSignalRuleResult.MajorXenoVictory => distress.MajorXenoAudio,
+            DistressSignalRuleResult.MinorXenoVictory => distress.MinorXenoAudio,
+            _ => null,
+        };
 
-            var audio = distress.Result switch
-            {
-                DistressSignalRuleResult.None => null,
-                DistressSignalRuleResult.MajorMarineVictory => distress.MajorMarineAudio,
-                DistressSignalRuleResult.MinorMarineVictory => distress.MinorMarineAudio,
-                DistressSignalRuleResult.MajorXenoVictory => distress.MajorXenoAudio,
-                DistressSignalRuleResult.MinorXenoVictory => distress.MinorXenoAudio,
-                // DistressSignalRuleResult.AllDied => distress.AllDiedAudio,
-                _ => null,
-            };
-
-            if (audio != null)
-                _audio.PlayGlobal(_audio.GetSound(audio), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-8));
-        }
+        if (audio != null)
+            _audio.PlayGlobal(audio, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-8));
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
+        InvalidateActiveRule();
         StartPlanetVote();
         ResetSelectedPlanet();
+        _spawnedDropships = false;
+        OperationName = null;
+        _usingCustomOperationName = false;
+        ActiveNightmareScenario = null;
         _config.SetCVar(CCVars.GameDisallowLateJoins, false);
 
         if (!_autoBalance)
