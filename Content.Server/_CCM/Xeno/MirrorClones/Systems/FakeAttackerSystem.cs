@@ -24,8 +24,6 @@ public sealed class FakeAttackerSystem : EntitySystem
             if (fake.Accumulator < fake.AttackInterval)
                 continue;
 
-            fake.Accumulator = 0f;
-
             if (!TryComp(clone.Original, out TransformComponent? origXform))
                 continue;
 
@@ -34,6 +32,8 @@ public sealed class FakeAttackerSystem : EntitySystem
 
             if (target == null)
                 continue;
+
+            fake.Accumulator = 0f;
 
             if (TryComp(target.Value, out TransformComponent? targetXform))
             {

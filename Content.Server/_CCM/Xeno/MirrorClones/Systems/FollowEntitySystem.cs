@@ -45,7 +45,8 @@ public sealed class FollowEntitySystem : EntitySystem
 
             _transform.SetWorldPosition(uid, newPos);
 
-            _transform.SetLocalRotation(uid, targetXform.LocalRotation);
+            if (follow.RotateWithTarget)
+                _transform.SetLocalRotation(uid, targetXform.LocalRotation);
         }
     }
 }
