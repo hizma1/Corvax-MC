@@ -280,9 +280,6 @@ public sealed partial class CMDistressSignalRuleSystem : GameRuleSystem<CMDistre
 
     private void OnMapLoading(LoadingMapsEvent ev)
     {
-        if (SelectedPlanetMap != null)
-            return;
-
         SelectRandomPlanet();
         GameTicker.UpdateInfoText();
     }
