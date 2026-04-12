@@ -362,7 +362,7 @@ public abstract class AlertsSystem : EntitySystem
 
     private void HandleClickAlert(ClickAlertEvent ev, EntitySessionEventArgs args)
     {
-        TryGetAlert(ev.Type, args.SenderSession.AttachedEntity, out _);
+        TryGetAlert(ev.Type, args.SenderSession?.AttachedEntity, out _);
     }
 
     private void HandleClickAlertAlt(ClickAlertAltEvent msg, EntitySessionEventArgs args)
