@@ -30,6 +30,7 @@ public sealed class TailWhirlwindSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<TailWhirlwindComponent, TailWhirlwindActionEvent>(OnXenoTailWhirlwindAction);
     }
 
@@ -84,6 +85,7 @@ public sealed class TailWhirlwindSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
         var query = EntityQueryEnumerator<TailWhirlwindComponent, TailWhirlwindingComponent>();
         while (query.MoveNext(out var xeno, out var tailWhirlwind, out var tailWhirlwinding))
         {
@@ -102,6 +104,7 @@ public sealed class TailWhirlwindSystem : EntitySystem
 
     public override void FrameUpdate(float frameTime)
     {
+        base.FrameUpdate(frameTime);
         var query = EntityQueryEnumerator<TailWhirlwindingComponent>();
         while (query.MoveNext(out var xeno, out var tailWhirlwinding))
         {

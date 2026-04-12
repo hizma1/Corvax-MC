@@ -37,6 +37,7 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         SubscribeLocalEvent<RMCVehicleFabricatorComponent, MapInitEvent>(OnFabricatorMapInit);
@@ -193,6 +194,7 @@ public sealed class RMCVehicleFabricatorSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
         if (_net.IsClient)
             return;
 

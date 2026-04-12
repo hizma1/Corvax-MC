@@ -17,6 +17,7 @@ public sealed class XenoMirrorClonesSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<MirrorClonesComponent, XenoMirrorClonesActionEvent>(OnMirrorClonesAction);
     }
 
