@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._CCM.Vehicle.Fabricator.Fabricator;
 
-public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
+public sealed class RMCVehicleFabricatorWindow : DefaultWindow
 {
     public event Action<RMCVehicleFabricatorCategory>? OnCategorySelected;
     public event Action<RMCVehicleType>? OnVehicleSelected;
@@ -19,14 +19,11 @@ public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
     private Label PointsLabel => FindControl<Label>("PointsLabel");
     private Label PrintingLabel => FindControl<Label>("PrintingLabel");
     private BoxContainer PrintablesContainer => FindControl<BoxContainer>("PrintablesContainer");
-    private RichTextLabel WindowTitleLabel => FindControl<RichTextLabel>("WindowTitleLabel");
     private RichTextLabel CategoryTitleLabel => FindControl<RichTextLabel>("CategoryTitleLabel");
 
     public RMCVehicleFabricatorWindow()
     {
         RobustXamlLoader.Load(this);
-
-        WindowTitleLabel.SetMarkupPermissive($"[color=#3db83b][bold]{Loc.GetString("rmc-vehicle-fabricator-window-title")}[/bold][/color]");
 
         var primaryBtn = FindControl<Button>("PrimaryCategoryButton");
         var secondaryBtn = FindControl<Button>("SecondaryCategoryButton");
@@ -50,7 +47,6 @@ public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
         apcBtn.OnPressed += _ => { SelectedVehicle = RMCVehicleType.APC; OnVehicleSelected?.Invoke(SelectedVehicle); UpdateVehicleButtons(apcBtn); };
         humveeBtn.OnPressed += _ => { SelectedVehicle = RMCVehicleType.Humvee; OnVehicleSelected?.Invoke(SelectedVehicle); UpdateVehicleButtons(humveeBtn); };
 
-        // Default selection
         tankBtn.Pressed = true;
         primaryBtn.Pressed = true;
         UpdateCategoryTitle();
@@ -80,10 +76,31 @@ public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
 
     private void UpdateCategoryTitle()
     {
-        var vehicle = Loc.GetString($"rmc-vehicle-fabricator-vehicle-{SelectedVehicle.ToString().ToLower()}");
-        var category = Loc.GetString($"rmc-vehicle-fabricator-category-{SelectedCategory.ToString().ToLower()}");
-        CategoryTitleLabel.SetMarkupPermissive($"[bold]{vehicle} - {category}[/bold]");
+        var vehicle = GetVehicleKey(SelectedVehicle);
+        var category = GetCategoryKey(SelectedCategory);
+        var vehicleLoc = Loc.GetString($"rmc-vehicle-fabricator-vehicle-{vehicle}");
+        var categoryLoc = Loc.GetString($"rmc-vehicle-fabricator-category-{category}");
+        CategoryTitleLabel.SetMarkupPermissive($"[bold]{vehicleLoc} - {categoryLoc}[/bold]");
     }
+
+    private static string GetVehicleKey(RMCVehicleType type) => type switch
+    {
+        RMCVehicleType.Tank => "tank",
+        RMCVehicleType.APC => "apc",
+        RMCVehicleType.Humvee => "humvee",
+        _ => type.ToString().ToLowerInvariant(),
+    };
+
+    private static string GetCategoryKey(RMCVehicleFabricatorCategory category) => category switch
+    {
+        RMCVehicleFabricatorCategory.Primary => "primary",
+        RMCVehicleFabricatorCategory.Secondary => "secondary",
+        RMCVehicleFabricatorCategory.Armor => "armor",
+        RMCVehicleFabricatorCategory.Support => "support",
+        RMCVehicleFabricatorCategory.Chassis => "chassis",
+        RMCVehicleFabricatorCategory.Ammo => "ammo",
+        _ => category.ToString().ToLowerInvariant(),
+    };
 
     public void SetPoints(int points)
     {
@@ -93,18 +110,33 @@ public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
     public void SetPrinting(string? itemName)
     {
         PrintingLabel.Visible = itemName != null;
-        if (itemName != null)
-            PrintingLabel.Text = Loc.GetString("rmc-vehicle-fabricator-printing", ("item", itemName));
+        PrintingLabel.Text = itemName != null
+            ? Loc.GetString("rmc-vehicle-fabricator-printing", ("item", itemName))
+            : string.Empty;
     }
 
     public void SetCategory(RMCVehicleFabricatorCategory category)
     {
         SelectedCategory = category;
+        var categoryNames = new[] { "Primary", "Secondary", "Armor", "Support", "Chassis", "Ammo" };
+        foreach (var name in categoryNames)
+        {
+            var btn = FindControl<Button>($"{name}CategoryButton");
+            btn.Pressed = GetCategoryKey(category) == name.ToLowerInvariant();
+        }
+        UpdateCategoryTitle();
     }
 
     public void SetVehicle(RMCVehicleType vehicle)
     {
         SelectedVehicle = vehicle;
+        var vehicleNames = new[] { "Tank", "APC", "Humvee" };
+        foreach (var name in vehicleNames)
+        {
+            var btn = FindControl<Button>($"{name}VehicleButton");
+            btn.Pressed = GetVehicleKey(vehicle) == name.ToLowerInvariant();
+        }
+        UpdateCategoryTitle();
     }
 
     public void SetPrintables(List<RMCVehicleFabricatorPrintableDisplayData> printables)
