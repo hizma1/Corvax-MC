@@ -346,6 +346,23 @@ public sealed partial class CMDistressSignalRuleSystem : GameRuleSystem<CMDistre
             time >= component.EndAtAllClear)
         {
             _roundEnd.EndRound();
+            return;
+        }
+
+        if (_xenoEvolution.HasLiving<XenoEvolutionGranterComponent>(1))
+            component.QueenDiedCheck = null;
+
+        if (component.QueenDiedCheck == null)
+            return;
+
+        if (time >= component.QueenDiedCheck)
+        {
+            if (component.Hijack)
+                EndRound(component, DistressSignalRuleResult.MinorXenoVictory);
+            else if (_xenoEvolution.HasLiving<XenoComponent>(4))
+                EndRound(component, DistressSignalRuleResult.MinorMarineVictory);
+            else
+                EndRound(component, DistressSignalRuleResult.MajorMarineVictory, "rmc-distress-signal-majormarinevictory-timeout");
         }
     }
     // CCM14-start

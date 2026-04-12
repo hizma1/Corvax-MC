@@ -400,7 +400,10 @@ public sealed partial class CMDistressSignalRuleSystem
         if (jobSpawners.Count == 0)
         {
             if (spawners.TryGetValue(comp.CivilianSurvivorJob, out var fallbackSpawners))
+            {
+                jobSpawners.Clear();
                 jobSpawners.AddRange(fallbackSpawners);
+            }
 
             if (jobSpawners.Count == 0)
             {

@@ -215,8 +215,6 @@ public sealed partial class CMDistressSignalRuleSystem
         }
 
         distress.QueenDiedCheck ??= Timing.CurTime + distress.QueenDiedDelay;
-        if (distress.QueenDiedCheck == null)
-            return;
 
         if (Timing.CurTime >= distress.QueenDiedCheck)
         {
