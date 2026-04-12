@@ -3,17 +3,13 @@ using Content.Server._CCM.Xeno.MirrorClones.Components;
 using Content.Shared._CCM.Actions.Events;
 using Content.Shared._CCM.Xenonids.MirrorClones;
 using Content.Shared._RMC14.Actions;
-using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared._RMC14.Xenonids.Plasma;
-using Robust.Shared.Random;
 
 namespace Content.Server._CCM.Xeno.MirrorClones.Systems;
 
 public sealed class XenoMirrorClonesSystem : EntitySystem
 {
     [Dependency] private readonly SharedRMCActionsSystem _rmcActions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!; 
-    [Dependency] private readonly SharedXenoHiveSystem _hive = default!;
     [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = default!;
     
     private const float ActiveSeconds = 10f;
@@ -35,14 +31,11 @@ public sealed class XenoMirrorClonesSystem : EntitySystem
         if (!_rmcActions.TryUseAction(args))
             return;
 
-        
         var active = EnsureComp<MirrorClonesActiveComponent>(xeno.Owner);
         active.TimeLeft = ActiveSeconds;
         active.GeneticDamage = ExtraDamage;
         Dirty(xeno.Owner, active);
-        
 
-        
         SpawnClones(xeno.Owner, "CCMXenoHunterMirrorClone");
 
         args.Handled = true;
@@ -50,38 +43,36 @@ public sealed class XenoMirrorClonesSystem : EntitySystem
 
     private void SpawnClones(EntityUid original, string clonePrototype)
     {
-        if (!TryComp<TransformComponent>(original, out var xform))
+        if (!TryComp(original, out TransformComponent? xform))
             return;
 
         var baseCoords = xform.Coordinates;
 
-        
-        const float side = 0.60f;   
-        const float back = -0.10f;  
+        const float side = 0.60f;
+        const float back = -0.10f;
 
-var offsets = new[]
-{
-    new Vector2(+side, back), 
-    new Vector2(-side, back), 
-};
+        var offsets = new[]
+        {
+            new Vector2(+side, back),
+            new Vector2(-side, back),
+        };
 
-foreach (var off in offsets)
-{
-    var clone = Spawn(clonePrototype, baseCoords.Offset(off));
+        foreach (var off in offsets)
+        {
+            var clone = Spawn(clonePrototype, baseCoords.Offset(off));
 
-    EnsureComp<MirrorCloneComponent>(clone).Original = original;
+            EnsureComp<MirrorCloneComponent>(clone).Original = original;
 
-    var follow = EnsureComp<FollowEntityComponent>(clone);
-    follow.Target = original;
+            var follow = EnsureComp<FollowEntityComponent>(clone);
+            follow.Target = original;
 
-    follow.RotateWithTarget = false;   
-    follow.Offset = off;               
+            follow.RotateWithTarget = false;
+            follow.Offset = off;
 
-    follow.FollowStrength = 45f;
-    follow.TeleportDistance = 1.0f;
+            follow.FollowStrength = 45f;
+            follow.TeleportDistance = 1.0f;
 
-    Dirty(clone, follow);
+            Dirty(clone, follow);
         }
-
     }
 }

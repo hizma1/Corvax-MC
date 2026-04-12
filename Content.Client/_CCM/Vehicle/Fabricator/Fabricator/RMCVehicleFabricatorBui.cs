@@ -20,6 +20,7 @@ public sealed class RMCVehicleFabricatorBui : BoundUserInterface
 
     protected override void Open()
     {
+        base.Open();
         _window = this.CreateWindow<RMCVehicleFabricatorWindow>();
         _window.OnClose += Close;
         _window.OnCategorySelected += OnCategorySelected;
@@ -97,7 +98,7 @@ public sealed class RMCVehicleFabricatorBui : BoundUserInterface
 
     protected override void Dispose(bool disposing)
     {
+        if (disposing) _window?.Orphan();
         base.Dispose(disposing);
-        if (disposing) _window?.Dispose();
     }
 }

@@ -1,10 +1,11 @@
-using System.Numerics;
 using Content.Server._CCM.Xeno.MirrorClones.Components;
 
 namespace Content.Server._CCM.Xeno.MirrorClones.Systems;
 
 public sealed class FollowEntitySystem : EntitySystem
 {
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<FollowEntityComponent, TransformComponent>();
@@ -14,15 +15,15 @@ public sealed class FollowEntitySystem : EntitySystem
             if (!EntityManager.EntityExists(follow.Target))
                 continue;
 
-            if (!TryComp<TransformComponent>(follow.Target, out var targetXform))
+            if (!TryComp(follow.Target, out TransformComponent? targetXform))
                 continue;
 
-            var targetPos = targetXform.MapPosition;
-            var ourPos = xform.MapPosition;
+            var targetPos = _transform.GetMapCoordinates(follow.Target, targetXform);
+            var ourPos = _transform.GetMapCoordinates(uid, xform);
 
             if (targetPos.MapId != ourPos.MapId)
             {
-                xform.Coordinates = targetXform.Coordinates;
+                _transform.SetCoordinates(uid, targetXform.Coordinates);
                 continue;
             }
 
@@ -34,14 +35,14 @@ public sealed class FollowEntitySystem : EntitySystem
 
             if (dist > follow.TeleportDistance)
             {
-                xform.WorldPosition = desired;
+                _transform.SetWorldPosition(uid, desired);
                 continue;
             }
 
             var t = MathF.Min(1f, frameTime * follow.FollowStrength);
             var newPos = current + delta * t;
 
-            xform.WorldPosition = newPos;
+            _transform.SetWorldPosition(uid, newPos);
 
             xform.LocalRotation = targetXform.LocalRotation;
         }

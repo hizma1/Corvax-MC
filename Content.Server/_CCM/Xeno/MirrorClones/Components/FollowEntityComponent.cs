@@ -1,5 +1,4 @@
 using System.Numerics;
-using Robust.Shared.Maths;
 
 namespace Content.Server._CCM.Xeno.MirrorClones.Components;
 

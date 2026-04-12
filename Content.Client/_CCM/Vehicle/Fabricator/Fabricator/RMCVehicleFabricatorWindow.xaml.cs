@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._CCM.Vehicle.Fabricator.Fabricator;
 
-public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
+public sealed class RMCVehicleFabricatorWindow : DefaultWindow
 {
     public event Action<RMCVehicleFabricatorCategory>? OnCategorySelected;
     public event Action<RMCVehicleType>? OnVehicleSelected;
@@ -50,7 +50,6 @@ public sealed partial class RMCVehicleFabricatorWindow : DefaultWindow
         apcBtn.OnPressed += _ => { SelectedVehicle = RMCVehicleType.APC; OnVehicleSelected?.Invoke(SelectedVehicle); UpdateVehicleButtons(apcBtn); };
         humveeBtn.OnPressed += _ => { SelectedVehicle = RMCVehicleType.Humvee; OnVehicleSelected?.Invoke(SelectedVehicle); UpdateVehicleButtons(humveeBtn); };
 
-        // Default selection
         tankBtn.Pressed = true;
         primaryBtn.Pressed = true;
         UpdateCategoryTitle();

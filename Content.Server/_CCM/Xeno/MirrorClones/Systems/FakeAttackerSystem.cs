@@ -8,6 +8,7 @@ namespace Content.Server._CCM.Xeno.MirrorClones.Systems;
 public sealed class FakeAttackerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Update(float frameTime)
     {
@@ -24,18 +25,20 @@ public sealed class FakeAttackerSystem : EntitySystem
 
             fake.Accumulator = 0f;
 
-            if (!TryComp<TransformComponent>(clone.Original, out var origXform))
+            if (!TryComp(clone.Original, out TransformComponent? origXform))
                 continue;
 
-            var origin = origXform.MapPosition;
+            var origin = _transform.GetMapCoordinates(clone.Original, origXform);
             var target = FindNearestTarget(origin, fake.SearchRange, exclude: uid, exclude2: clone.Original);
 
             if (target == null)
                 continue;
 
-            if (TryComp<TransformComponent>(target.Value, out var targetXform))
+            if (TryComp(target.Value, out TransformComponent? targetXform))
             {
-                var dir = targetXform.MapPosition.Position - xform.MapPosition.Position;
+                var targetMapPos = _transform.GetMapCoordinates(target.Value, targetXform);
+                var ourMapPos = _transform.GetMapCoordinates(uid, xform);
+                var dir = targetMapPos.Position - ourMapPos.Position;
                 if (dir.LengthSquared() > 0.001f)
                     xform.LocalRotation = dir.ToAngle();
             }
@@ -61,7 +64,7 @@ public sealed class FakeAttackerSystem : EntitySystem
             if (HasComp<MirrorCloneComponent>(uid))
                 continue;
 
-            var mp = xform.MapPosition;
+            var mp = _transform.GetMapCoordinates(uid, xform);
             if (mp.MapId != origin.MapId)
                 continue;
 

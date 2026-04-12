@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._CCM.Alert;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -361,7 +362,7 @@ public abstract class AlertsSystem : EntitySystem
 
     private void HandleClickAlert(ClickAlertEvent ev, EntitySessionEventArgs args)
     {
-        TryGetAlert(ev.Type, args.SenderSession?.AttachedEntity, out _);
+        TryGetAlert(ev.Type, args.SenderSession.AttachedEntity, out _);
     }
 
     private void HandleClickAlertAlt(ClickAlertAltEvent msg, EntitySessionEventArgs args)
