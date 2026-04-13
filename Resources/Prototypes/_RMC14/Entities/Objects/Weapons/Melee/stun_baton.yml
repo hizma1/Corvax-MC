@@ -100,7 +100,7 @@
     size: Small
 # // CCM CHANGES ↓
   - type: MeleeDamageMultiplier
-    multiplier: 20
+    multiplier: 13.3
     whitelist:
       components:
       - Xeno
