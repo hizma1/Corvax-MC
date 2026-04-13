@@ -104,7 +104,6 @@ public sealed class RMCVehicleViewportSystem : EntitySystem
         if (state == null)
             return;
 
-        // Проверяем, что сущность пользователя ещё существует
         if (!Exists(user) || TerminatingOrDeleted(user))
             return;
 
