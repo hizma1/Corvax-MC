@@ -42,14 +42,22 @@ public sealed partial class CMDistressSignalRuleSystem
             return;
 
         var comp = rule.Value.Comp;
-
+        // CCM14-start
+        comp.MarinesSpawned = 0;
+        comp.XenosSpawned = 0;
+        comp.SurvivorsSpawned = 0;
+        // CCM14-end
         OperationName ??= GetRandomOperationName();
 
-        InitializeXenoMap(rule.Value, comp);
+        if (!InitializeXenoMap(rule.Value, comp))
+            return;
+
         SetupSurvivorJobs(comp);
         ApplyJobSlotScaling(comp, ev);
+
+        var initialPlayerCount = ev.PlayerPool.Count;
         SelectAndSpawnXenos(comp, ev);
-        SpawnSurvivors(comp, ev);
+        SpawnSurvivors(comp, ev, initialPlayerCount);
 
         if (_spawnedDropships) return;
 
@@ -57,7 +65,7 @@ public sealed partial class CMDistressSignalRuleSystem
         InitializeDropships(comp);
     }
 
-    private void InitializeXenoMap(Entity<CMDistressSignalRuleComponent> rule, CMDistressSignalRuleComponent comp)
+    private bool InitializeXenoMap(Entity<CMDistressSignalRuleComponent> rule, CMDistressSignalRuleComponent comp)
     {
         // TODO: come up with random name like operation name, in a function that can be reused for hive v hive
         comp.Hive = _hive.CreateHive("xenonid hive", comp.HiveId);
@@ -65,7 +73,7 @@ public sealed partial class CMDistressSignalRuleSystem
         {
             Log.Error("Failed to load xeno map");
             // TODO: how should the gamemode handle failure? restart immediately or create an alert for admins
-            return;
+            return false;
         }
 
         _intel.RunSpawners();
@@ -83,24 +91,35 @@ public sealed partial class CMDistressSignalRuleSystem
             var bioscan = Spawn(null, MapCoordinates.Nullspace);
             EnsureComp<BioscanComponent>(bioscan);
         }
+
+        return true;
     }
 
     private void SetupSurvivorJobs(CMDistressSignalRuleComponent comp)
     {
-        if (SelectedPlanetMap?.Comp.SurvivorJobs == null)
+        if (SelectedPlanetMap == null)
             return;
 
-        comp.SurvivorJobs = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobs, notNullableOverride: true);
         comp.SurvivorJobVariants = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobVariants);
         comp.SurvivorJobOverrides = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobOverrides);
 
+        if (SelectedPlanetMap.Value.Comp.SurvivorJobs != null)
+            comp.SurvivorJobs = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobs, notNullableOverride: true);
+
         if (ActiveNightmareScenario != null)
         {
-            if (SelectedPlanetMap.Value.Comp.SurvivorJobScenarios?.TryGetValue(ActiveNightmareScenario, out var scenarioJobs) == true)
+            var activeScenarioSurvivors = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobScenarios);
+            var activeScenarioSurvivorOverrides = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobOverrideScenarios);
+            var activeScenarioSurvivorVariants = _serialization.CreateCopy(SelectedPlanetMap.Value.Comp.SurvivorJobVariantScenarios);
+
+            if (activeScenarioSurvivors != null && activeScenarioSurvivors.TryGetValue(ActiveNightmareScenario, out var scenarioJobs))
                 comp.SurvivorJobs = scenarioJobs;
 
-            SelectedPlanetMap.Value.Comp.SurvivorJobOverrideScenarios?.TryGetValue(ActiveNightmareScenario, out comp.SurvivorJobOverrides);
-            SelectedPlanetMap.Value.Comp.SurvivorJobVariantScenarios?.TryGetValue(ActiveNightmareScenario, out comp.SurvivorJobVariantScenarios);
+            if (activeScenarioSurvivorOverrides != null)
+                activeScenarioSurvivorOverrides.TryGetValue(ActiveNightmareScenario, out comp.SurvivorJobOverrides);
+
+            if (activeScenarioSurvivorVariants != null)
+                activeScenarioSurvivorVariants.TryGetValue(ActiveNightmareScenario, out comp.SurvivorJobVariantScenarios);
         }
     }
 
@@ -245,7 +264,13 @@ public sealed partial class CMDistressSignalRuleSystem
         }
 
         if (totalXenos - selectedXenos > 0)
-            _hive.IncreaseBurrowedLarva(totalXenos - selectedXenos);
+        // CCM14-start
+        {
+            var burrowedLarva = totalXenos - selectedXenos;
+            _hive.IncreaseBurrowedLarva(burrowedLarva);
+            comp.XenosSpawned += burrowedLarva;
+        }
+        // CCM14-end
     }
 
     private EntityUid SpawnXenoEnt(EntProtoId ent, ICommonSession player, bool doBurst,

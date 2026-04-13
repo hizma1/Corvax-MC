@@ -366,13 +366,13 @@ public sealed partial class CMDistressSignalRuleSystem : GameRuleSystem<CMDistre
     /// <summary>
     /// Gets the current round result and hijack status for Discord notifications.
     /// </summary>
-    public (DistressSignalRuleResult? Result, bool Hijack, int MarinesTotal, int XenosTotal) GetRoundEndInfo()
+    public (DistressSignalRuleResult? Result, bool Hijack, int MarinesTotal, int XenosTotal, int SurvivorsTotal) GetRoundEndInfo()
     {
         var rule = TryGetActiveRule();
         if (rule == null)
-            return (null, false, 0, 0);
+            return (null, false, 0, 0, 0);
 
-        return (rule.Result, rule.Hijack, rule.MarinesSpawned, rule.XenosSpawned);
+        return (rule.Result, rule.Hijack, rule.MarinesSpawned, rule.XenosSpawned, rule.SurvivorsSpawned);
     }
     // CCM14-end
     /// <summary>
