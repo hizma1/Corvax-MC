@@ -22,6 +22,8 @@ public sealed class RMCVehicleWheelSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<RMCVehicleWheelSlotsComponent, ComponentInit>(OnWheelInit);
         SubscribeLocalEvent<RMCVehicleWheelSlotsComponent, MapInitEvent>(OnWheelMapInit);
         SubscribeLocalEvent<RMCVehicleWheelSlotsComponent, ItemSlotEjectAttemptEvent>(OnWheelEjectAttempt);
@@ -41,12 +43,29 @@ public sealed class RMCVehicleWheelSystem : EntitySystem
         EnsureSlots(ent.Owner, ent.Comp);
         UpdateAppearance(ent.Owner, ent.Comp);
     }
-
+    // CCM14-start
     private void OnWheelEjectAttempt(Entity<RMCVehicleWheelSlotsComponent> ent, ref ItemSlotEjectAttemptEvent args)
     {
+        if (TryComp<RMCHardpointSlotsComponent>(ent.Owner, out var hardpoints) &&
+            TryComp<ItemSlotsComponent>(ent.Owner, out var itemSlots))
+        {
+            string? slotId = null;
+            foreach (var (id, slot) in itemSlots.Slots)
+            {
+                if (slot == args.Slot)
+                {
+                    slotId = id;
+                    break;
+                }
+            }
+
+            if (slotId != null && hardpoints.CompletingRemovals.Contains(slotId))
+                return;
+        }
+
         args.Cancelled = true;
     }
-
+    // CCM14-end
     private void OnWheelInserted(Entity<RMCVehicleWheelSlotsComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (!IsWheelSlot(ent.Comp, args.Container.ID))

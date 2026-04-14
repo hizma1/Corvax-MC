@@ -37,7 +37,7 @@ public sealed partial class RMCHardpointItemComponent : Component
 
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(RMCHardpointSystem), typeof(RMCHardpointSlotSystem))]
+[Access(typeof(RMCHardpointSystem), typeof(RMCHardpointSlotSystem), typeof(RMCVehicleWheelSystem))]
 public sealed partial class RMCHardpointSlotsComponent : Component
 {
     [DataField]
@@ -60,6 +60,9 @@ public sealed partial class RMCHardpointSlotsComponent : Component
 
     [NonSerialized]
     public HashSet<string> PendingRemovals = new();
+
+    [NonSerialized]
+    public HashSet<string> CompletingRemovals = new();
 
     [NonSerialized]
     public HashSet<EntityUid> PendingInsertUsers = new();

@@ -16,6 +16,7 @@ using Content.Shared._RMC14.Medical.Unrevivable;
 using Content.Server._RMC14.Overwatch;
 using Content.Shared._RMC14.Overwatch;
 using Content.Shared._RMC14.Sensor;
+using Content.Shared._RMC14.Survivor;
 using Content.Shared._RMC14.TacticalMap;
 using Content.Shared.Popups;
 using Content.Shared._RMC14.Xenonids.Egg;
@@ -395,6 +396,10 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
 
     private void OnLayerTrackedSquadMemberUpdated(Entity<TacticalMapLayerTrackedComponent> ent, ref SquadMemberUpdatedEvent args)
     {
+        // CCM14-start
+        if (Terminating(ent) || Deleted(ent) || Terminating(args.Squad) || Deleted(args.Squad))
+            return;
+        // CCM14-end
         // squad changes move tracked entities between squad-owned blip layers.
         var changed = false;
         var allSquadLayers = GetAllSquadLayers();
@@ -856,8 +861,9 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
     private void RefreshUserVisibleLayers(Entity<TacticalMapUserComponent> user)
     {
         var baseLayers = EnsureBaseLayers(user);
+        var allowDefaults = !HasComp<RMCSurvivorComponent>(user.Owner) && !HasComp<XenoComponent>(user.Owner); // CCM14
         // players use explicit layer sets, not global defaults.
-        var options = BuildLayerOptions(user.Owner, baseLayers, includeLayerAccess: true, includeAllSquads: false, allowDefaultVisible: false);
+        var options = BuildLayerOptions(user.Owner, baseLayers, includeLayerAccess: true, includeAllSquads: false, allowDefaultVisible: allowDefaults); // CCM14
         ApplyLayerOptions(user, options);
         ApplyVisibleLayerSelection(user, options, baseLayers);
     }
@@ -1114,6 +1120,11 @@ public sealed class TacticalMapSystem : SharedTacticalMapSystem
 
     private bool TryGetSquadLayer(EntityUid squadEntity, out ProtoId<TacticalMapLayerPrototype> layer)
     {
+        // CCM14-start
+        layer = default;
+        if (Terminating(squadEntity) || Deleted(squadEntity))
+            return false;
+        // CCM14-end
         var prototypeId = MetaData(squadEntity).EntityPrototype?.ID;
         if (prototypeId != null && _squadLayerMap.TryGetValue(prototypeId, out layer))
             return true;

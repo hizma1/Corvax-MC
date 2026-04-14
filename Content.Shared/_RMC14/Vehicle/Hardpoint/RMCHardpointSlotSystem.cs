@@ -30,12 +30,31 @@ public sealed class RMCHardpointSlotSystem : EntitySystem
         SubscribeLocalEvent<RMCHardpointSlotsComponent, RMCHardpointRemoveMessage>(OnHardpointRemoveMessage);
         SubscribeLocalEvent<RMCHardpointSlotsComponent, RMCHardpointRemoveDoAfterEvent>(OnHardpointRemoveDoAfter);
     }
-
+    // CCM14-start
     private void OnEjectAttempt(Entity<RMCHardpointSlotsComponent> ent, ref ItemSlotEjectAttemptEvent args)
     {
+        if (!TryComp(ent.Owner, out ItemSlotsComponent? itemSlots))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        string? slotId = null;
+        foreach (var (id, slot) in itemSlots.Slots)
+        {
+            if (slot == args.Slot)
+            {
+                slotId = id;
+                break;
+            }
+        }
+
+        if (slotId != null && ent.Comp.CompletingRemovals.Contains(slotId))
+            return;
+
         args.Cancelled = true;
     }
-
+    // CCM14-end
     private void OnInsertAttempt(Entity<RMCHardpointSlotsComponent> ent, ref ItemSlotInsertAttemptEvent args)
     {
         if (args.User == null)
@@ -251,8 +270,13 @@ public sealed class RMCHardpointSlotSystem : EntitySystem
             _hardpoints.UpdateContainingVehicleUi(ent.Owner);
             return;
         }
+        // CCM14-start
+        ent.Comp.CompletingRemovals.Add(args.SlotId);
+        var ejected = _itemSlots.TryEjectToHands(ent.Owner, itemSlot, args.User, true);
+        ent.Comp.CompletingRemovals.Remove(args.SlotId);
 
-        if (!_itemSlots.TryEjectToHands(ent.Owner, itemSlot, args.User, true))
+        if (!ejected)
+        // CCM14-end
         {
             ent.Comp.LastUiError = "Couldn't remove the hardpoint. Free a hand and try again.";
             _hardpoints.SetContainingVehicleUiError(ent.Owner, ent.Comp.LastUiError);
