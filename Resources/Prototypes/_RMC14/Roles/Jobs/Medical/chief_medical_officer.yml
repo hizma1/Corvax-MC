@@ -89,6 +89,8 @@
     id: CMIDCardCMO
     ears: CMHeadsetCMO
     belt: CMBeltMedicalFilled
+    pocket1: CCMAdvancedBruteToolHealer
+    pocket2: CCMAdvancedBurnToolHealer
 
 - type: entity
   parent: CMSpawnPointJobBase
