@@ -345,6 +345,10 @@
       - id: RMCSatchelMarineIntelChestrig
         points: 15
 # // CCM CHANGES ↓
+      - id: CCMAdvancedBruteToolHealer
+        points: 10
+      - id: CCMAdvancedBurnToolHealer
+        points: 10
     - name: Опасные инструменты # CCM14
       choices: { CCMSynthWeapon: 1 }
       entries:
