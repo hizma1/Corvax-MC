@@ -20,7 +20,7 @@
     treats: false
     group: Brute
     consumable: false
-    scalingDoAfter: 0.25
+    scalingDoAfter: 0.1
     damage: -20
     canUseUnskilled: false
     skills:
@@ -67,7 +67,7 @@
     treats: false
     group: Burn
     consumable: false
-    scalingDoAfter: 0.25
+    scalingDoAfter: 0.1
     damage: -20
     canUseUnskilled: false
     skills:
