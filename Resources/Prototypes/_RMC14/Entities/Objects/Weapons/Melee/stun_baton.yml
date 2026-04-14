@@ -108,10 +108,10 @@
     higherOnXenos: true
     slowTime: 3
   - type: UseDelay
-    delay: 1
+    delay: 2
   - type: UseDelayOnMeleeHit
   - type: MeleeThrowOnHit
-    distance: 3
+    distance: 5
     speed: 8
     stunTime: 0
   - type: MeleeWeapon
