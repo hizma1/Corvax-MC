@@ -100,7 +100,7 @@
     size: Small
 # // CCM CHANGES ↓
   - type: MeleeDamageMultiplier
-    multiplier: 13.3
+    multiplier: 7
     whitelist:
       components:
       - Xeno
@@ -111,8 +111,8 @@
     delay: 1
   - type: UseDelayOnMeleeHit
   - type: MeleeThrowOnHit
-    distance: 0.555
-    speed: 5
+    distance: 3
+    speed: 8
     stunTime: 0
   - type: MeleeWeapon
     attackRate: 0.444
