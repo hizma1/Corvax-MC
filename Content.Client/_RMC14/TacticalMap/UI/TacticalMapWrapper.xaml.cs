@@ -492,7 +492,7 @@ public sealed partial class TacticalMapWrapper : Control
 
     private void SetObjectivesToggleText()
     {
-        var text = _objectivesVisible ? "Hide" : "Show";
+        var text = Loc.GetString("ui-tactical-map-objectives-toggle", ("visible", _objectivesVisible)); // CCM14
         SetButtonText(ObjectivesToggleButton, text, DefaultButtonTextColor);
     }
 
