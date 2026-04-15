@@ -5,9 +5,6 @@
   name: advanced surgical tool
   description: A roll of military-grade surgical line, able to seamlessly sew up any wound. Also works as a robust fishing line for maritime deployments.
   components:
-  - type: Tag
-    tags:
-    - CMSurgicalLine
   - type: Sprite
     sprite: _RMC14/Objects/Medical/Surgery/scalpel.rsi
     state: scalpel_manager
@@ -53,9 +50,6 @@
   suffix: CCM - Healing Burn
   description: An applicator for silicon skin field grafts. The stuff reeks, itches like the dickens, hurts going on, and the color is a perfectly averaged multiethnic tone that doesn't blend with anyone's complexion. But at least you don't have to stay in sickbay.
   components:
-  - type: Tag
-    tags:
-    - CMSynthGraft
   - type: Sprite
     sprite: _RMC14/Objects/Medical/Surgery/cautery.rsi
     state: predator_cautery
