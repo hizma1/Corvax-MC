@@ -1324,6 +1324,8 @@
       entries:
       - id: CMHandsLatex
       - id: CMHeadsetCMO
+      - id: CCMAdvancedBurnToolHealer
+      - id: CCMAdvancedBruteToolHealer
     - name: Очки # CCM14
       jobs:
       - CMCMO
