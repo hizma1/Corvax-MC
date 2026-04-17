@@ -98,11 +98,6 @@
     quickEquip: false
     slots: [mask]
     sprite: _RMC14/Mobs/Xenonids/Parasite/parasite_mask.rsi
-  - type: CCMParasiteSprite
-    maskRsi: _RMC14/Mobs/Xenonids/Parasite/parasite_mask.rsi
-    maskInventoryState: icon
-    normalRsi: _RMC14/Mobs/Xenonids/Parasite/parasite.rsi
-    normalState: alive
   - type: HideLayerClothing
     slots:
     - Snout
