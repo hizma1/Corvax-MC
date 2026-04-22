@@ -237,6 +237,8 @@
       - RMCNailgunTactical
       - RMCCircuitboard
       - RMCSynthResetKey
+      - RMCWeldingGoggle
+      - RMCHelmetWelding
       # TODO stock parts
       components:
       - Welder
@@ -258,6 +260,7 @@
       - Material
       - Sentry
       - FullSandbag
+      - ComponentToggler
 
 - type: entity
   parent: CMBeltUtility
@@ -304,6 +307,8 @@
       - RMCNailgunCompact
       - RMCNailgunTactical
       - RMCSynthResetKey
+      - RMCWeldingGoggle
+      - RMCHelmetWelding
       #      - # TODO analyzer
       components:
       - Welder
@@ -312,6 +317,10 @@
       - GasAnalyzer
       - LightReplacer
       - EntrenchingTool
+  - type: IgnoreContentsSize
+    items:
+      components:
+      - ComponentToggler
   - type: FixedItemSizeStorage
   - type: LimitedStorage
     limits:
