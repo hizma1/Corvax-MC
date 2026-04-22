@@ -809,8 +809,8 @@ public sealed class VehicleSupplySystem : EntitySystem
             {
                 var key = Normalize(entry.Vehicle.Id);
                 var count = GetStoredCount(lift.Comp, key);
-                if (count <= 0)
-                    continue;
+                // if (count <= 0)
+                //     continue;
 
                 available.Add(new VehicleSupplyEntryState(entry.Vehicle.Id, GetEntryName(entry), count));
                 continue;
@@ -1023,11 +1023,11 @@ public sealed class VehicleSupplySystem : EntitySystem
         categoryLabel = string.Empty;
         categoryOrder = int.MaxValue;
 
-        if (!string.Equals(Normalize(vehicleId), "rmcvehicletank", StringComparison.Ordinal))
+        if (!string.Equals(Normalize(vehicleId), "Vehicletank", StringComparison.Ordinal))
             return false;
 
         var hardpointKey = Normalize(hardpointId);
-        if (hardpointKey == "rmcvehicletanksnowplow")
+        if (hardpointKey == "Vehicletanksnowplow")
         {
             categoryKey = "tank-general";
             categoryLabel = "General";
@@ -1294,13 +1294,12 @@ public sealed class VehicleSupplySystem : EntitySystem
         return false;
     }
 
+    // CCM14-start: Always use localized name from prototype
     private string GetEntryName(VehicleSupplyEntry entry)
     {
-        if (!string.IsNullOrWhiteSpace(entry.Name))
-            return entry.Name;
-
         return GetPrototypeName(entry.Vehicle.Id);
     }
+    // CCM14-end
 
     private string GetPrototypeName(string protoId)
     {
@@ -1538,14 +1537,18 @@ public sealed class VehicleSupplySystem : EntitySystem
 
         return unlocked;
     }
-
+    // CCM14-start
     private static bool IsEntryUnlocked(VehicleSupplyEntry entry, HashSet<string> unlocked)
     {
-        if (string.IsNullOrWhiteSpace(entry.Unlock))
+        if (!string.IsNullOrWhiteSpace(entry.Unlock))
             return true;
 
-        return unlocked.Contains(Normalize(entry.Unlock));
+        if (!string.IsNullOrWhiteSpace(entry.Locked))
+            return unlocked.Contains(Normalize(entry.Locked));
+
+        return true;
     }
+    // CCM14-end
 #if false // CCM14-start
     private IReadOnlyList<string> GetHardpointsForVehicle(string vehicleId, IReadOnlyList<VehicleSupplyEntry> entries)
     {
