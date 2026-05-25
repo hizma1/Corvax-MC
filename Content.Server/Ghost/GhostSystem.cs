@@ -1,6 +1,6 @@
+﻿// CM14 rework: non-RMC edit marker.
 using System.Linq;
 using System.Numerics;
-using Content.Server._Forge.Sponsors; // Forge-Change
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -9,6 +9,7 @@ using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared._RMC14.Ghost;
+using Content.Shared._RMC14.Xenonids;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -27,7 +28,9 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.NPC.Components;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Content.Shared.Warps;
@@ -71,13 +74,69 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
-        [Dependency] private readonly SponsorManager _sponsors = default!; // Forge-Change
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
         private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";
+
+        private static readonly Dictionary<string, string> FactionTabNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["RMCXeno"] = "Xenos",
+            ["Xeno"] = "Xenos",
+            ["UNMC"] = "Marines",
+            ["GOVFOR"] = "Marines",
+            ["RoyalMarines"] = "TSE/Royal",
+            ["TSE"] = "TSE/Royal",
+            ["SPP"] = "SPP",
+            ["WeYa"] = "WeYa/PMC",
+            ["AUWeYu"] = "WeYa/PMC",
+            ["Halcyon"] = "WeYa/PMC",
+            ["CLF"] = "CLF",
+            ["Bureau"] = "CMB/Provost",
+            ["AUBureau"] = "CMB/Provost",
+            ["Civilian"] = "Survivors",
+            ["AUColonist"] = "Survivors",
+            ["ColonySynth"] = "Survivors",
+            ["OPFOR"] = "OPFOR",
+            ["THREAT"] = "Threat",
+            ["CMUAPE"] = "APE",
+        };
+
+        private static readonly string[] FactionPriority =
+        {
+            "RMCXeno",
+            "Xeno",
+            "UNMC",
+            "GOVFOR",
+            "RoyalMarines",
+            "TSE",
+            "SPP",
+            "WeYa",
+            "AUWeYu",
+            "Halcyon",
+            "CLF",
+            "Bureau",
+            "AUBureau",
+            "Civilian",
+            "AUColonist",
+            "ColonySynth",
+            "OPFOR",
+            "THREAT",
+            "CMUAPE",
+        };
+
+        private static readonly HashSet<string> MarineDepartments = new(StringComparer.Ordinal)
+        {
+            "CMAuxiliarySupport",
+            "CMCommand",
+            "CMEngineering",
+            "CMSquad",
+            "CMMedbay",
+            "CMMilitaryPolice",
+            "CMRequisitions",
+        };
 
         public override void Initialize()
         {
@@ -370,7 +429,12 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
+                yield return new GhostWarp(
+                    GetNetEntity(uid),
+                    warp.Location ?? Name(uid),
+                    true,
+                    tab: "Locations",
+                    section: "Warp Points");
             }
         }
 
@@ -383,14 +447,185 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached))
+                    continue;
+
                 TryComp<MindContainerComponent>(attached, out var mind);
+                TryComp<XenoComponent>(attached, out var xeno);
 
-                var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+                _jobs.MindTryGetJob(mind?.Mind, out var job);
+                if (xeno != null && _prototypeManager.TryIndex(xeno.Role, out JobPrototype? xenoJob))
+                    job = xenoJob;
 
-                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                var department = GetDepartment(job);
+                var tab = GetFactionTab(attached, job, xeno, department);
+                var section = GetSection(tab, job, xeno, department);
+                var roleName = job?.LocalizedName ?? Loc.GetString("generic-unknown-title");
+                var meta = Comp<MetaDataComponent>(attached);
+
+                yield return new GhostWarp(
+                    GetNetEntity(attached),
+                    meta.EntityName,
+                    false,
+                    roleName,
+                    tab,
+                    section,
+                    job?.Icon.ToString(),
+                    job?.JobPreviewEntity?.ToString() ?? meta.EntityPrototype?.ID,
+                    job?.ID,
+                    job?.RealDisplayWeight ?? 0,
+                    xeno?.Tier,
+                    xeno != null || IsXenoJob(job));
             }
+        }
+
+        private DepartmentPrototype? GetDepartment(JobPrototype? job)
+        {
+            if (job == null)
+                return null;
+
+            var jobId = new ProtoId<JobPrototype>(job.ID);
+            return _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
+                .Where(department => department.Roles.Contains(jobId))
+                .OrderBy(department => department, DepartmentUIComparer.Instance)
+                .FirstOrDefault();
+        }
+
+        private string GetFactionTab(
+            EntityUid uid,
+            JobPrototype? job,
+            XenoComponent? xeno,
+            DepartmentPrototype? department)
+        {
+            if (xeno != null || IsXenoJob(job))
+                return "Xenos";
+
+            if (TryComp<NpcFactionMemberComponent>(uid, out var faction) &&
+                TryGetFactionTab(faction, out var factionTab))
+            {
+                return factionTab;
+            }
+
+            if (department != null)
+            {
+                if (department.ID == "CMSurvivor")
+                    return "Survivors";
+
+                if (MarineDepartments.Contains(department.ID))
+                    return "Marines";
+            }
+
+            if (job != null && TryGetJobIdTab(job.ID, out var jobTab))
+                return jobTab;
+
+            return "Other";
+        }
+
+        private static bool IsXenoJob(JobPrototype? job)
+        {
+            return job?.ID.StartsWith("CMXeno", StringComparison.OrdinalIgnoreCase) == true;
+        }
+
+        private static bool TryGetFactionTab(NpcFactionMemberComponent faction, out string tab)
+        {
+            foreach (var priority in FactionPriority)
+            {
+                if (!faction.Factions.Any(factionId => factionId.ToString().Equals(priority, StringComparison.OrdinalIgnoreCase)))
+                    continue;
+
+                tab = FactionTabNames[priority];
+                return true;
+            }
+
+            foreach (var factionId in faction.Factions)
+            {
+                if (!FactionTabNames.TryGetValue(factionId.ToString(), out tab!))
+                    continue;
+
+                return true;
+            }
+
+            tab = faction.Factions.FirstOrDefault().ToString() ?? "Other";
+            return !string.IsNullOrWhiteSpace(tab);
+        }
+
+        private static bool TryGetJobIdTab(string jobId, out string tab)
+        {
+            if (jobId.Contains("CLF", StringComparison.OrdinalIgnoreCase))
+            {
+                tab = "CLF";
+                return true;
+            }
+
+            if (jobId.Contains("SPP", StringComparison.OrdinalIgnoreCase))
+            {
+                tab = "SPP";
+                return true;
+            }
+
+            if (jobId.Contains("PMC", StringComparison.OrdinalIgnoreCase) ||
+                jobId.Contains("WeYa", StringComparison.OrdinalIgnoreCase) ||
+                jobId.Contains("Corporate", StringComparison.OrdinalIgnoreCase))
+            {
+                tab = "WeYa/PMC";
+                return true;
+            }
+
+            if (jobId.Contains("Bureau", StringComparison.OrdinalIgnoreCase) ||
+                jobId.Contains("CMB", StringComparison.OrdinalIgnoreCase) ||
+                jobId.Contains("Provost", StringComparison.OrdinalIgnoreCase))
+            {
+                tab = "CMB/Provost";
+                return true;
+            }
+
+            if (jobId.Contains("Royal", StringComparison.OrdinalIgnoreCase) ||
+                jobId.Contains("TSE", StringComparison.OrdinalIgnoreCase))
+            {
+                tab = "TSE/Royal";
+                return true;
+            }
+
+            tab = string.Empty;
+            return false;
+        }
+
+        private string GetSection(
+            string tab,
+            JobPrototype? job,
+            XenoComponent? xeno,
+            DepartmentPrototype? department)
+        {
+            if (tab == "Xenos")
+            {
+                if (job?.ID.Contains("Queen", StringComparison.OrdinalIgnoreCase) == true)
+                    return "Queen";
+
+                return xeno?.Tier != null
+                    ? $"Tier {xeno.Tier}"
+                    : "Unknown Tier";
+            }
+
+            if (tab == "Marines" && department != null)
+                return Loc.GetString(department.Name);
+
+            if (tab == "Survivors")
+                return "Survivors";
+
+            if (job == null)
+                return "Personnel";
+
+            var weight = job.RealDisplayWeight;
+            if (weight >= 10)
+                return "High Command";
+
+            if (weight >= 5)
+                return "Command";
+
+            if (weight >= 2)
+                return "Specialists";
+
+            return weight > 0 ? "Line Personnel" : "Personnel";
         }
 
         #endregion
@@ -488,34 +723,7 @@ namespace Content.Server.Ghost
                 return null;
             }
 
-            // Forge-Change-Start
-            var user = mind.Comp.UserId;
-            EntityUid ghost;
-            try
-            {
-                if (user != null && _sponsors.TryGetSponsor(user.Value, out var level)
-                                 && _sponsors.TryGetSponsorGhost(level, out var sponsorGhost))
-                {
-                    ghost = Spawn(sponsorGhost, spawnPosition.Value);
-                }
-                else
-                {
-                    ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition.Value);
-                }
-
-                if (!HasComp<GhostComponent>(ghost))
-                {
-                    AddComp<GhostComponent>(ghost);
-                    Log.Warning($"Added missing GhostComponent to {ToPrettyString(ghost)}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Failed to spawn ghost: {ex}");
-                return null;
-            }
-            // Forge-Change-End
-
+            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             // Try setting the ghost entity name to either the character name or the player name.
@@ -571,8 +779,8 @@ namespace Content.Server.Ghost
             {
                 if (_player.TryGetSessionById(mind.UserId, out var session)) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
-                    _chatManager.DispatchServerMessage(session, Loc.GetString("comp-mind-ghosting-prevented"),
-                        true);
+                    _chatManager.DispatchServerMessageLoc(session, "comp-mind-ghosting-prevented",
+                        suppressLog: true);
                 }
 
                 return false;

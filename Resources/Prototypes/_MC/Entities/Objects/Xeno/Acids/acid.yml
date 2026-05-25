@@ -1,0 +1,17 @@
+- type: entity
+  parent: MCXenoAcidSpray
+  id: MCXenoAcidSprayBull
+  components:
+  - type: TimedDespawn
+    lifetime: 3
+  - type: DamageOnCollide
+    paralyze: 1
+    damage:
+      types:
+        Heat: 9
+    chainDamage:
+      types:
+        Heat: 7.5
+    whitelist:
+      components:
+      - Marine

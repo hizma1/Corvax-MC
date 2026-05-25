@@ -15,3 +15,4 @@ public sealed partial class NameTunnelWindow : DefaultWindow
         SubmitButton.Text = Loc.GetString("xeno-ui-name-tunnel-submit-text");
     }
 }
+

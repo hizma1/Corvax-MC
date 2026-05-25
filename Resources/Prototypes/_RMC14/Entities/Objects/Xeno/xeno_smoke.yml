@@ -1,4 +1,5 @@
 - type: entity
+  parent: MCSmokeXenoTransvitox # CCM14
   id: RMCSmokeAcid
   name: acid gas
   categories: [ HideSpawnMenu ]
@@ -17,7 +18,6 @@
         - MobMask
         layer:
         - MidImpassable
-  - type: Occluder
   - type: Sprite
     sprite: _RMC14/Effects/smoke.rsi
     state: smoke2
@@ -28,9 +28,12 @@
     tags:
     - HideContextMenu
   - type: Appearance
-  - type: ActiveEdgeSpreader
-  - type: EdgeSpreader
+  - type: MCEdgeSpreader # CCM14
+    delay: 0.7
+    range: 3
     id: RMCSmokeAcid
+  - type: MCTimedDespawnDisappearanceVisuals
+    lifetime: 12
   - type: EvenSmoke
     spawn: RMCSmokeAcid
     range: 3
@@ -50,11 +53,11 @@
     whitelist:
       components:
       - Marine
-      - Xeno
       - Vehicle
   - type: DeleteOnExplosion # so this is supposed to be random depending on the explosion severity but uhhh hahAHAHA help
 
 - type: entity
+  parent: MCSmokeXenoNeurotoxin # CCM14
   id: RMCSmokeNeurotoxin
   name: neurotoxin gas
   categories: [ HideSpawnMenu ]
@@ -73,7 +76,6 @@
         - MobMask
         layer:
         - MidImpassable
-  - type: Occluder
   - type: Sprite
     sprite: _RMC14/Effects/smoke.rsi
     state: smoke2
@@ -85,8 +87,11 @@
     - HideContextMenu
   - type: Appearance
   - type: ActiveEdgeSpreader
-  - type: EdgeSpreader
+  - type: MCEdgeSpreader # CCM14
+    delay: 0.1
     id: RMCSmokeNeurotoxin
+  - type: MCTimedDespawnDisappearanceVisuals # CCM14
+    lifetime: 12
   - type: EvenSmoke
     spawn: RMCSmokeNeurotoxin
     range: 4
@@ -133,7 +138,6 @@
         - MobMask
         layer:
         - MidImpassable
-  - type: Occluder
   - type: Sprite
     sprite: _RMC14/Effects/smoke.rsi
     state: smoke2
@@ -176,12 +180,11 @@
     - HideContextMenu
   - type: Appearance
   - type: DeleteOnExplosion
-  - type: EdgeSpreader
+  - type: MCEdgeSpreader # CCM14
+    delay: 0.1
     id: RMCSmokeKingDoom
-  - type: ActiveEdgeSpreader
-  - type: EvenSmoke
-    spawn: RMCSmokeKingDoom
-    range: 7
+  - type: MCTimedDespawnDisappearanceVisuals # CCM14
+    lifetime: 12
 
 
 

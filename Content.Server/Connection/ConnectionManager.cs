@@ -2,8 +2,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using Content.Server._Forge.Discord; // Forge-Change
-using Content.Server._Forge.Sponsors; // Forge-Change
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection.IPIntel;
@@ -20,8 +18,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Corvax.Interfaces.Shared; // Corvax-Sponsors
-using Content.Corvax.Interfaces.Server; // Corvax-Sponsors
 
 /*
  * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
@@ -33,7 +29,6 @@ namespace Content.Server.Connection
     {
         void Initialize();
         void PostInit();
-        Task<bool> HavePrivilegedJoin(NetUserId userId); // Corvax-Queue
 
         /// <summary>
         /// Temporarily allow a user to bypass regular connection requirements.
@@ -55,6 +50,8 @@ namespace Content.Server.Connection
     /// </summary>
     public sealed partial class ConnectionManager : IConnectionManager
     {
+        internal const string HiddenBanDisconnectReason = "Failed to establish connection - no response from remote host";
+
         [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
@@ -68,11 +65,8 @@ namespace Content.Server.Connection
         [Dependency] private readonly IHttpClientHolder _http = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly SponsorManager _sponsorMan = default!; // Forge-Change
-        [Dependency] private readonly DiscordAuthManager _discordAuth = default!; // Forge-Change
 
         private GameTicker? _ticker;
-        private ISharedSponsorsManager? _sponsorsMgr; // Corvax-Sponsors
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
@@ -89,7 +83,6 @@ namespace Content.Server.Connection
 
             _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
 
-            IoCManager.Instance!.TryResolveType(out _sponsorsMgr); // Corvax-Sponsors
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
@@ -223,6 +216,10 @@ namespace Content.Server.Connection
             var addr = e.IP.Address;
             var userId = e.UserId;
             ImmutableArray<byte>? hwId = e.UserData.HWId;
+
+            if (await _db.GetHiddenBanStatusAsync(userId, addr, hwId, e.UserData.ModernHWIds))
+                return (ConnectionDenyReason.HiddenBan, HiddenBanDisconnectReason, null);
+
             if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))
             {
                 // HWId not available for user's platform, don't look it up.
@@ -278,7 +275,7 @@ namespace Content.Server.Connection
                 }
 
                 var minOverallMinutes = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
-                var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+                var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalMinutes > minOverallMinutes;
 
                 // Use the custom reason if it exists & they don't have the minimum time
@@ -312,10 +309,7 @@ namespace Content.Server.Connection
                 softPlayerCount -= _adminManager.ActiveAdmins.Count();
             }
 
-            // Corvax-Queue-Start
-            var isQueueEnabled = IoCManager.Instance!.TryResolveType<IServerJoinQueueManager>(out var mgr) && mgr.IsEnabled;
-            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame && !isQueueEnabled)
-            // Corvax-Queue-End
+            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
@@ -384,19 +378,5 @@ namespace Content.Server.Connection
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
         }
-
-        // Corvax-Queue-Start: Make these conditions in one place, for checks in the connection and in the queue
-        public async Task<bool> HavePrivilegedJoin(NetUserId userId)
-        {
-            var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && await _db.GetAdminDataForAsync(userId) != null;
-            var havePriorityJoin = _sponsorsMgr != null && _sponsorsMgr.HaveServerPriorityJoin(userId); // Corvax-Sponsors
-            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
-                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
-                            status == PlayerGameStatus.JoinedGame;
-            return adminBypass ||
-                   havePriorityJoin || // Corvax-Sponsors
-                   wasInGame;
-        }
-        // Corvax-Queue-End
     }
 }

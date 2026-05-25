@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using Content.Shared._MC.Map;
 using Content.Shared._RMC14.CCVar;
 using Content.Shared._RMC14.Power;
 using Content.Shared._RMC14.TacticalMap;
@@ -76,7 +77,7 @@ public sealed class RMCPlanetSystem : EntitySystem
 
         if (TryComp(ent, out AudioComponent? audio))
 #pragma warning disable RA0002
-            audio.Params.Volume = SharedAudioSystem.GainToVolume(_hijackSongGain);
+            audio.Params.Volume = Content.Shared.Audio.AudioHelpers.SafeGainToVolume(_hijackSongGain, RMCCVars.VolumeGainHijackSong.DefaultValue);
 #pragma warning restore RA0002
     }
 
@@ -90,7 +91,7 @@ public sealed class RMCPlanetSystem : EntitySystem
         while (query.MoveNext(out _, out _, out var audio))
         {
 #pragma warning disable RA0002
-            audio.Params = audio.Params with { Volume = SharedAudioSystem.GainToVolume(gain) };
+            audio.Params = audio.Params with { Volume = Content.Shared.Audio.AudioHelpers.SafeGainToVolume(gain, RMCCVars.VolumeGainHijackSong.DefaultValue) };
 #pragma warning restore RA0002
         }
     }
@@ -228,6 +229,14 @@ public sealed class RMCPlanetSystem : EntitySystem
 
         EnsureComp<RMCPlanetComponent>(map.Value);
         EnsureComp<TacticalMapComponent>(map.Value);
+
+        if (PlanetPaths.TryGetValue(path.ToString(), out var planetId) &&
+            _prototypes.TryIndex(planetId, out var planetProto))
+        {
+            var spawnEv = new MCPlanetMapSpawnEvent((map.Value, map.Value.Comp), planetProto);
+            RaiseLocalEvent(map.Value, ref spawnEv);
+        }
+
         _rmcPower.RecalculatePower();
         return map.Value.Comp.MapId;
     }

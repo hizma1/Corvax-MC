@@ -25,6 +25,7 @@ public sealed partial class PlayerTab : Control
     private const string ArrowDown = "↓";
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
+    private readonly Color _headerColor = Color.FromHex("#292B38");
     private readonly AdminSystem _adminSystem;
     private IReadOnlyList<PlayerInfo> _players = new List<PlayerInfo>();
 
@@ -52,11 +53,10 @@ public sealed partial class PlayerTab : Control
         _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
 
-
         OverlayButton.OnPressed += OverlayButtonPressed;
         ShowDisconnectedButton.OnPressed += ShowDisconnectedPressed;
 
-        ListHeader.BackgroundColorPanel.PanelOverride = new StyleBoxFlat(_altColor);
+        ListHeader.BackgroundColorPanel.PanelOverride = new StyleBoxFlat(_headerColor);
         ListHeader.OnHeaderClicked += HeaderClicked;
 
         SearchList.SearchBar = SearchLineEdit;

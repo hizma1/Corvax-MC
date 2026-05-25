@@ -1,3 +1,4 @@
+﻿// CM14 rework: non-RMC edit marker.
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Audio;
@@ -23,6 +24,9 @@ namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem
 {
+    // CCM 22 > 23: temporarily disable ambient music playback.
+    private const bool CcmDisableAmbientMusic = true;
+
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -75,11 +79,12 @@ public sealed partial class ContentAudioSystem
 
     private void AmbienceCVarChanged(float obj)
     {
-        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
+        _volumeSlider = AudioHelpers.SafeGainToVolume(obj, CCVars.AmbientMusicVolume.DefaultValue);
 
         if (_ambientMusicStream != null && _musicProto != null)
         {
-            _audio.SetVolume(_ambientMusicStream, _musicProto.Sound.Params.Volume + _volumeSlider);
+            _audio.SetVolume(_ambientMusicStream,
+                AudioHelpers.SanitizeVolume(_musicProto.Sound.Params.Volume + _volumeSlider, _musicProto.Sound.Params.Volume));
         }
     }
 
@@ -149,6 +154,13 @@ public sealed partial class ContentAudioSystem
 
     private void UpdateAmbientMusic()
     {
+        if (CcmDisableAmbientMusic)
+        {
+            _ambientMusicStream = Audio.Stop(_ambientMusicStream);
+            _musicProto = null;
+            return;
+        }
+
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
@@ -211,7 +223,8 @@ public sealed partial class ContentAudioSystem
             track.ToString(),
             Filter.Local(),
             false,
-            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+            AudioParams.Default.WithVolume(
+                AudioHelpers.SanitizeVolume(_musicProto.Sound.Params.Volume + _volumeSlider, _musicProto.Sound.Params.Volume)));
 
         _ambientMusicStream = strim?.Entity;
 

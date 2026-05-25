@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
@@ -37,16 +38,16 @@ public sealed class AudioUIController : UIController
 
     private void SetInterfaceVolume(float obj)
     {
-        _interfaceGain = obj;
+        _interfaceGain = AudioHelpers.SanitizeGain(obj, CCVars.InterfaceVolume.DefaultValue);
 
         if (_clickSource != null)
         {
-            _clickSource.Gain = ClickGain * _interfaceGain;
+            _clickSource.Gain = AudioHelpers.SanitizeGain(ClickGain * _interfaceGain, 0f);
         }
 
         if (_hoverSource != null)
         {
-            _hoverSource.Gain = HoverGain * _interfaceGain;
+            _hoverSource.Gain = AudioHelpers.SanitizeGain(HoverGain * _interfaceGain, 0f);
         }
     }
 
@@ -55,12 +56,18 @@ public sealed class AudioUIController : UIController
         if (!string.IsNullOrEmpty(value))
         {
             var resource = GetSoundOrFallback(value, CCVars.UIClickSound.DefaultValue);
+            if (resource == null)
+            {
+                _clickSource = null;
+                UIManager.SetClickSound(null);
+                return;
+            }
             var source =
                 _audioManager.CreateAudioSource(resource);
 
             if (source != null)
             {
-                source.Gain = ClickGain * _interfaceGain;
+                source.Gain = AudioHelpers.SanitizeGain(ClickGain * _interfaceGain, 0f);
                 source.Global = true;
             }
 
@@ -69,6 +76,7 @@ public sealed class AudioUIController : UIController
         }
         else
         {
+            _clickSource = null;
             UIManager.SetClickSound(null);
         }
     }
@@ -78,12 +86,18 @@ public sealed class AudioUIController : UIController
         if (!string.IsNullOrEmpty(value))
         {
             var hoverResource = GetSoundOrFallback(value, CCVars.UIHoverSound.DefaultValue);
+            if (hoverResource == null)
+            {
+                _hoverSource = null;
+                UIManager.SetHoverSound(null);
+                return;
+            }
             var hoverSource =
                 _audioManager.CreateAudioSource(hoverResource);
 
             if (hoverSource != null)
             {
-                hoverSource.Gain = HoverGain * _interfaceGain;
+                hoverSource.Gain = AudioHelpers.SanitizeGain(HoverGain * _interfaceGain, 0f);
                 hoverSource.Global = true;
             }
 
@@ -92,15 +106,18 @@ public sealed class AudioUIController : UIController
         }
         else
         {
+            _hoverSource = null;
             UIManager.SetHoverSound(null);
         }
     }
 
-    private AudioResource GetSoundOrFallback(string path, string fallback)
+    private AudioResource? GetSoundOrFallback(string path, string fallback)
     {
-        if (!_cache.TryGetResource(path, out AudioResource? resource))
-            return _cache.GetResource<AudioResource>(fallback);
+        if (_cache.TryGetResource(path, out AudioResource? resource))
+            return resource;
 
-        return resource;
+        return _cache.TryGetResource(fallback, out AudioResource? fallbackResource)
+            ? fallbackResource
+            : null;
     }
 }

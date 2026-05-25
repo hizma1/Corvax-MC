@@ -1,11 +1,12 @@
+﻿# CM14 rework: non-RMC edit marker.
 [net]
 tickrate = 30
 max_connections = 1024
 
 [game]
-hostname = "🛰️ Corvax — Colonial Marines 🌍"
-desc = "Corvax первый русскоязычный проект в Space Station 14.\nПервый русскоязычный проект на тему колониальных морпехов.\nНа сервере средние требования к RP."
-soft_max_players = 100
+hostname = "[RU]🌍 Colonial Marine Corps 🌍"
+desc = "Colonial Marine Corps (ex-Corvax CM) — the first multilingual Space Station 14 build focused on Colonial Marines and based on the RMC-14. \n The server maintains Medium RP requirements."
+soft_max_players = 250
 map_rotation = true
 lobbyduration = 180
 round_end_pvs_overrides = false
@@ -55,6 +56,10 @@ cooldown = 120
 mass_limit = -1
 emergency = false
 
+[database]
+engine = "sqlite"
+sqlite_dbpath = "preferences.db"
+
 [discord]
 rich_main_icon_id = "corvax"
 
@@ -88,14 +93,20 @@ can_create_vacuum = false
 preload = false
 
 [rmc]
-late_joins_per_burrowed_larva = 3.5
-late_joins_per_burrowed_larva_early = 3.5
-late_joins_per_burrowed_larva_early_threshold_minutes = 5
-marines_per_xeno = 3.5
-auto_balance_step = 0.5
-auto_balance_min = 2.5
-auto_balance_max = 4.5
+late_joins_per_burrowed_larva = 7
+late_joins_per_burrowed_larva_early = 7.5
+late_joins_per_burrowed_larva_early_threshold_minutes = 15
+marines_per_xeno = 6
+auto_balance_step = 0.25
+auto_balance_min = 5
+auto_balance_max = 6.5
 distress_xenos_minimum = 1
+discord_oauth_base_url = "http://127.0.0.1:2424"
+discord_oauth_state_secret = "replace-me"
+discord_oauth_state_lifetime_seconds = 300
+emote_cooldown_seconds = 1
+chat_translate_api = "http://127.0.0.1:5500/translate"
+chat_translate_source = "auto"
 enable_suicide = false
 
 [gateway]
@@ -108,10 +119,10 @@ screen_shake_intensity = 1
 enabled = false
 
 [build]
-engine_version = "264.0.2-fix-physics" #and remember to remove it next update...xd
+engine_version = "264.0.2-fix-physics"
 
 [movement]
 mob_pushing = true
 
-[jerry]
-discord_auth_enabled = true
+[mc.z_levels]
+enabled = false

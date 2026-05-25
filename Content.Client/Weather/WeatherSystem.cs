@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.Light.Components;
 using Content.Shared.Weather;
 using Robust.Client.Audio;
@@ -48,7 +49,11 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!Timing.IsFirstTimePredicted || weatherProto.Sound == null)
             return;
 
-        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
+        weather.Stream ??= _audio.PlayGlobal(
+            weatherProto.Sound,
+            Filter.Local(),
+            true,
+            AudioHelpers.SanitizeAudioParams(weatherProto.Sound.Params))?.Entity;
 
         if (!TryComp(weather.Stream, out AudioComponent? comp))
             return;
@@ -116,8 +121,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
             }
         }
 
-        var alpha = GetPercent(weather, uid);
-        alpha *= SharedAudioSystem.VolumeToGain(weatherProto.Sound.Params.Volume);
+        var alpha = Math.Clamp(GetPercent(weather, uid), 0f, 1f);
+        alpha *= AudioHelpers.SafeVolumeToGain(weatherProto.Sound.Params.Volume, 0f);
+        alpha = AudioHelpers.SanitizeGain(alpha, 0f);
         _audio.SetGain(weather.Stream, alpha, comp);
         comp.Occlusion = occlusion;
     }
@@ -139,11 +145,18 @@ public sealed class WeatherSystem : SharedWeatherSystem
             weather.Stream = _audio.Stop(weather.Stream);
             return true;
         }
+
+        if (weatherProto.Sound == null)
+            return true;
         //
 
         // TODO: Fades (properly)
         weather.Stream = _audio.Stop(weather.Stream);
-        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
+        weather.Stream = _audio.PlayGlobal(
+            weatherProto.Sound,
+            Filter.Local(),
+            true,
+            AudioHelpers.SanitizeAudioParams(weatherProto.Sound.Params))?.Entity;
         return true;
     }
 

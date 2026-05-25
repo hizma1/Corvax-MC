@@ -20,21 +20,77 @@
     - ActionXenoBoneChips
     - ActionXenoZoom
     - ActionXenoDevolve
+    - ActionXenoRounyScreech
+    - ActionCCMXenoChargeLine
     tier: 3
     hudOffset: 0,0.63
     unlockAt: 900 # 15 minutes
   - type: XenoDevolve
     devolvesTo:
-    - RMCXenoLurkerBase
+    - CMXenoLurker
   - type: XenoEvolutionCapped
     id: CCMXenoRouny
     max: 1
   - type: MovementSpeedModifier
-    baseWalkSpeed: 8
-    baseSprintSpeed: 15
+    baseWalkSpeed: 6.25
+    baseSprintSpeed: 12.25
   - type: XenoMaturing
     critThreshold: 650
     deadThreshold: 750
     delay: 900 # 15 minutes
   - type: RMCXenoDamageVisuals
     prefix: rouny
+  # - type: MCXenoPouncing
+  - type: MCXenoPounce
+    delay: 0.2
+    maxDistance: 13
+    strength: 45
+    zigZag: false
+    zigZagAmplitude: 3.5
+    zigZagFrequency: 10
+    stopOnHit: true
+    hitKnockdownTime: 2
+  - type: XenoRounyScreech
+  # - type: MCXenoPounceEmote
+  #   emote: XenoRoar
+  # - type: MCXenoPounceEffect
+    # entityId: MCEffectXenoCharge
+  # - type: MCXenoEndure
+  #   duration: 10
+  - type: CCMXenoChargeLine
+    damage:
+      types:
+        Blunt: 20
+    healPerHit: 20
+    speedMultiplier: 1.5
+    maxDistance: 8
+    maxTiles: 10
+    hitSound:
+      path: /Audio/_MC/Effects/alien_tail_attack.ogg
+    attackEffect: RMCEffectExtraSlash
+    healEffect: RMCEffectHealFlurry
+    telegraphEffect: RMCEffectXenoTelegraphRed
+    emote: XenoRoar
+    emoteDelay: 2
+  - type: XenoPlasma
+    plasma: 250
+    maxPlasma: 250
+    plasmaRegenOnWeeds: 11
+  - type: XenoLeap
+    moveDelayTime: 1.5
+  - type: XenoRegen
+    restHealMultiplier:  1.40
+  - type: SlowOnPull
+    slowdowns:
+    - multiplier: 0.3825
+      whitelist:
+        components:
+        - Marine
+    - multiplier: 0.425
+      whitelist:
+        components:
+        - XenoLight
+    - multiplier: 0.2475
+      whitelist:
+        components:
+        - XenoHeavy

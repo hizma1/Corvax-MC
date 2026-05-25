@@ -22,3 +22,4 @@ public sealed partial class ReserveParasitesWindow : DefaultWindow
         ReserveBar.Value = number;
     }
 }
+

@@ -24,6 +24,7 @@
     whitelist:
       tags:
         - RMCRocketAmmo84mm
+        - MCRocketShell #CCM edit
     capacity: 1
     cycleable: true
     mayTransfer: false
@@ -118,6 +119,7 @@
     suffix: false
   - type: IgnorePredictionHide
   - type: AssistedReloadAmmo
+  - type: Corrodible
 
 - type: entity
   id: RMCBaseProjectileRocket84mm
@@ -125,6 +127,8 @@
   categories: [ HideSpawnMenu ]
   description: Uh oh.
   components:
+  - type: CEZPhysics # mc-changes [z-levels]
+    bounciness: 0
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
@@ -292,7 +296,7 @@
       path: /Audio/_RMC14/Weapons/Guns/Flamer/gun_flamethrower3.ogg
   - type: DeleteOnTrigger
   - type: SpawnOnTerminate
-    spawn: RMCSmokeWhitePhosphorus
+    spawn: MCSmokeM5 #CCM edit
   - type: RMCAreaDamage
     damageArea: 3.5
     falloffDistance: 3.5

@@ -28,6 +28,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Corpsman:
+      collection: AU14MaleCorpsman
     Warcry:
       collection: MaleWarcry # CCM14
 
@@ -50,5 +52,7 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Corpsman:
+      collection: AU14FemaleCorpsman
     Warcry:
       collection: FemaleWarcry # CCM14

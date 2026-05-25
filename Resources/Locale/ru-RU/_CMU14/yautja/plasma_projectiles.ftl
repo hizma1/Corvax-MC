@@ -1,0 +1,19 @@
+﻿# Russian localization for plasma projectile effects and bolts in Resources/Prototypes/_CMU14/Yautja/plasma_projectiles.yml
+ent-CMUYautjaPlasmaMuzzleFlash = Вспышка плазмы
+    .desc = Вспышка энергии при выстреле плазменного оружия.
+ent-CMUYautjaPlasmaImpactEffect = Эффект удара плазмы
+    .desc = Визуальный эффект при попадании лёгкого плазменного снаряда.
+ent-CMUYautjaPlasmaHeavyImpactEffect = Сильный эффект удара плазмы
+    .desc = Усиленный визуальный эффект при попадании тяжёлого плазменного снаряда.
+ent-CMUYautjaPlasmaEradicatorImpactEffect = Эффект удара Eradicator
+    .desc = Яркий эффект при попадании энергетическим высокоинтенсивным снарядом.
+ent-CMUYautjaPlasmaSmallShockWave = Малый радиус ударной волны
+    .desc = Малый радиус ударной волны от плазменного взрыва.
+ent-CMUYautjaPlasmaHeavyShockWave = Большая ударная волна
+    .desc = Широкая ударная волна от мощного взрыва плазмы.
+ent-CMUYautjaPlasmaEradicatorShockWave = Ударная волна Eradicator
+    .desc = Сильная ударная волна от высокоинтенсивного плазменного взрыва.
+ent-CMUYautjaPlasmaPistolBolt = Плазменный снаряд (пистолет)
+    .desc = Снаряд малого калибра, выпускаемый плазменным пистолетом.
+ent-CMUYautjaPlasmaRifleBolt = Плазменный снаряд (винтовка)
+    .desc = Мощный снаряд винтовочного типа с увеличенным уроном и взрывной силой.

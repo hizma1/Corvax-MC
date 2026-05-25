@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Speech.Prototypes;
+using Content.Shared._CMU14.Yautja;
 using Content.Shared._RMC14.Chat;
 using Content.Shared._RMC14.Marines;
 using Content.Shared._RMC14.Xenonids;
@@ -15,9 +16,9 @@ using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._RMC14.Chat.Chat;
 
@@ -28,13 +29,13 @@ public sealed class CMChatSystem : SharedCMChatSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
 
     private static readonly ProtoId<ReplacementAccentPrototype> ChatSanitize = "CMChatSanitize";
     private static readonly ProtoId<ReplacementAccentPrototype> MarineChatSanitize = "CMChatSanitizeMarine";
     private static readonly ProtoId<ReplacementAccentPrototype> XenoChatSanitize = "CMChatSanitizeXeno";
+
     private static readonly Regex PrefixesRegex = new(@"^:(\w)+");
 
     private readonly List<ICommonSession> _toRemove = new();
@@ -55,8 +56,12 @@ public sealed class CMChatSystem : SharedCMChatSystem
             if (data.Observer)
                 continue;
 
-            if (HasComp<XenoComponent>(session.AttachedEntity))
+            if (session.AttachedEntity is { } attached &&
+                HasComp<XenoComponent>(attached) &&
+                !IsHivebrokenXeno(attached))
+            {
                 _toRemove.Add(session);
+            }
         }
 
         foreach (var session in _toRemove)
@@ -69,18 +74,21 @@ public sealed class CMChatSystem : SharedCMChatSystem
     {
         _toRemove.Clear();
 
-        foreach (var (session, data) in args.Recipients)
+        if (!IsHivebrokenXeno(ent.Owner))
         {
-            if (data.Observer)
-                continue;
+            foreach (var (session, data) in args.Recipients)
+            {
+                if (data.Observer)
+                    continue;
 
-            if (!HasComp<XenoComponent>(session.AttachedEntity))
-                _toRemove.Add(session);
-        }
+                if (!HasComp<XenoComponent>(session.AttachedEntity))
+                    _toRemove.Add(session);
+            }
 
-        foreach (var session in _toRemove)
-        {
-            args.Recipients.Remove(session);
+            foreach (var session in _toRemove)
+            {
+                args.Recipients.Remove(session);
+            }
         }
     }
 
@@ -88,7 +96,9 @@ public sealed class CMChatSystem : SharedCMChatSystem
     {
         msg = _wordreplacement.ApplyReplacements(msg, ChatSanitize);
 
-        var factionSanitize = HasComp<XenoComponent>(source) ? XenoChatSanitize : MarineChatSanitize;
+        var factionSanitize = HasComp<XenoComponent>(source) && !IsHivebrokenXeno(source)
+            ? XenoChatSanitize
+            : MarineChatSanitize;
         msg = _wordreplacement.ApplyReplacements(msg, factionSanitize);
 
         return msg;

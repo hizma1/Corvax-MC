@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿// CM14 rework: non-RMC edit marker.
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -22,7 +23,6 @@ public sealed class JobWhitelistManager : IPostInjectInit
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
-
     private readonly Dictionary<NetUserId, HashSet<string>> _whitelists = new();
 
     public void Initialize()

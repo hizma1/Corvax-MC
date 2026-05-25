@@ -1,8 +1,21 @@
+using Content.Server._CCM.Stats;
 using Content.Server.NPC.HTN;
+using Content.Shared.Actions.Components;
+using Content.Shared._CCM.Stats;
+using Content.Shared._RMC14.Marines;
+using Content.Shared._RMC14.Survivor;
+using Content.Shared._RMC14.Synth;
+using Content.Shared._RMC14.Vehicle;
+using Content.Shared._RMC14.Xenonids;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Projectiles;
+using Content.Shared.Vehicle.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.KillTracking;
@@ -16,8 +29,14 @@ public sealed class KillTrackingSystem : EntitySystem
     public override void Initialize()
     {
         // Add damage to LifetimeDamage before MobStateChangedEvent gets raised
-        SubscribeLocalEvent<KillTrackerComponent, DamageChangedEvent>(OnDamageChanged, before: [ typeof(MobThresholdSystem) ]);
+        SubscribeLocalEvent<KillTrackerComponent, DamageChangedEvent>(OnDamageChanged, before: [typeof(MobThresholdSystem)]);
         SubscribeLocalEvent<KillTrackerComponent, MobStateChangedEvent>(OnMobStateChanged);
+    }
+
+    public void EnsureKillTracker(EntityUid uid, MobState killState)
+    {
+        var tracker = EnsureComp<KillTrackerComponent>(uid);
+        tracker.KillState = killState;
     }
 
     private void OnDamageChanged(EntityUid uid, KillTrackerComponent component, DamageChangedEvent args)
@@ -35,7 +54,7 @@ public sealed class KillTrackingSystem : EntitySystem
             return;
         }
 
-        var source = GetKillSource(args.Origin);
+        var source = GetKillSource(args.Origin, args.Tool);
         var damage = component.LifetimeDamage.GetValueOrDefault(source);
         component.LifetimeDamage[source] = damage + args.DamageDelta.GetTotal();
     }
@@ -95,13 +114,155 @@ public sealed class KillTrackingSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev, true);
     }
 
-    private KillSource GetKillSource(EntityUid? sourceEntity)
+    private KillSource GetKillSource(EntityUid? sourceEntity, EntityUid? toolEntity = null)
     {
-        if (TryComp<ActorComponent>(sourceEntity, out var actor))
-            return new KillPlayerSource(actor.PlayerSession.UserId);
-        if (HasComp<HTNComponent>(sourceEntity))
-            return new KillNpcSource(sourceEntity.Value);
+        if (TryResolveKillSource(sourceEntity, out var source))
+            return source;
+        if (TryResolveKillSource(toolEntity, out source))
+            return source;
+
         return new KillEnvironmentSource();
+    }
+
+    private bool TryResolveKillSource(EntityUid? sourceEntity, out KillSource source)
+    {
+        source = default!;
+        if (sourceEntity == null)
+            return false;
+
+        var visited = new HashSet<EntityUid>();
+        return TryResolveKillSource(sourceEntity.Value, visited, out source);
+    }
+
+    private bool TryResolveKillSource(EntityUid sourceEntity, HashSet<EntityUid> visited, out KillSource source)
+    {
+        source = default!;
+        if (!visited.Add(sourceEntity))
+            return false;
+
+        if (TryComp<CCMStatsProjectileSourceComponent>(sourceEntity, out var projectileSource))
+        {
+            source = new KillPlayerSource(projectileSource.UserId, projectileSource.Side);
+            return true;
+        }
+
+        var current = sourceEntity;
+        var userId = default(NetUserId);
+        var side = CCMStatsSide.None;
+
+        for (var depth = 0; depth < 8; depth++)
+        {
+            if (userId == default &&
+                TryComp<ActorComponent>(current, out var actor))
+            {
+                userId = actor.PlayerSession.UserId;
+            }
+
+            if (userId == default &&
+                TryComp(current, out MindContainerComponent? mindContainer) &&
+                mindContainer.Mind is { } mindId &&
+                TryComp(mindId, out MindComponent? mind) &&
+                mind.UserId is { } mindUserId)
+            {
+                userId = mindUserId;
+            }
+
+            if (side == CCMStatsSide.None)
+                side = GetSide(current);
+
+            if (userId == default &&
+                TryComp(current, out VehicleWeaponsComponent? vehicleWeapons) &&
+                vehicleWeapons.Operator is { } weaponOperator &&
+                weaponOperator != current &&
+                TryResolveKillSource(weaponOperator, visited, out source))
+            {
+                return true;
+            }
+
+            if (userId == default &&
+                TryComp(current, out VehicleComponent? vehicle) &&
+                vehicle.Operator is { } vehicleOperator &&
+                vehicleOperator != current &&
+                TryResolveKillSource(vehicleOperator, visited, out source))
+            {
+                return true;
+            }
+
+            if (userId == default &&
+                TryComp(current, out ActionComponent? action))
+            {
+                if (action.AttachedEntity is { } attached &&
+                    attached != current &&
+                    TryResolveKillSource(attached, visited, out source))
+                {
+                    return true;
+                }
+
+                if (action.Container is { } container &&
+                    container != current &&
+                    TryResolveKillSource(container, visited, out source))
+                {
+                    return true;
+                }
+            }
+
+            if (HasComp<HTNComponent>(current))
+            {
+                source = new KillNpcSource(current);
+                return true;
+            }
+
+            if (userId != default && side != CCMStatsSide.None)
+            {
+                source = new KillPlayerSource(userId, side);
+                return true;
+            }
+
+            if (!TryComp(current, out TransformComponent? xform) ||
+                xform.ParentUid == EntityUid.Invalid ||
+                xform.ParentUid == current)
+            {
+                break;
+            }
+
+            current = xform.ParentUid;
+        }
+
+        if (TryComp(sourceEntity, out ProjectileComponent? projectile))
+        {
+            if (projectile.Shooter is { } shooter &&
+                shooter != sourceEntity &&
+                TryResolveKillSource(shooter, visited, out source))
+            {
+                return true;
+            }
+
+            if (projectile.Weapon is { } weapon &&
+                weapon != sourceEntity &&
+                TryResolveKillSource(weapon, visited, out source))
+            {
+                return true;
+            }
+        }
+
+        if (userId == default)
+            return false;
+
+        source = new KillPlayerSource(userId, side);
+        return true;
+    }
+
+    private CCMStatsSide GetSide(EntityUid uid)
+    {
+        if (HasComp<MarineComponent>(uid))
+            return CCMStatsSide.Marines;
+        if (HasComp<RMCSurvivorComponent>(uid))
+            return CCMStatsSide.Marines;
+        if (HasComp<SynthComponent>(uid))
+            return CCMStatsSide.Marines;
+        if (HasComp<XenoComponent>(uid))
+            return CCMStatsSide.Xenos;
+        return CCMStatsSide.None;
     }
 
     private KillSource? GetLargestSource(Dictionary<KillSource, FixedPoint2> lifetimeDamages)

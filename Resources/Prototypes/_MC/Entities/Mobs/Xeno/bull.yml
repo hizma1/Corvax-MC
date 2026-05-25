@@ -1,0 +1,103 @@
+- type: entity
+  parent:
+  - CMXenoDeveloped
+  - CMXenoFlammable
+  - RMCXenoSpeechSounds
+  - RMCXenoCommendationReceiver
+  - RMCXenoMobCollision
+  id: MCXenoBull
+  name: bull
+  description: A well defended hit-and-runner.
+  components:
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+  # Name
+  - type: FixedIdentity
+    name: mc-job-name-xeno-bull
+  - type: GhostRole
+    name: mc-job-name-xeno-bull
+  - type: RMCActionOrder
+    id: MCXenoBull
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/bull.rsi
+    offset: 0, 0.35
+  - type: TacticalMapIcon
+    icon:
+      sprite: /Textures/_RMC14/Interface/map_blips.rsi
+      state: defender
+  # Abilities
+  - type: Xeno
+    role: MCXenoBull
+    actionIds:
+    - ActionXenoRest
+    - ActionXenoRegurgitate
+    - ActionXenoWatch
+    - ActionXenoDevolve
+    # Main
+    - MCActionXenoGoreCharge
+    - MCActionXenoHeadbuttCharge
+    - MCActionXenoAcidCharge
+    tier: 2
+    hudOffset: -0.15, 0.25
+    unlockAt: 540 # 9 minutes
+  # Statistics
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      500: Critical
+      600: Dead
+  - type: XenoDevolve
+    devolvesTo:
+    - CMXenoDefender
+  - type: XenoEvolution
+    max: 500
+    evolvesTo:
+    - RMCXenoCrusher
+    - CMXenoPraetorian
+  - type: XenoPlasma
+    plasma: 270
+    maxPlasma: 270
+    plasmaRegenOnWeeds: 20
+  - type: SlowOnPull
+    slowdowns:
+    - multiplier: 0.4525
+      whitelist:
+        components:
+        - Marine
+    - multiplier: 0.5025
+      whitelist:
+        components:
+        - XenoLight
+    - multiplier: 0.3625
+      whitelist:
+        components:
+        - XenoHeavy
+  - type: CMArmor
+    xenoArmor: 20
+    explosionArmor: 40
+  # - type: MCArmor
+  #   soft:
+  #     melee: 40
+  #     bullet: 50
+  #     laser: 40
+  #     energy: 40
+  #     bomb: 20
+  #     bio: 35
+  #     fire: 20
+  #     acid: 35
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.125
+    baseSprintSpeed: 4.545
+  # Abilities
+  - type: MCXenoHeadbuttCharge
+  # Passive
+  # - type: MCXenoSunder
+  #   multiplier: 0.8

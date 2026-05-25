@@ -1,6 +1,9 @@
+﻿// CM14 rework: non-RMC edit marker.
+using System;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._CCM.Barks;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -17,10 +20,12 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Shared._RMC14.Humanoid;
-using Content.Corvax.Interfaces.Shared; // Corvax-Sponsors
 
 namespace Content.Shared.Humanoid;
 
@@ -42,14 +47,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly SharedIdentitySystem _identity = default!;
-    private ISharedSponsorsManager? _sponsors; // Corvax-Sponsors
 
     public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
 
     public override void Initialize()
     {
         base.Initialize();
-        IoCManager.Instance!.TryResolveType(out _sponsors); // Corvax-Sponsors
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
@@ -73,18 +76,103 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         var yamlStream = new YamlStream();
         yamlStream.Load(reader);
 
-        var root = yamlStream.Documents[0].RootNode;
-        var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+        if (yamlStream.Documents.Count == 0)
+            throw new InvalidDataException("Profile file is empty.");
+
+        var profile = ReadImportedProfile(yamlStream.Documents[0].RootNode.ToDataNode());
+        var collection = IoCManager.Instance;
+        profile.EnsureValid(session, collection!);
+        return profile;
+    }
+
+    private HumanoidCharacterProfile ReadImportedProfile(DataNode root)
+    {
+        if (root is not MappingDataNode mapping)
+            throw new InvalidDataException("Profile file must contain a YAML mapping.");
 
         /*
-         * Add custom handling here for forks / version numbers if you care.
+         * Older exports are raw HumanoidCharacterProfile YAML without the wrapper.
+         * Newer or foreign builds may also include unknown fields or values we don't support yet.
          */
+        if (mapping.ContainsKey("profile"))
+            return ReadCompatibleNode<HumanoidProfileExport>(mapping).Profile;
 
-        var profile = export.Profile;
-        var collection = IoCManager.Instance;
-        var sponsorPrototypes = _sponsors != null && _sponsors.TryGetServerPrototypes(session.UserId, out var prototypes) ? prototypes.ToArray() : []; // Corvax-Sponsors
-        profile.EnsureValid(session, collection!, sponsorPrototypes);
-        return profile;
+        return ReadCompatibleNode<HumanoidCharacterProfile>(mapping);
+    }
+
+    private T ReadCompatibleNode<T>(DataNode root)
+    {
+        var sanitized = root.Copy();
+
+        if (!SanitizeForImport<T>(sanitized))
+            throw new InvalidDataException($"Profile import contains unsupported data for {typeof(T).Name}.");
+
+        return _serManager.Read<T>(sanitized, notNullableOverride: true);
+    }
+
+    private bool SanitizeForImport<T>(DataNode root)
+    {
+        const int maxSanitizationPasses = 256;
+
+        for (var i = 0; i < maxSanitizationPasses; i++)
+        {
+            var errors = _serManager.ValidateNode<T>(root).GetErrors().ToArray();
+            if (errors.Length == 0)
+                return true;
+
+            var removedNode = false;
+
+            foreach (var error in errors)
+            {
+                if (!TryRemoveInvalidNode(root, error.Node))
+                    continue;
+
+                removedNode = true;
+                break;
+            }
+
+            if (!removedNode)
+                return false;
+        }
+
+        return false;
+    }
+
+    private bool TryRemoveInvalidNode(DataNode current, DataNode invalidNode)
+    {
+        switch (current)
+        {
+            case MappingDataNode mapping:
+                foreach (var key in mapping.Keys.ToArray())
+                {
+                    var value = mapping[key];
+                    if (ReferenceEquals(mapping.GetKeyNode(key), invalidNode) || ReferenceEquals(value, invalidNode))
+                        return mapping.Remove(key);
+
+                    if (TryRemoveInvalidNode(value, invalidNode))
+                        return true;
+                }
+
+                break;
+
+            case SequenceDataNode sequence:
+                for (var i = 0; i < sequence.Count; i++)
+                {
+                    var value = sequence[i];
+                    if (ReferenceEquals(value, invalidNode))
+                    {
+                        sequence.RemoveAt(i);
+                        return true;
+                    }
+
+                    if (TryRemoveInvalidNode(value, invalidNode))
+                        return true;
+                }
+
+                break;
+        }
+
+        return false;
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
@@ -459,6 +547,20 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         humanoid.Age = profile.Age;
+
+        // CCM barks - start
+        var synthesis = EnsureComp<SpeechSynthesisComponent>(uid);
+        synthesis.VoicePrototypeId = profile.BarkVoice;
+        synthesis.Pitch = profile.BarkPitch;
+        synthesis.PlaybackSpeed = profile.BarkSpeed;
+        synthesis.PitchPreset = profile.BarkPitch switch
+        {
+            <= 0.82f => VoicePitchPreset.Low,
+            >= 1.25f => VoicePitchPreset.High,
+            _ => VoicePitchPreset.Medium
+        };
+        Dirty(uid, synthesis);
+        // CCM barks - end
 
         Dirty(uid, humanoid);
     }

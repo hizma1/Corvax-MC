@@ -26,6 +26,7 @@
     thresholds: []
   - type: ChangeItemSizeOnTimerTrigger
   - type: CancelUseWithCloak
+  - type: Corrodible
 
 - type: entity
   abstract: true
@@ -131,7 +132,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: Occluder
   - type: Sprite
     sprite: _RMC14/Effects/smoke.rsi
     state: smoke2
@@ -157,7 +157,7 @@
     range: 1
 
 - type: entity
-  parent: RMCSmokeExplosionProof
+  parent: MCSmoke
   id: RMCSmoke
   components:
   - type: DeleteOnExplosion

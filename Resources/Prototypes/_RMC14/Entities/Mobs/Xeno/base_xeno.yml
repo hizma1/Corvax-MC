@@ -34,6 +34,8 @@
   save: false
   components: # TODO RMC14 camera recoil from large explosions? check 13
   - type: ZombieImmune
+  - type: BodyZoneTargeting
+    meleeAccuracy: 0.55
   - type: BlockEntityStorage
     whitelist:
       components:
@@ -46,6 +48,7 @@
     simple: true
     deadText: rmc-medical-examine-dead-xeno
   - type: RMCBlockMedicalExamine
+  - type: YautjaTrophySource
   - type: MobState
     allowedStates:
     - Alive
@@ -282,6 +285,7 @@
       - Xeno
       - Infectable
       - Synth
+      - Yautja
   - type: BlockPullingDead
   - type: XenoFriendly
   - type: Undisposable
@@ -379,6 +383,12 @@
   - type: EmoteCooldown
   - type: RMCMesonsNonviewable
     xenoVisible: true
+  - type: CEZPhysics # [z-levels]
+  - type: MCZLevelFallStun # [z-levels]
+  - type: MCZLevelFallDamage
+    damage:
+      types:
+        Slash: 5
 
 - type: entity
   abstract: true

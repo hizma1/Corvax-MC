@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -6,6 +7,94 @@ namespace Content.Shared.Audio
 {
     public static class AudioHelpers
     {
+        private const float MaxSafeGain = 64f;
+        private const float MinSafeVolume = -80f;
+        private const float MaxSafeVolume = 24f;
+
+        public static float SanitizeGain(float gain, float fallback = 1f)
+        {
+            if (!float.IsFinite(gain) || gain < 0f)
+                gain = fallback;
+
+            if (!float.IsFinite(gain) || gain < 0f)
+                return 0f;
+
+            return Math.Clamp(gain, 0f, MaxSafeGain);
+        }
+
+        public static float SanitizeVolume(float volume, float fallback = 0f)
+        {
+            if (float.IsNegativeInfinity(volume))
+                return float.NegativeInfinity;
+
+            if (!float.IsFinite(volume))
+                volume = fallback;
+
+            if (float.IsNegativeInfinity(volume))
+                return float.NegativeInfinity;
+
+            if (!float.IsFinite(volume))
+                return 0f;
+
+            return Math.Clamp(volume, MinSafeVolume, MaxSafeVolume);
+        }
+
+        public static float SafeGainToVolume(float gain, float fallback = 1f)
+        {
+            var sanitizedGain = SanitizeGain(gain, fallback);
+            return sanitizedGain <= 0f
+                ? float.NegativeInfinity
+                : SharedAudioSystem.GainToVolume(sanitizedGain);
+        }
+
+        public static float SafeVolumeToGain(float volume, float fallback = 0f)
+        {
+            var sanitizedVolume = SanitizeVolume(volume, fallback);
+            return float.IsNegativeInfinity(sanitizedVolume)
+                ? 0f
+                : SharedAudioSystem.VolumeToGain(sanitizedVolume);
+        }
+
+        public static AudioParams SanitizeAudioParams(AudioParams audioParams, AudioParams? fallback = null)
+        {
+            var safeFallback = fallback ?? AudioParams.Default;
+
+            audioParams = audioParams
+                .WithVolume(SanitizeVolume(audioParams.Volume, safeFallback.Volume))
+                .WithPitchScale(SanitizeNonNegative(audioParams.Pitch, safeFallback.Pitch))
+                .WithMaxDistance(SanitizeNonNegative(audioParams.MaxDistance, safeFallback.MaxDistance))
+                .WithRolloffFactor(SanitizeNonNegative(audioParams.RolloffFactor, safeFallback.RolloffFactor))
+                .WithReferenceDistance(SanitizeNonNegative(audioParams.ReferenceDistance, safeFallback.ReferenceDistance))
+                .WithPlayOffset(SanitizeNonNegative(audioParams.PlayOffsetSeconds, safeFallback.PlayOffsetSeconds))
+                .WithVariation(SanitizeVariation(audioParams.Variation, safeFallback.Variation));
+
+            return audioParams;
+        }
+
+        private static float SanitizeNonNegative(float value, float fallback)
+        {
+            if (!float.IsFinite(value) || value < 0f)
+                value = fallback;
+
+            if (!float.IsFinite(value) || value < 0f)
+                return 0f;
+
+            return value;
+        }
+
+        private static float? SanitizeVariation(float? value, float? fallback)
+        {
+            if (value is null)
+                return null;
+
+            if (!float.IsFinite(value.Value) || value.Value < 0f)
+                return fallback is { } fallbackValue && float.IsFinite(fallbackValue) && fallbackValue >= 0f
+                    ? fallbackValue
+                    : null;
+
+            return value.Value;
+        }
+
         /// <summary>
         ///     Returns a random pitch.
         /// </summary>

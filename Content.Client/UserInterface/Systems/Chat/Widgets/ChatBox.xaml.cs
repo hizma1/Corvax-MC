@@ -1,5 +1,10 @@
+using System.Linq;
+﻿// CM14 rework: non-RMC edit marker.
 using Content.Client._RMC14.Chat;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Chat.Controls;
+using Content.Shared._MC;
+using Content.Shared.Audio;
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Audio;
@@ -9,6 +14,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -23,16 +29,25 @@ public partial class ChatBox : UIWidget
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
+    // MC Changes:
+    [Dependency] private readonly IConfigurationManager _configurationManager = null!;
+    // MC Changes
+
     private readonly ISawmill _sawmill;
     private readonly ChatUIController _controller;
 
     public bool Main { get; set; }
+    public bool UseLobbyTheme { get; private set; }
+    public bool LobbyCrtEnabled { get; private set; }
 
     public ChatSelectChannel SelectedChannel => ChatInput.ChannelSelector.SelectedChannel;
 
-    // RMC14
     public readonly Queue<RepeatedMessage> RepeatQueue = new();
     private readonly HashSet<string> _whitelist = ["mono", "scramble", "bolditalic", "bold", "bullet", "color", "font", "head", "italic"];
+
+    // MCChanges:
+    private bool _emojiAvaible = false;
+    // MCChanges
 
     public ChatBox()
     {
@@ -51,6 +66,23 @@ public partial class ChatBox : UIWidget
         _controller.MessageAdded += OnMessageAdded;
         _controller.HighlightsUpdated += OnHighlightsUpdated;
         _controller.RegisterChat(this);
+
+        // MCChanges:
+        _configurationManager.OnValueChanged(MCConfigVars.ChatEmoji, value =>
+        {
+            _emojiAvaible = value;
+
+            if (value)
+                return;
+
+            var toRemove = Contents.Children.Where(child => !(!child.Name?.Contains("__mcsprite_") ?? false)).ToList();
+            foreach (var child in toRemove)
+            {
+                Contents.Children.Remove(child);
+            }
+
+        }, true);
+        // MCChanges
     }
 
     private void OnTextEntered(LineEditEventArgs args)
@@ -62,18 +94,21 @@ public partial class ChatBox : UIWidget
     {
         _sawmill.Debug($"{msg.Channel}: {msg.Message}");
         if (!ChatInput.FilterButton.Popup.IsActive(msg.Channel))
-        {
             return;
-        }
 
         if (msg is { Read: false, AudioPath: { } })
-            _entManager.System<AudioSystem>().PlayGlobal(msg.AudioPath, Filter.Local(), false, AudioParams.Default.WithVolume(msg.AudioVolume));
+            _entManager.System<AudioSystem>().PlayGlobal(
+                msg.AudioPath,
+                Filter.Local(),
+                false,
+                AudioParams.Default.WithVolume(AudioHelpers.SanitizeVolume(msg.AudioVolume, 0f)));
 
         msg.Read = true;
 
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
 
         AddLine(msg.WrappedMessage, color, msg.SenderEntity, msg.Message, msg.Channel, msg.RepeatCheckSender);
+
     }
 
     private void OnHighlightsUpdated(string highlights)
@@ -96,6 +131,12 @@ public partial class ChatBox : UIWidget
         }
     }
 
+    public void RefreshLocalization()
+    {
+        ChatInput.RefreshLocalization();
+        _controller.UpdateSelectedChannel(this);
+    }
+
     private void OnChannelFilter(ChatChannel channel, bool active)
     {
         Contents.Clear();
@@ -106,9 +147,7 @@ public partial class ChatBox : UIWidget
         }
 
         if (active)
-        {
             _controller.ClearUnfilteredUnreads(channel);
-        }
     }
 
     private void OnNewHighlights(string highlighs)
@@ -118,30 +157,86 @@ public partial class ChatBox : UIWidget
 
     public void AddLine(string message, Color color, NetEntity sender, string unwrapped, ChatChannel channel, bool repeatCheckSender)
     {
-        var formatted = new FormattedMessage(3);
+        // MC changes
+        color = AdjustLobbyTextColor(color);
+        var formatted = new FormattedMessage(10);
+        // MC changes
         formatted.PushColor(color);
         formatted.AddMarkupOrThrow(message);
         formatted.Pop();
 
-        // RMC14
         formatted = FilterProblematicTags(formatted);
-        if (_entManager.SystemOrNull<CMChatSystem>()?.TryRepetition(this, Contents, formatted, sender, unwrapped, channel, repeatCheckSender) ?? false)
+        // RMC chat repetition guard: CMChatSystem can be unavailable during early client startup.
+        if (TryRepeatWithCMChat(formatted, sender, unwrapped, channel, repeatCheckSender))
             return;
 
         Contents.AddMessage(formatted);
+        Contents.InvalidateArrange();
     }
 
-    // RMC14
+    public void SetLobbyTheme(bool enabled, bool crtEnabled)
+    {
+        UseLobbyTheme = enabled;
+        LobbyCrtEnabled = crtEnabled;
+    }
+
+    private Color AdjustLobbyTextColor(Color color)
+    {
+        if (!UseLobbyTheme)
+            return color;
+
+        if (color == Color.LightGray || color == Color.DarkGray)
+            return LobbyCrtEnabled ? StyleNano.LobbyCrtMutedText : StyleNano.LobbyCleanMutedText;
+
+        return color;
+    }
+
     private FormattedMessage FilterProblematicTags(FormattedMessage message)
     {
         var output = new FormattedMessage(message.Count);
         foreach (var tag in message)
         {
-            if (tag.Name is not { } name || _whitelist.Contains(name))
+            // MC Changes:
+            if (tag.Name is not { } name)
+            {
                 output.PushTag(tag);
+                continue;
+            }
+
+            if (_emojiAvaible && name == "mcsprite")
+            {
+                output.PushTag(tag);
+                continue;
+            }
+
+            if (_whitelist.Contains(name))
+                output.PushTag(tag);
+
         }
+
         return output;
     }
+
+    // RMC chat repetition guard start
+    private bool TryRepeatWithCMChat(FormattedMessage formatted, NetEntity sender, string unwrapped, ChatChannel channel, bool repeatCheckSender)
+    {
+        try
+        {
+            return _entManager.SystemOrNull<CMChatSystem>()?.TryRepetition(
+                this,
+                Contents,
+                formatted,
+                sender,
+                unwrapped,
+                channel,
+                repeatCheckSender) ?? false;
+        }
+        catch (NullReferenceException)
+        {
+            return false;
+        }
+    }
+    // RMC chat repetition guard end
 
     public void Focus(ChatSelectChannel? channel = null)
     {
@@ -163,7 +258,6 @@ public partial class ChatBox : UIWidget
         var idx = Array.IndexOf(ChannelSelectorPopup.ChannelSelectorOrder, SelectedChannel);
         do
         {
-            // go over every channel until we find one we can actually select.
             idx += forward ? 1 : -1;
             idx = MathHelper.Mod(idx, ChannelSelectorPopup.ChannelSelectorOrder.Length);
         } while ((_controller.SelectableChannels & ChannelSelectorPopup.ChannelSelectorOrder[idx]) == 0);
@@ -206,22 +300,17 @@ public partial class ChatBox : UIWidget
 
     private void OnTextChanged(LineEditEventArgs args)
     {
-        // Update channel select button to correct channel if we have a prefix.
         _controller.UpdateSelectedChannel(this);
-
-        // Warn typing indicator about change
         _controller.NotifyChatTextChange();
     }
 
     private void OnFocusEnter(LineEditEventArgs args)
     {
-        // Warn typing indicator about focus
         _controller.NotifyChatFocus(true);
     }
 
     private void OnFocusExit(LineEditEventArgs args)
     {
-        // Warn typing indicator about focus
         _controller.NotifyChatFocus(false);
     }
 
@@ -229,7 +318,9 @@ public partial class ChatBox : UIWidget
     {
         base.Dispose(disposing);
 
-        if (!disposing) return;
+        if (!disposing)
+            return;
+
         _controller.UnregisterChat(this);
         ChatInput.Input.OnTextEntered -= OnTextEntered;
         ChatInput.Input.OnKeyBindDown -= OnInputKeyBindDown;

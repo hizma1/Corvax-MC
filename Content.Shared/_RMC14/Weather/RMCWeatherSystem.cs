@@ -99,6 +99,9 @@ public sealed class RMCWeatherSystem : EntitySystem
         if (_net.IsClient)
             return;
 
+        // Temporary global weather disable: keep the weather cycle dormant on all maps.
+        return;
+
         var weatherQuery = EntityQueryEnumerator<RMCWeatherCycleComponent>();
 
         while (weatherQuery.MoveNext(out var uid, out var cycle))
@@ -108,7 +111,7 @@ public sealed class RMCWeatherSystem : EntitySystem
             // Process whether to start a weather event
             if(cycle.LastEventCooldown <= TimeSpan.Zero)
             {
-                var weatherPick = _random.Pick(cycle.WeatherEvents);
+                var weatherPick = PickWeatherEvent(cycle.WeatherEvents);
                 _proto.TryIndex(weatherPick.WeatherType, out var weatherProto);
                 var endTime = _timing.CurTime + weatherPick.Duration;
 
@@ -138,5 +141,31 @@ public sealed class RMCWeatherSystem : EntitySystem
                 }
             }
         }
+    }
+
+    private RMCWeatherEvent PickWeatherEvent(List<RMCWeatherEvent> events)
+    {
+        var totalWeight = 0f;
+        foreach (var weatherEvent in events)
+        {
+            if (weatherEvent.Weight > 0f)
+                totalWeight += weatherEvent.Weight;
+        }
+
+        if (totalWeight <= 0f)
+            return _random.Pick(events);
+
+        var pick = _random.NextFloat(totalWeight);
+        foreach (var weatherEvent in events)
+        {
+            if (weatherEvent.Weight <= 0f)
+                continue;
+
+            pick -= weatherEvent.Weight;
+            if (pick <= 0f)
+                return weatherEvent;
+        }
+
+        return events[^1];
     }
 }

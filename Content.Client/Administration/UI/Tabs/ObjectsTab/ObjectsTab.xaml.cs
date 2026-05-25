@@ -19,6 +19,7 @@ public sealed partial class ObjectsTab : Control
 
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
+    private readonly Color _headerColor = Color.FromHex("#292B38");
 
     private bool _ascending;
     private ObjectsTabHeader.Header _headerClicked = ObjectsTabHeader.Header.ObjectName;
@@ -48,6 +49,7 @@ public sealed partial class ObjectsTab : Control
         SearchList.GenerateItem += GenerateButton;
         SearchList.DataFilterCondition += DataFilterCondition;
         SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
+        ListHeader.BackgroundColorPanel.PanelOverride = new StyleBoxFlat(_headerColor);
         RefreshListButton.OnPressed += _ => RefreshObjectList();
 
         var defaultSelection = ObjectsTabSelection.Grids;

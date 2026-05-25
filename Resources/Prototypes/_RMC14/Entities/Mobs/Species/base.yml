@@ -1,16 +1,27 @@
 ﻿- type: entity
   save: false
-  parent: BaseMobSpecies
+  parent:
+  # - MCMobSpecies
+  - BaseMobSpecies
   id: RMCBaseMobSpeciesOrganic
   abstract: true
   name: Urist C.M. McHands
   suffix: RMC14
   components:
+  # - type: Physics
+  #   bodyType: Dynamic
+  # mc-changes-start
+  - type: CEZPhysics #A [z-levels]
+  - type: MCZLevelFallStun # [z-levels]
+  - type: MCZLevelFallDamage
+    damage:
+      types:
+        Blunt: 5
+  # mc-changes-end
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 185
         restitution: 0.0
@@ -23,8 +34,7 @@
         - XenoProjectileImpassable
         - Marine
       fix2:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 0
         restitution: 0.0
@@ -75,6 +85,9 @@
     interactSuccessString: rmc-patting-success-generic
     messagePerceivedByOthers: rmc-patting-success-generic-others
   - type: Blindable
+    maxDamage: 30
+  - type: CMUBlurDelay
+    threshold: 12
   - type: Tag
     tags:
     - CanPilot
@@ -100,14 +113,19 @@
       Dead: 0
   - type: Thirst
     baseDecayRate: 0.01666666666
+  - type: CMUHumanMedical
+  - type: HitLocation
+  - type: PainShock
+  - type: BodyZoneTargeting
   - type: Body
-    prototype: Human
+    prototype: CMUHumanBody
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: null
     healthBarThreshold: 5
   - type: Vocal
+    screamAction: null
     sounds:
       Male: MaleHuman
       Female: FemaleHuman
@@ -242,7 +260,7 @@
       Dead:
       - CMActionGhost
   - type: Destructible
-    thresholds: [ ]
+    thresholds: []
   - type: NpcFactionMember
     factions:
     - UNMC
@@ -269,6 +287,38 @@
             sprite: _RMC14/Effects/xeno_spray_acid.rsi
             state: human_acid_enhanced
             visible: true
+      #enum.HookedVisuals.Hooked:
+      #  hooked:
+      #    True: { visible: true }
+      #    False: { visible: false }
+      #enum.TargetedVisuals.Targeted:
+      #  targeted:
+      #    None:
+      #      visible: false
+      #    Spotted:
+      #      sprite: _RMC14/Effects/targeted.rsi
+      #      state: spotter_lockon
+      #      visible: true
+      #    Targeted:
+      #      sprite: _RMC14/Effects/targeted.rsi
+      #      state: sniper_lockon
+      #      visible: true
+      #    TargetedIntense:
+      #      sprite: _RMC14/Effects/targeted.rsi
+      #      state: sniper_lockon_intense
+      #      visible: true
+      #enum.TargetedVisuals.TargetedDirection:
+      #  targetedDirection:
+      #    True: { visible: true }
+      #    False: { visible: false }
+      #enum.TargetedVisuals.TargetedDirectionIntense:
+      #  targetedDirectionIntense:
+      #    True: { visible: true }
+      #    False: { visible: false }
+      #enum.FocusedVisuals.Focused:
+      #  focused:
+      #    True: { visible: true }
+      #    False: { visible: false }
   - type: Spottable
   - type: ActiveInputMover
   - type: DropItemsOnRest
