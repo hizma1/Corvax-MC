@@ -47,6 +47,7 @@
     - MCXenoBull
     evolvesToWithoutPoints:
     - CMXenoQueen
+    - RMCXenoKing # CCM14 ADD 
   - type: XenoPlasma
     plasma: 100
     maxPlasma: 100

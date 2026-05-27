@@ -109,6 +109,7 @@
     - CMXenoLurker
     evolvesToWithoutPoints:
     - CMXenoQueen
+    - RMCXenoKing # CCM14 ADD
   - type: XenoZoom
   - type: MeleeWeapon
     attackRate: 1.4
