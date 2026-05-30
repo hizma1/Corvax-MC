@@ -1,13 +1,19 @@
-﻿// CM14 rework: non-RMC edit marker.
+// CM14 rework: non-RMC edit marker.
+// Forge port: this manager is now backed by the Monolith _Forge SponsorManager.
+// Sponsor tier resolution comes from Discord roles (or a manual DB override) and is
+// translated to a CCM-flavored snapshot so the rest of the CCM stack keeps working
+// unchanged (chat color, OOC tags, ghost/xeno/armor camouflage, role timer bypass,
+// queue bypass and round-end credits).
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server._Forge.Sponsor;
 using Content.Server.Database;
-using Content.Server.Secrets.CCM.Sponsorship;
 using Content.Server.Station.Systems;
 using Content.Shared._CCM.Sponsorship;
+using Content.Shared._Forge.Sponsor;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,30 +24,31 @@ namespace Content.Server._CCM.Sponsorship;
 
 public sealed class CCMSponsorshipManager : IPostInjectInit
 {
+    private const string DonateUrl = "https://boosty.to/cmc14";
+
     private static readonly TimeSpan DefaultManualSponsorshipDuration = TimeSpan.FromDays(30);
-    private readonly Dictionary<NetUserId, CCMSponsorshipStatusSnapshot> _baseStatus = new();
+
     private readonly Dictionary<NetUserId, CCMSponsorshipStatusSnapshot> _status = new();
     private readonly Dictionary<NetUserId, CCMStoredSponsorshipRecord> _manualTierOverrides = new();
 
     [Dependency] private readonly UserDbDataManager _userDb = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly ICCMSponsorshipSecretsProvider _provider = default!;
+    [Dependency] private readonly SponsorManager _sponsorManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
+
+    /// <summary>
+    ///     Raised after a player's resolved sponsorship status changes so the EntitySystem
+    ///     half (CCMSponsorshipSystem) can push the new state to the client and refresh
+    ///     their customization.
+    /// </summary>
+    public event Action<NetUserId>? StatusChanged;
 
     private StationJobsSystem StationJobs => _entManager.System<StationJobsSystem>();
 
     public CCMSponsorshipStatusSnapshot GetStatus(NetUserId userId)
     {
-        return _status.GetValueOrDefault(userId) ?? new CCMSponsorshipStatusSnapshot(
-            CCMSponsorshipTier.None,
-            _provider.DonateUrl,
-            0,
-            string.Empty,
-            string.Empty,
-            0f,
-            false,
-            false);
+        return _status.GetValueOrDefault(userId) ?? EmptySnapshot();
     }
 
     public bool HasRoleTimerBypass(NetUserId userId)
@@ -103,38 +110,34 @@ public sealed class CCMSponsorshipManager : IPostInjectInit
             .ToList();
     }
 
-    public async Task<bool> RefreshSession(ICommonSession session, CancellationToken cancel)
+    /// <summary>
+    ///     Re-resolves a session's status (e.g. after a sponsor update came in from Discord)
+    ///     and returns whether it actually changed.
+    /// </summary>
+    public bool Refresh(NetUserId userId)
     {
-        var before = GetStatus(session.UserId);
-        await LoadData(session, cancel);
-        var after = GetStatus(session.UserId);
+        var before = GetStatus(userId);
+        RefreshResolvedStatus(userId);
+        var after = GetStatus(userId);
         return !StatusEquals(before, after);
     }
 
     private async Task LoadData(ICommonSession session, CancellationToken cancel)
     {
-        var record = await _provider.GetStatusAsync(session.UserId.UserId, session.Name, cancel);
         var stored = await _db.GetCCMStoredSponsorship(session.UserId.UserId);
         cancel.ThrowIfCancellationRequested();
 
-        var providerSnapshot = new CCMSponsorshipStatusSnapshot(
-            record.Tier,
-            _provider.DonateUrl,
-            ResolveExpiration(record.Tier, record.ExpirationUnixSeconds),
-            string.IsNullOrWhiteSpace(record.OocColorHex) ? GetDefaultColor(record.Tier, false) : record.OocColorHex,
-            string.IsNullOrWhiteSpace(record.LoocColorHex) ? GetDefaultColor(record.Tier, true) : record.LoocColorHex,
-            GetRoleWeightBonus(record.Tier),
-            record.QueueBypass,
-            record.Tier != CCMSponsorshipTier.None);
+        if (stored != null && stored.Tier != CCMSponsorshipTier.None
+            && stored.ExpirationUnixSeconds > DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+        {
+            _manualTierOverrides[session.UserId] = stored;
+        }
 
-        var snapshot = ApplyStoredSponsorship(providerSnapshot, stored);
-        _baseStatus[session.UserId] = snapshot;
         RefreshResolvedStatus(session.UserId);
     }
 
     private void ClientDisconnected(ICommonSession session)
     {
-        _baseStatus.Remove(session.UserId);
         _status.Remove(session.UserId);
         _manualTierOverrides.Remove(session.UserId);
         StationJobs.ClearExternalWeightOverride(session.UserId);
@@ -142,56 +145,44 @@ public sealed class CCMSponsorshipManager : IPostInjectInit
 
     private void RefreshResolvedStatus(NetUserId userId)
     {
-        var baseSnapshot = _baseStatus.GetValueOrDefault(userId) ?? new CCMSponsorshipStatusSnapshot(
-            CCMSponsorshipTier.None,
-            _provider.DonateUrl,
-            0,
-            string.Empty,
-            string.Empty,
-            0f,
-            false,
-            false);
-
-        var resolved = ApplyManualOverride(userId, baseSnapshot);
-        _status[userId] = resolved;
-        ApplyRoleWeightOverride(userId, resolved);
+        var snapshot = BuildSnapshot(userId);
+        _status[userId] = snapshot;
+        ApplyRoleWeightOverride(userId, snapshot);
+        StatusChanged?.Invoke(userId);
     }
 
-    private CCMSponsorshipStatusSnapshot ApplyStoredSponsorship(
-        CCMSponsorshipStatusSnapshot fallback,
-        CCMStoredSponsorshipRecord? stored)
+    private CCMSponsorshipStatusSnapshot BuildSnapshot(NetUserId userId)
     {
-        if (stored == null || stored.Tier == CCMSponsorshipTier.None)
-            return fallback;
+        if (_manualTierOverrides.TryGetValue(userId, out var manualOverride)
+            && manualOverride.Tier != CCMSponsorshipTier.None
+            && manualOverride.ExpirationUnixSeconds > DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+        {
+            return new CCMSponsorshipStatusSnapshot(
+                manualOverride.Tier,
+                DonateUrl,
+                manualOverride.ExpirationUnixSeconds,
+                GetDefaultColor(manualOverride.Tier, false),
+                GetDefaultColor(manualOverride.Tier, true),
+                GetRoleWeightBonus(manualOverride.Tier),
+                manualOverride.Tier >= CCMSponsorshipTier.SponsorI,
+                manualOverride.Tier >= CCMSponsorshipTier.SponsorII);
+        }
 
-        if (stored.ExpirationUnixSeconds <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-            return fallback;
+        if (!_sponsorManager.TryGetSponsor(userId, out var level) || level == SponsorLevel.None)
+            return EmptySnapshot();
+
+        var tier = SponsorLevelToTier(level);
+        var forgeColor = SponsorData.SponsorColor.GetValueOrDefault(level, GetDefaultColor(tier, false));
 
         return new CCMSponsorshipStatusSnapshot(
-            stored.Tier,
-            fallback.DonateUrl,
-            stored.ExpirationUnixSeconds,
-            GetDefaultColor(stored.Tier, false),
-            GetDefaultColor(stored.Tier, true),
-            GetRoleWeightBonus(stored.Tier),
-            stored.Tier != CCMSponsorshipTier.None,
-            stored.Tier != CCMSponsorshipTier.None);
-    }
-
-    private CCMSponsorshipStatusSnapshot ApplyManualOverride(NetUserId userId, CCMSponsorshipStatusSnapshot snapshot)
-    {
-        if (!_manualTierOverrides.TryGetValue(userId, out var overrideRecord))
-            return snapshot;
-
-        return new CCMSponsorshipStatusSnapshot(
-            overrideRecord.Tier,
-            snapshot.DonateUrl,
-            ResolveExpiration(overrideRecord.Tier, overrideRecord.ExpirationUnixSeconds),
-            GetDefaultColor(overrideRecord.Tier, false),
-            GetDefaultColor(overrideRecord.Tier, true),
-            GetRoleWeightBonus(overrideRecord.Tier),
-            overrideRecord.Tier != CCMSponsorshipTier.None,
-            overrideRecord.Tier != CCMSponsorshipTier.None);
+            tier,
+            DonateUrl,
+            ResolveExpiration(tier, 0),
+            forgeColor,
+            GetDefaultColor(tier, true),
+            GetRoleWeightBonus(tier),
+            tier >= CCMSponsorshipTier.SponsorI,
+            tier >= CCMSponsorshipTier.SponsorII);
     }
 
     private void ApplyRoleWeightOverride(NetUserId userId, CCMSponsorshipStatusSnapshot snapshot)
@@ -203,6 +194,38 @@ public sealed class CCMSponsorshipManager : IPostInjectInit
         }
 
         StationJobs.SetExternalWeightOverride(userId, snapshot.RoleWeightBonus);
+    }
+
+    private CCMSponsorshipStatusSnapshot EmptySnapshot()
+    {
+        return new CCMSponsorshipStatusSnapshot(
+            CCMSponsorshipTier.None,
+            DonateUrl,
+            0,
+            string.Empty,
+            string.Empty,
+            0f,
+            false,
+            false);
+    }
+
+    public static CCMSponsorshipTier SponsorLevelToTier(SponsorLevel level)
+    {
+        // Перк-распределение (см. CCMSponsorshipWindow):
+        //   L1     -> SponsorI   (приоритетный вход + цвет OOC + ckey в конце раунда)
+        //   L2     -> SponsorII  (+ цвет LOOC + готовый OOC-тег + базовая кастомизация)
+        //   L3..L6 -> SponsorIII (+ скин призрака + свой OOC-тег + расширенная кастомизация)
+        return level switch
+        {
+            SponsorLevel.None => CCMSponsorshipTier.None,
+            SponsorLevel.Level1 => CCMSponsorshipTier.SponsorI,
+            SponsorLevel.Level2 => CCMSponsorshipTier.SponsorII,
+            SponsorLevel.Level3 => CCMSponsorshipTier.SponsorIII,
+            SponsorLevel.Level4 => CCMSponsorshipTier.SponsorIII,
+            SponsorLevel.Level5 => CCMSponsorshipTier.SponsorIII,
+            SponsorLevel.Level6 => CCMSponsorshipTier.SponsorIII,
+            _ => CCMSponsorshipTier.None,
+        };
     }
 
     private static float GetRoleWeightBonus(CCMSponsorshipTier tier)
@@ -248,5 +271,12 @@ public sealed class CCMSponsorshipManager : IPostInjectInit
     {
         _userDb.AddOnLoadPlayer(LoadData);
         _userDb.AddOnPlayerDisconnect(ClientDisconnected);
+
+        _sponsorManager.SponsorChanged += OnForgeSponsorChanged;
+    }
+
+    private void OnForgeSponsorChanged(NetUserId userId)
+    {
+        RefreshResolvedStatus(userId);
     }
 }

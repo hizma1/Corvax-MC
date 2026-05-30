@@ -1,7 +1,11 @@
+using Content.Client._Forge.DiscordAuth;
+using Content.Client._Forge.JoinQueue;
+using Content.Client._Forge.Sponsor;
 using Content.Client._RMC14.Commendations;
 using Content.Client._RMC14.LinkAccount;
 using Content.Client._RMC14.PlayTimeTracking;
 using Content.Client._RMC14.TacticalMap;
+using Content.Shared._Forge.Sponsor;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -66,6 +70,12 @@ namespace Content.Client.IoC
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
             collection.Register<ClientsidePlaytimeTrackingManager>();
+
+            // Forge (Sponsor / Discord auth / Join queue)
+            collection.Register<SponsorManager>();
+            collection.Register<ISharedSponsorManager, SponsorManager>();
+            collection.Register<DiscordAuthManager>();
+            collection.Register<JoinQueueManager>();
 
             // RMC14
             collection.Register<LinkAccountManager>();

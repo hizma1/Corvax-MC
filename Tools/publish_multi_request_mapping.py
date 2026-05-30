@@ -6,8 +6,9 @@ import os
 import subprocess
 from typing import Iterable
 
-PUBLISH_TOKEN = os.environ["PUBLISH_TOKEN"]
+PUBLISH_TOKEN = os.environ["PUBLISH_MAPPING_TOKEN"]
 VERSION = os.environ["GITHUB_SHA"]
+FORK_ID = "cm_mapping"
 
 RELEASE_DIR = "release"
 
@@ -16,7 +17,6 @@ RELEASE_DIR = "release"
 # Forks should change these to publish to their own infrastructure.
 #
 ROBUST_CDN_URL = "https://cdn.corvaxforge.ru/"
-FORK_ID = "cm"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -76,8 +76,9 @@ def get_files_to_publish() -> Iterable[str]:
 
 def get_engine_version() -> str:
     proc = subprocess.run(
-        ["git", "config", "-f", ".gitmodules", "submodule.RobustToolbox.branch"],
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
         stdout=subprocess.PIPE,
+        cwd="RobustToolbox",
         check=True,
         encoding="UTF-8"
     )

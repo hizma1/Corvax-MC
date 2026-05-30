@@ -1,24 +1,26 @@
-﻿// CM14 rework: non-RMC edit marker.
-using System;
-using System.Linq;
+// CM14 rework: non-RMC edit marker.
+// Forge port: the legacy CCMSponsorshipSystem was the bridge between a server-only
+// sponsorship cache and the CCM client UI. After porting the Monolith _Forge
+// SponsorManager, all heavy lifting (resolving Discord-role driven tier, sending
+// MsgSyncSponsorData) moves there - this class now only:
+//   * answers CCM-specific status/customization requests from the client
+//   * pushes refreshed status/customization when the resolved tier changes
+//   * appends round-end credits for connected sponsors
+// It is intentionally thin; the perks themselves live in CCMCustomizationManager
+// and CCMCustomizationApplySystem, both of which keep working unchanged because
+// the manager's snapshot API still returns CCMSponsorshipTier values.
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Shared._CCM.Sponsorship;
 using Robust.Server.Player;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server._CCM.Sponsorship;
 
 public sealed class CCMSponsorshipSystem : EntitySystem
 {
-    private const float SponsorshipRefreshIntervalSeconds = 60f;
-    private float _sponsorshipRefreshAccumulator;
-    private bool _refreshingSponsorships;
-
     [Dependency] private readonly CCMSponsorshipManager _sponsorship = default!;
     [Dependency] private readonly CCMCustomizationManager _customization = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -30,6 +32,14 @@ public sealed class CCMSponsorshipSystem : EntitySystem
         SubscribeNetworkEvent<SaveCCMCustomizationEvent>(OnSaveCustomization);
 
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+
+        _sponsorship.StatusChanged += OnSponsorshipChanged;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _sponsorship.StatusChanged -= OnSponsorshipChanged;
     }
 
     public void PushStatus(ICommonSession session)
@@ -47,44 +57,13 @@ public sealed class CCMSponsorshipSystem : EntitySystem
         RaiseNetworkEvent(new CCMCustomizationResponseEvent(snapshot), session.Channel);
     }
 
-    public override void Update(float frameTime)
+    private void OnSponsorshipChanged(NetUserId userId)
     {
-        base.Update(frameTime);
-
-        _sponsorshipRefreshAccumulator += frameTime;
-        if (_sponsorshipRefreshAccumulator < SponsorshipRefreshIntervalSeconds || _refreshingSponsorships)
+        if (!_players.TryGetSessionById(userId, out var session))
             return;
 
-        _sponsorshipRefreshAccumulator = 0f;
-        _ = RefreshOnlineSponsorships();
-    }
-
-    private async Task RefreshOnlineSponsorships()
-    {
-        if (_refreshingSponsorships)
-            return;
-
-        _refreshingSponsorships = true;
-        try
-        {
-            foreach (var session in _players.Sessions.ToArray())
-            {
-                var changed = await _sponsorship.RefreshSession(session, CancellationToken.None);
-                if (!changed)
-                    continue;
-
-                PushStatus(session);
-                await PushCustomization(session);
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Error($"Failed to refresh CCM sponsorship status:\n{e}");
-        }
-        finally
-        {
-            _refreshingSponsorships = false;
-        }
+        PushStatus(session);
+        _ = PushCustomization(session);
     }
 
     private void OnRequestStatus(RequestCCMSponsorshipStatusEvent ev, EntitySessionEventArgs args)

@@ -21,7 +21,7 @@ namespace Content.Client._CCM.Sponsorship;
 
 public sealed class CCMSponsorshipWindow : DefaultCMWindow
 {
-    private const string DefaultDonateUrl = "https://boosty.to/cmc14";
+    private const string DefaultDonateUrl = "https://boosty.to/corvaxforge";
     private const float DefaultWindowWidth = 1380f;
     private const float DefaultWindowHeight = 930f;
     private const float CompactMinWidth = 760f;
@@ -477,30 +477,31 @@ public sealed class CCMSponsorshipWindow : DefaultCMWindow
 
     private static IReadOnlyList<string> GetTierPerkKeys(CCMSponsorshipTier tier)
     {
+        // На карточке показываем ТОЛЬКО новые для данного тира перки.
+        // О том, что более высокий уровень включает все предыдущие, говорится в info-line-1.
+        //   SponsorI   - приоритетный вход, цвет OOC, ckey в конце раунда
+        //   SponsorII  - цвет LOOC, готовый OOC-тег, базовая кастомизация
+        //   SponsorIII - свой OOC-тег, скин призрака, скины ксеноморфов, расширенная кастомизация
         return tier switch
         {
             CCMSponsorshipTier.SponsorIII =>
             [
-                "ccm-sponsorship-perk-chat-color",
-                "ccm-sponsorship-perk-endgame-credits",
-                "ccm-sponsorship-extended-perk-customization",
-                "ccm-sponsorship-perk-role-timers",
-                "ccm-sponsorship-perk-custom-sprite-skin",
-                "ccm-sponsorship-perk-thanks"
+                "ccm-sponsorship-perk-ooc-tag-custom",
+                "ccm-sponsorship-perk-ghost-skin",
+                "ccm-sponsorship-perk-xeno-skin",
+                "ccm-sponsorship-extended-perk-customization"
             ],
             CCMSponsorshipTier.SponsorII =>
             [
-                "ccm-sponsorship-perk-chat-color",
-                "ccm-sponsorship-perk-endgame-credits",
-                "ccm-sponsorship-perk-customization",
-                "ccm-sponsorship-perk-role-timers",
-                "ccm-sponsorship-perk-thanks"
+                "ccm-sponsorship-perk-looc-color",
+                "ccm-sponsorship-perk-ooc-tag-preset",
+                "ccm-sponsorship-perk-customization"
             ],
             _ =>
             [
-                "ccm-sponsorship-perk-chat-color",
-                "ccm-sponsorship-perk-endgame-credits",
                 "ccm-sponsorship-perk-queue",
+                "ccm-sponsorship-perk-ooc-color",
+                "ccm-sponsorship-perk-endgame-credits",
                 "ccm-sponsorship-perk-thanks"
             ],
         };

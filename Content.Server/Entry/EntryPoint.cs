@@ -1,4 +1,6 @@
 ﻿// CM14 rework: non-RMC edit marker.
+using Content.Server._Forge.Discord;
+using Content.Server._Forge.JoinQueue;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -120,6 +122,10 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+
+                // Forge sponsor/discord/queue stack
+                IoCManager.Resolve<DiscordAuthManager>().Initialize();
+                IoCManager.Resolve<JoinQueueManager>().Initialize();
             }
         }
 

@@ -1,4 +1,7 @@
 ﻿// CM14 rework: non-RMC edit marker.
+using Content.Client._Forge.DiscordAuth;
+using Content.Client._Forge.JoinQueue;
+using Content.Client._Forge.Sponsor;
 using Content.Client._RMC14.Explosion;
 using Content.Client._RMC14.Xenonids.Screech;
 using Content.Client.Administration.Managers;
@@ -80,6 +83,9 @@ namespace Content.Client.Entry
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
+        [Dependency] private readonly SponsorManager _sponsorManager = default!;
+        [Dependency] private readonly DiscordAuthManager _discordAuthManager = default!;
+        [Dependency] private readonly JoinQueueManager _joinQueueManager = default!;
 
         public override void Init()
         {
@@ -144,6 +150,9 @@ namespace Content.Client.Entry
             _jobRequirements.Initialize();
             _playbackMan.Initialize();
             _clientsidePlaytimeManager.Initialize();
+            _sponsorManager.Initialize();
+            _discordAuthManager.Initialize();
+            _joinQueueManager.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
