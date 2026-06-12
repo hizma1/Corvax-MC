@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._RMC14.Bioscan;
@@ -43,14 +42,8 @@ public sealed partial class CMDistressSignalRuleSystem
             return;
 
         var comp = rule.Value.Comp;
-        // CCM14-start
-        comp.MarinesSpawned = 0;
-        comp.XenosSpawned = 0;
-        comp.SurvivorsSpawned = 0;
-        // CCM14-end
-        OperationName ??= GetRandomOperationName();
 
-        LoadRoundStartGameMaps(rule.Value);
+        OperationName ??= GetRandomOperationName();
 
         if (!InitializeXenoMap(rule.Value, comp))
             return;
@@ -66,21 +59,6 @@ public sealed partial class CMDistressSignalRuleSystem
 
         _spawnedDropships = true;
         InitializeDropships(comp);
-    }
-
-    private void LoadRoundStartGameMaps(Entity<CMDistressSignalRuleComponent> rule)
-    {
-        foreach (var mapId in rule.Comp.RoundStartGameMaps)
-        {
-            if (!_prototypes.TryIndex<GameMapPrototype>(mapId, out var gameMap))
-            {
-                Log.Error($"Failed to load round-start map '{mapId}' for {ToPrettyString(rule.Owner)}: missing gameMap prototype.");
-                continue;
-            }
-
-            GameTicker.LoadGameMap(gameMap, out var mapUid);
-            _mapSystem.InitializeMap(mapUid);
-        }
     }
 
     private bool InitializeXenoMap(Entity<CMDistressSignalRuleComponent> rule, CMDistressSignalRuleComponent comp)
@@ -143,7 +121,10 @@ public sealed partial class CMDistressSignalRuleSystem
 
     private void ApplyJobSlotScaling(CMDistressSignalRuleComponent comp, RulePlayerSpawningEvent ev)
     {
-        var (_, _, marines) = CalculateRoundStartFactionCounts(ev.PlayerPool.Count);
+        var totalXenos = (int) Math.Round(Math.Max(1, ev.PlayerPool.Count / _marinesPerXeno));
+        // TODO RMC14 dont count survivors
+        var totalSurvivors = (int) Math.Clamp((int)Math.Round(ev.PlayerPool.Count / _marinesPerSurvivor), _minimumSurvivors, _maximumSurvivors);
+        var marines = ev.PlayerPool.Count - totalXenos - totalSurvivors;
 
         // TODO RMC14: Move to component
         if (!comp.DoJobSlotScaling || marines <= 0 || !_config.GetCVar(RMCCVars.RMCJobSlotScaling))
@@ -225,11 +206,10 @@ public sealed partial class CMDistressSignalRuleSystem
                 mind = _mind.CreateMind(playerId);
 
             _mind.TransferTo(mind.Value, xenoEnt);
-            comp.XenosSpawned++; // CCM14
             return playerId;
         }
 
-        var (totalXenos, _, _) = CalculateRoundStartFactionCounts(ev.PlayerPool.Count);
+        var totalXenos = (int) Math.Round(Math.Max(1, ev.PlayerPool.Count / _marinesPerXeno));
         var priorities = Enum.GetValues<JobPriority>().Length;
         var xenoCandidates = new List<NetUserId>[priorities];
         for (var i = 0; i < priorities; i++)
@@ -279,35 +259,7 @@ public sealed partial class CMDistressSignalRuleSystem
         }
 
         if (totalXenos - selectedXenos > 0)
-        // CCM14-start
-        {
-            var burrowedLarva = totalXenos - selectedXenos;
-            _hive.IncreaseBurrowedLarva(burrowedLarva);
-            comp.XenosSpawned += burrowedLarva;
-        }
-        // CCM14-end
-    }
-
-    private (int Xenos, int Survivors, int Marines) CalculateRoundStartFactionCounts(int totalPlayers)
-    {
-        if (totalPlayers <= 0)
-            return (0, 0, 0);
-
-        var totalSurvivors = _marinesPerSurvivor <= 0
-            ? 0
-            : (int) Math.Clamp(
-                (int) Math.Round(totalPlayers / _marinesPerSurvivor),
-                _minimumSurvivors,
-                _maximumSurvivors);
-
-        var marineAndXenoPool = Math.Max(1, totalPlayers - totalSurvivors);
-        var totalXenos = _marinesPerXeno <= 0
-            ? marineAndXenoPool
-            : (int) Math.Round(Math.Max(1f, marineAndXenoPool / (_marinesPerXeno + 1f)));
-
-        totalXenos = Math.Clamp(totalXenos, 1, marineAndXenoPool);
-        var marines = Math.Max(0, totalPlayers - totalSurvivors - totalXenos);
-        return (totalXenos, totalSurvivors, marines);
+            _hive.ChangeBurrowedLarva(totalXenos - selectedXenos);
     }
 
     private EntityUid SpawnXenoEnt(EntProtoId ent, ICommonSession player, bool doBurst,
@@ -476,8 +428,6 @@ public sealed partial class CMDistressSignalRuleSystem
             if (comp.SetHunger && TryComp(ev.SpawnResult, out HungerComponent? hunger))
                 _hunger.SetHunger(ev.SpawnResult.Value, 50.0f, hunger);
         }
-
-        comp.MarinesSpawned++; // CCM14
     }
 
     private void SpawnSquads(Entity<CMDistressSignalRuleComponent> rule)

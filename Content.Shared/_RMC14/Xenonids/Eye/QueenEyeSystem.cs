@@ -37,8 +37,6 @@ public sealed class QueenEyeSystem : EntitySystem
     private readonly HashSet<Entity<QueenEyeVisionComponent>> _seeds = new();
 
     private readonly HashSet<Vector2i> _singleTiles = new();
-    private readonly HashSet<Entity<XenoWeedsComponent>> _nearbyWeeds = new();
-    private readonly HashSet<Entity<XenoWeedsComponent>> _anchorWeeds = new();
 
     private readonly HashSet<Entity<XenoWeedsComponent>> _nearbyWeeds = new();
     private readonly HashSet<Entity<XenoWeedsComponent>> _anchorWeeds = new();
@@ -115,11 +113,6 @@ public sealed class QueenEyeSystem : EntitySystem
         _eye.SetTarget(ent, ent.Comp.Eye, eye);
         _eye.SetDrawFov(ent, false);
         _mover.SetRelay(ent, ent.Comp.Eye.Value);
-        // CCM14-start
-        // When queen eye is activated, swap plant weeds to world-target expand weeds
-        if (HasComp<XenoAttachedOvipositorComponent>(ent.Owner))
-            SwapPlantWeedsToWorldTarget(ent);
-        // CCM14-end
     }
 
     private void OnQueenEyeActionGetVisMask(Entity<QueenEyeActionComponent> ent, ref GetVisMaskEvent args)
@@ -262,7 +255,9 @@ public sealed class QueenEyeSystem : EntitySystem
         _parallel.ProcessNow(_job, _job.Data.Count);
     }
 
-    // Returns whether a tile is accessible based on vision.
+    /// <summary>
+    /// Returns whether a tile is accessible based on vision.
+    /// </summary>
     private bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 29)
     {
         _seeds.Clear();
@@ -335,8 +330,15 @@ public sealed class QueenEyeSystem : EntitySystem
 
     public bool CanSeeTarget(Entity<QueenEyeActionComponent?> queen, EntityUid target)
     {
+        if (!Resolve(queen, ref queen.Comp, false) ||
+            queen.Comp.Eye == null)
+        {
+            return false;
+        }
+
         var targetTransform = Transform(target);
         if (!TryComp(targetTransform.GridUid, out BroadphaseComponent? broadphase) ||
+            !TryComp(targetTransform.GridUid, out MapGridComponent? grid))
         {
             return false;
         }
@@ -364,7 +366,9 @@ public sealed class QueenEyeSystem : EntitySystem
         return IsAccessible((gridId, broadphase, grid), targetTile);
     }
 
-    // Gets the relevant vision seeds for later.
+    /// <summary>
+    /// Gets the relevant vision seeds for later.
+    /// </summary>
     private record struct SeedJob : IRobustJob
     {
         public required QueenEyeSystem System;

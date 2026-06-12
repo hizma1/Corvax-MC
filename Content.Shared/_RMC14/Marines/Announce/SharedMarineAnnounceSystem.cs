@@ -22,7 +22,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Maths;
 
 namespace Content.Shared._RMC14.Marines.Announce;
 
@@ -214,20 +213,6 @@ public abstract class SharedMarineAnnounceSystem : EntitySystem
     {
     }
 
-    public virtual void AnnounceOverwatchSquad(
-        EntityUid sender,
-        string message,
-        EntityUid squad,
-        Color squadColor,
-        string squadName,
-        SoundSpecifier? sound = null)
-    {
-    }
-
-    public virtual void AnnounceAlertLevel(RMCAlertLevels level, string message, Filter? filter = null)
-    {
-    }
-
     /// <summary>
     ///     Dispatches already wrapped announcement to Marines.
     /// </summary>
@@ -286,18 +271,6 @@ public abstract class SharedMarineAnnounceSystem : EntitySystem
             {
                 _core.CreateARESLog(faction, LogCat, (string)$"{Name(sender)} sent an announcement: {message}");
             }
-    }
-
-    protected virtual void AnnounceSignedUi(
-        EntityUid sender,
-        string message,
-        string author,
-        string name,
-        SoundSpecifier? sound,
-        Filter? filter,
-        bool excludeSurvivors,
-        string? faction)
-    {
     }
 
     public string FormatHighCommand(string? author, string message)

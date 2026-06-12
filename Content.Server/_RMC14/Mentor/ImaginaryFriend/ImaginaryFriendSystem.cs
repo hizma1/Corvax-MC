@@ -134,7 +134,7 @@ public sealed class ImaginaryFriendSystem : SharedImaginaryFriendSystem
                         continue;
 
                     var jobs = humanoid.JobPriorities;
-                    var highJob = jobs.FirstOrDefault(x => x.Value == JobPriority.High).Key;
+                    var highJob = jobs.FirstOrDefault(x => x.Value == JobPriority.First).Key;
 
                     if (highJob != ImaginaryFriendJobPrototype)
                         continue;

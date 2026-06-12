@@ -1163,8 +1163,6 @@ namespace Content.Client.Lobby.UI
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
-            UpdateSpawnPriorityControls();
-            UpdateArmorPreferenceControls();
             UpdatePlaytimeRankPreferenceControls();
             UpdateSquadPreferenceControls();
             UpdateAgeEdit();
@@ -1613,7 +1611,7 @@ namespace Content.Client.Lobby.UI
                     // If the job has ranks we will add the options as buttons.
                     if (job.Ranks != null && job.SetRankPreference)
                     {
-                        rankOptions.AddItem("Auto");
+                        rankOptions.AddItem(Loc.GetString("humanoid-profile-editor-rank-auto"));
 
                         foreach (var rank in job.Ranks)
                         {
@@ -1645,12 +1643,8 @@ namespace Content.Client.Lobby.UI
                     }
                     // RMC14
 
-                    _jobPriorities.Add((job.ID, selector));
                     _rankPriorities.Add((job.ID, rankOptions, rankProtoIds));
-                    jobContainer.AddChild(selector);
-                    jobContainer.AddChild(loadoutWindowBtn);
                     jobContainer.AddChild(rankOptions);
-                    category.AddChild(jobContainer);
                 }
             }
 
@@ -2404,26 +2398,6 @@ namespace Content.Client.Lobby.UI
             }
 
             PronounsButton.SelectId((int) Profile.Gender);
-        }
-
-        private void UpdateSpawnPriorityControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            SpawnPriorityButton.SelectId((int) Profile.SpawnPriority);
-        }
-
-        private void UpdateArmorPreferenceControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            ArmorPreferenceButton.SelectId((int) Profile.ArmorPreference);
         }
 
         private void UpdatePlaytimeRankPreferenceControls()

@@ -16,6 +16,12 @@ namespace Content.Shared._RMC14.HealthExaminable;
 
 public sealed class RMCHealthExaminableSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
+
+    private static readonly ProtoId<DamageGroupPrototype> BruteGroup = "Brute";
+    private static readonly ProtoId<DamageGroupPrototype> BurnGroup = "Burn";
+
     private readonly ImmutableArray<FixedPoint2> _thresholds = ImmutableArray.Create<FixedPoint2>(25, 50, 75, 100, 200, 300);
 
     public override void Initialize()
@@ -39,7 +45,7 @@ public sealed class RMCHealthExaminableSystem : EntitySystem
 
             foreach (var group in ent.Comp.Groups)
             {
-                if ((group == BruteGroup && suppress.Brute) || (group == BurnGroup && suppress.Burn))
+                if (group == BruteGroup && suppress.Brute || group == BurnGroup && suppress.Burn)
                     continue;
 
                 if (!damageable.DamagePerGroup.TryGetValue(group, out var groupDamage))

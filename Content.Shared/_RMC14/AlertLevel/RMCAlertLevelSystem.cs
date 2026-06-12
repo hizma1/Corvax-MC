@@ -144,9 +144,7 @@ public sealed class RMCAlertLevelSystem : EntitySystem
         {
             if (announcement != null)
             {
-                var text = Loc.GetString(announcement);
-                _marineAnnounce.AnnounceToMarines(text);
-                _marineAnnounce.AnnounceAlertLevel(level, text, filter);
+                _marineAnnounce.AnnounceToMarines(Loc.GetString(announcement));
             }
             else if (message != null)
             {

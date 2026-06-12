@@ -85,6 +85,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private readonly SharedRMCMeleeWeaponSystem _rmcMelee = default!;
     [Dependency] private readonly SharedEntityStorageSystem _storage = default!;
     // RMC14 end
+    [Dependency] private readonly RMCReagentSystem _reagent = default!; // CCM-14
 
     private static readonly ProtoId<ReagentPrototype> YautjaBloodReagent = "CMUYautjaBlood";
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
@@ -243,7 +244,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnLightAttack(LightAttackEvent msg, EntitySessionEventArgs args)
     {
-        _rmcLagCompensation.SetLastRealTick(args.SenderSession.UserId, msg.LastRealTick);
         if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
@@ -258,7 +258,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnHeavyAttack(HeavyAttackEvent msg, EntitySessionEventArgs args)
     {
-        _rmcLagCompensation.SetLastRealTick(args.SenderSession.UserId, msg.LastRealTick);
         if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
@@ -273,7 +272,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
     {
-        _rmcLagCompensation.SetLastRealTick(args.SenderSession.UserId, msg.LastRealTick);
         if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
