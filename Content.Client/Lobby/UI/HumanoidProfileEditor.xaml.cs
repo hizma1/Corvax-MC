@@ -20,6 +20,7 @@ using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared._CCM.Preferences;
 using Content.Shared._RMC14.CCVar;
 using Content.Shared._RMC14.LinkAccount;
+using Content.Shared._RMC14.Marines.Roles.Ranks;
 using Content.Shared._RMC14.Marines.Squads;
 using Content.Shared._RMC14.NamedItems;
 using Content.Shared._RMC14.Prototypes;
@@ -132,6 +133,8 @@ namespace Content.Client.Lobby.UI
         private List<SpeciesPrototype> _species = new();
 
         private List<(string, RequirementsSelector)> _jobPriorities = new();
+
+        private List<(string JobId, OptionButton Button, List<ProtoId<RankPrototype>?> RankIds)> _rankPriorities = new();
 
         private readonly Dictionary<string, BoxContainer> _jobCategories;
         private readonly Dictionary<string, RichTextLabel> _jobChanceLabels = new();
@@ -1160,6 +1163,7 @@ namespace Content.Client.Lobby.UI
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
+            UpdatePlaytimeRankPreferenceControls();
             UpdateSquadPreferenceControls();
             UpdateAgeEdit();
             UpdateEyePickers();
@@ -1261,6 +1265,8 @@ namespace Content.Client.Lobby.UI
             JobListOther.DisposeAllChildren();
             _jobCategories.Clear();
             _jobPriorities.Clear();
+            _rankPriorities.Clear();
+            var firstCategory = true;
             _jobChanceLabels.Clear();
             _jobChanceUnderlines.Clear();
             var firstMarinesCategory = true;
@@ -1590,11 +1596,61 @@ namespace Content.Client.Lobby.UI
                             jobContainer
                         }
                     });
+                    // RMC14
+                    var rankOptions = new OptionButton()
+                    {
+                        Name = "RankOptionsButton",
+                        HorizontalAlignment = HAlignment.Right,
+                        VerticalAlignment = VAlignment.Center,
+                        Margin = new Thickness(3f, 3f, 0f, 0f)
+                    };
+
+                    // index 0 = Auto (null), subsequent entries map 1:1 to job.Ranks in definition order.
+                    var rankProtoIds = new List<ProtoId<RankPrototype>?> { null };
+
+                    // If the job has ranks we will add the options as buttons.
+                    if (job.Ranks != null && job.SetRankPreference)
+                    {
+                        rankOptions.AddItem(Loc.GetString("humanoid-profile-editor-rank-auto"));
+
+                        foreach (var rank in job.Ranks)
+                        {
+                            if (_prototypeManager.TryIndex(rank.Key, out var rankPrototype))
+                            {
+                                rankOptions.AddItem(rankPrototype.Name);
+                                rankProtoIds.Add(rank.Key);
+
+                                if (rank.Value != null && !_requirements.CheckRoleRequirements(rank.Value, Profile, out _))
+                                    rankOptions.SetItemDisabled(rankOptions.ItemCount - 1, true);
+                            }
+                        }
+
+                        rankOptions.SetItemDisabled(rankOptions.ItemCount - 1, true);
+                        // If the job only has 1 rank there is nothing to choose.
+                        if (rankProtoIds.Count <= 2)
+                            rankOptions.Disabled = true;
+
+                        rankOptions.OnItemSelected += args =>
+                        {
+                            rankOptions.SelectId(args.Id);
+                            SetRankPreference(job.ID, rankProtoIds[args.Id]);
+                        };
+                    }
+                    // Else if the job does not contain ranks we do not show it (Xenos as an example).
+                    else
+                    {
+                        rankOptions.Visible = false;
+                    }
+                    // RMC14
+
+                    _rankPriorities.Add((job.ID, rankOptions, rankProtoIds));
+                    jobContainer.AddChild(rankOptions);
                 }
             }
 
             UpdateJobPriorities();
             ApplyJobPriorityChances();
+            UpdatePlaytimeRankPreferenceControls();
         }
 
         private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto)
@@ -1952,6 +2008,12 @@ namespace Content.Client.Lobby.UI
                 : "humanoid-profile-editor-background-info-open");
         }
         // CCM rework lobby - end
+
+        private void SetRankPreference(string jobId, ProtoId<RankPrototype>? rankId)
+        {
+            Profile = Profile?.WithRankPreference(jobId, rankId);
+            SetDirty();
+        }
 
         private void SetSquadPreference(EntProtoId<SquadTeamComponent>? newSquadPreference)
         {
@@ -2336,6 +2398,36 @@ namespace Content.Client.Lobby.UI
             }
 
             PronounsButton.SelectId((int) Profile.Gender);
+        }
+
+        private void UpdatePlaytimeRankPreferenceControls()
+        {
+            var preferenceAdjusted = false;
+            foreach (var (jobID, optionsButton, rankIds) in _rankPriorities)
+            {
+                if (!_prototypeManager.TryIndex(jobID, out JobPrototype? job) || job == null)
+                    continue;
+
+                if (job.Ranks == null || !job.SetRankPreference)
+                    continue;
+
+                ProtoId<RankPrototype>? preferredRank = null;
+                Profile?.RankPreferences.TryGetValue(jobID, out preferredRank);
+                var selectedIndex = rankIds.IndexOf(preferredRank);
+                if (selectedIndex < 0)
+                    selectedIndex = 0;
+
+                if (preferredRank is { } rank && rank == rankIds.Last())
+                {
+                    Profile = Profile?.WithRankPreference(jobID, null);
+                    preferenceAdjusted = true;
+                }
+
+                optionsButton.Select(selectedIndex);
+            }
+
+            if (preferenceAdjusted)
+                Save?.Invoke();
         }
 
         private void UpdateSquadPreferenceControls()
