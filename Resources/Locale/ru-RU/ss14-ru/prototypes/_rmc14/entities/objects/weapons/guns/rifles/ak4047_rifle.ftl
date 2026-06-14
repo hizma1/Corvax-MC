@@ -1,8 +1,8 @@
-ent-RMCWeaponRifleAK4047 = AK-4047
+ent-RMCWeaponRifleType77 = AK-4047
     .desc = AK-4047 является дешёвым и надёжным аналогом винтовки M54C, созданным для армии СССП. Это оружие часто попадает в руки наёмников и повстанцев. Хотя AK-4047 не такой точный, как M54, он прочнее аналогов из ККМП. AK-4047 всё ещё будет работать, даже если его сбросить со скалы и оставить под водой на месяц.
-ent-RMCWeaponRifleAK4047Tactical = { ent-RMCWeaponRifleAK4047 }
+ent-RMCWeaponRifleType77Tactical = { ent-RMCWeaponRifleType77 }
     .suffix = Тактический
-    .desc = { ent-RMCWeaponRifleAK4047.desc }
+    .desc = { ent-RMCWeaponRifleType77.desc }
 ent-RMCMagazineRifleType77 = магазин AK-4047 (10x24 мм)
     .desc = { ent-CMMagazineRifleBase.desc }
 ent-RMCMagazineRifleType77AP = магазин AK-4047 ББ (10x24 мм)

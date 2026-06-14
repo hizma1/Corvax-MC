@@ -64,13 +64,11 @@
         Blunt: 20
     healPerHit: 20
     speedMultiplier: 1.5
-    maxDistance: 8
     maxTiles: 10
     hitSound:
       path: /Audio/_MC/Effects/alien_tail_attack.ogg
     attackEffect: RMCEffectExtraSlash
     healEffect: RMCEffectHealFlurry
-    telegraphEffect: RMCEffectXenoTelegraphRed
     emote: XenoRoar
     emoteDelay: 2
   - type: XenoPlasma

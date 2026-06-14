@@ -1,8 +1,8 @@
-ent-RMCWeaponRifleAK4047 = AK-4047 assault rifle
+ent-RMCWeaponRifleType77 = AK-4047 assault rifle
     .desc = The SPP equivalent to the M54C Rifle, the AK-4047 is a cheap and reliable substitute. As such, the weapon often winds up in the hands of mercenaries and insurgents. While not as accurate as the M54, the AK-4047 is sturdier than the UNMC weapon. An AK-4047 still works after being thrown off a cliff and left underwater for a month.
-ent-RMCWeaponRifleAK4047Tactical = { ent-RMCWeaponRifleAK4047 }
+ent-RMCWeaponRifleType77Tactical = { ent-RMCWeaponRifleType77 }
     .suffix = Tactical
-    .desc = { ent-RMCWeaponRifleAK4047.desc }
+    .desc = { ent-RMCWeaponRifleType77.desc }
 ent-RMCMagazineRifleType77 = AK4047 magazine (10x24mm)
     .desc = { ent-CMMagazineRifleBase.desc }
 ent-RMCMagazineRifleType77AP = AK4047 AP magazine (10x24mm)

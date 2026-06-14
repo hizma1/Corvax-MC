@@ -93,7 +93,7 @@
     - id: CCMPillTramadol
       amount: 4
   - type: IconLabel
-    labelTextLocId: Tr
+    labelTextLocId: pill-tramadol
 
 # Pill Canisters
 
