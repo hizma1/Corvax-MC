@@ -140,7 +140,11 @@
   components:
   - type: Sprite
     sprite: _RMC14/Structures/Machines/computer.rsi
-    state: toc_shuttle
+    layers:
+    - map: ["base"]
+      state: "toc_shuttle"
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
+      state: "toc_shuttle"
     overrideDir: West
     enableOverrideDir: true
 
@@ -178,7 +182,11 @@
   components:
   - type: Sprite
     sprite: _RMC14/Structures/Machines/computer.rsi
-    state: toc_map
+    layers:
+    - map: ["base"]
+      state: "toc_map"
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
+      state: "toc_map"
     overrideDir: West
     enableOverrideDir: true
 
@@ -216,7 +224,11 @@
   components:
   - type: Sprite
     sprite: _RMC14/Structures/Machines/computer.rsi
-    state: toc_railgun
+    layers:
+    - map: ["base"]
+      state: "toc_railgun"
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
+      state: "toc_railgun"
     overrideDir: West
     enableOverrideDir: true
 
@@ -254,7 +266,11 @@
   components:
   - type: Sprite
     sprite: _RMC14/Structures/Machines/computer.rsi
-    state: toc_railcannon
+    layers:
+    - map: ["base"]
+      state: "toc_railcannon"
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
+      state: "toc_railcannon"
     overrideDir: West
     enableOverrideDir: true
 

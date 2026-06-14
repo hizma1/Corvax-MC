@@ -31,7 +31,6 @@
   - type: MCEdgeSpreader # CCM14
     delay: 0.7
     range: 3
-    id: RMCSmokeAcid
   - type: MCTimedDespawnDisappearanceVisuals
     lifetime: 12
   - type: EvenSmoke
@@ -89,7 +88,6 @@
   - type: ActiveEdgeSpreader
   - type: MCEdgeSpreader # CCM14
     delay: 0.1
-    id: RMCSmokeNeurotoxin
   - type: MCTimedDespawnDisappearanceVisuals # CCM14
     lifetime: 12
   - type: EvenSmoke
@@ -182,7 +180,6 @@
   - type: DeleteOnExplosion
   - type: MCEdgeSpreader # CCM14
     delay: 0.1
-    id: RMCSmokeKingDoom
   - type: MCTimedDespawnDisappearanceVisuals # CCM14
     lifetime: 12
 
