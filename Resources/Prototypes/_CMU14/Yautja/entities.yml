@@ -142,7 +142,6 @@
     defaultState: Full
     green: false
     blockScopes: true
-    ignoreUserOnlyHalf: true
 
 - type: entity
   parent: IDCardStandard
