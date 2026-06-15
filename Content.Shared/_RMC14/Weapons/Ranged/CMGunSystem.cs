@@ -113,6 +113,7 @@ public sealed class CMGunSystem : EntitySystem
 
         SubscribeLocalEvent<ProjectileFixedDistanceComponent, PreventCollideEvent>(OnCollisionCheckArc);
         SubscribeLocalEvent<ProjectileFixedDistanceComponent, PhysicsSleepEvent>(OnEventToStopProjectile);
+        SubscribeLocalEvent<ProjectileFixedDistanceComponent, StartCollideEvent>(OnProjectileFixedDistanceStartCollide); // CCM-14
 
         SubscribeLocalEvent<GunShowUseDelayComponent, GunShotEvent>(OnShowUseDelayShot);
         SubscribeLocalEvent<GunShowUseDelayComponent, ItemWieldedEvent>(OnShowUseDelayWielded);
@@ -941,6 +942,14 @@ public sealed class CMGunSystem : EntitySystem
     {
         args.Cancelled = true;
     }
+
+    #region CCM14
+    private void OnProjectileFixedDistanceStartCollide(Entity<ProjectileFixedDistanceComponent> ent, ref StartCollideEvent args)
+    {
+        RemCompDeferred<ProjectileFixedDistanceComponent>(ent);
+        StopProjectile(ent);
+    }
+    #endregion
 }
 
 /// <summary>
