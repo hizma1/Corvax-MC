@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared._CCM14.Weapons.Ranged.Mortar; // CCM-14
 using Content.Shared._CCM14.Xenonids.Screech; // CCM14
 using Content.Shared._RMC14.Attachable.Components;
 using Content.Shared._RMC14.CCVar;
@@ -175,6 +176,9 @@ public sealed class CMGunSystem : EntitySystem
     /// </remarks>
     private void OnShootAtFixedPointShot(Entity<ShootAtFixedPointComponent> ent, ref AmmoShotEvent args)
     {
+        if (TryComp<MortarModeComponent>(ent.Owner, out var mortar) && mortar.Activated) // CCM-14
+            return;
+
         if (!TryComp(ent, out GunComponent? gun) ||
             gun.ShootCoordinates is not { } target)
         {
