@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Numerics;
-using Content.Shared._CCM14.Weapons.Ranged.Mortar; // CCM-14
-using Content.Shared._CCM14.Xenonids.Screech; // CCM14
+using Content.Shared._CCM.Weapons.Ranged.Mortar; // CCM-14
+using Content.Shared._CCM.Xenonids.Screech; // CCM14
 using Content.Shared._RMC14.Attachable.Components;
 using Content.Shared._RMC14.CCVar;
 using Content.Shared._RMC14.Evasion;
