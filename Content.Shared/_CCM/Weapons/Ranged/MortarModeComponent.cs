@@ -24,7 +24,7 @@ public sealed partial class MortarModeComponent : Component
     public LocId Examine = "ccm-gun-mortar-examine";
 
     [DataField, AutoNetworkedField]
-    public float MaxRange = 5f;
+    public float MaxRange = 7f;
 
     [DataField, AutoNetworkedField]
     public float Scatter = 1.8f;
