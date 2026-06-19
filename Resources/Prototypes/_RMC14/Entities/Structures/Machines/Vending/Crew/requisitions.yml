@@ -298,6 +298,8 @@
         amount: 1
       - id: CMPamphletEngineer
         amount: 1
+      - id: CMPamphletMedical
+        amount: 1
       - id: CMPamphletPowerloader
         amount: 1
     - name: Коробки со взрывчаткой # CCM14
