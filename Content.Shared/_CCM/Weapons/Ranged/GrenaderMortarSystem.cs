@@ -1,6 +1,8 @@
 using System.Numerics;
+using Content.Shared._RMC14.Areas;
 using Content.Shared._RMC14.Weapons.Ranged;
 using Content.Shared._RMC14.Weapons.Common;
+using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
@@ -20,6 +22,7 @@ namespace Content.Shared._CCM.Weapons.Ranged.Mortar;
 
 public sealed class GrenaderMortarSystem : EntitySystem
 {
+    [Dependency] private readonly AreaSystem _area = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -84,7 +87,21 @@ public sealed class GrenaderMortarSystem : EntitySystem
         if (distance > ent.Comp.MaxRange)
         {
             args.Cancelled = true;
-            _popup.PopupClient(Loc.GetString("ccm-mortar-too-far"), args.User, args.User, PopupType.SmallCaution);
+            _popup.PopupClient(Loc.GetString("ccm-mortar-too-far"), args.User, args.User, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!_area.CanMortarPlacement(args.User.ToCoordinates()))
+        {
+            args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString("ccm-mortar-covered"), args.User, args.User, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!_area.CanMortarFire(_transform.ToCoordinates(targetMap)))
+        {
+            args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString("ccm-mortar-covered"), args.User, args.User, PopupType.MediumCaution);
             return;
         }
 
@@ -92,7 +109,8 @@ public sealed class GrenaderMortarSystem : EntitySystem
 
         var user = args.User;
         var gunNet = GetNetEntity(ent);
-        var targetNetCoords = GetNetCoordinates(args.ToCoordinates.Value);
+        var gridCoords = _transform.ToCoordinates(targetMap);
+        var targetNetCoords = GetNetCoordinates(gridCoords);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfterDuration,
             new MortarDoAfterEvent(gunNet, targetNetCoords), ent)

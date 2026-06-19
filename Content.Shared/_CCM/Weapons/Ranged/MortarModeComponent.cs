@@ -12,7 +12,7 @@ public sealed partial class MortarModeComponent : Component
     public bool Activated;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
+    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(4);
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? ToggleSound = new SoundPathSpecifier("/Audio/Weapons/click.ogg");
@@ -24,8 +24,8 @@ public sealed partial class MortarModeComponent : Component
     public LocId Examine = "ccm-gun-mortar-examine";
 
     [DataField, AutoNetworkedField]
-    public float MaxRange = 6f;
+    public float MaxRange = 5f;
 
     [DataField, AutoNetworkedField]
-    public float Scatter = 1.5f;
+    public float Scatter = 1.8f;
 }
