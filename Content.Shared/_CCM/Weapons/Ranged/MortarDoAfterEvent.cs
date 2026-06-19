@@ -2,7 +2,7 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._CCM14.Weapons.Ranged.Mortar;
+namespace Content.Shared._CCM.Weapons.Ranged.Mortar;
 
 [Serializable, NetSerializable]
 public sealed partial class MortarDoAfterEvent : SimpleDoAfterEvent

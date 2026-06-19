@@ -2,7 +2,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
-namespace Content.Shared._CCM14.Weapons.Ranged.Mortar;
+namespace Content.Shared._CCM.Weapons.Ranged.Mortar;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(GrenaderMortarSystem))]

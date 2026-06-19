@@ -16,7 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
 
-namespace Content.Shared._CCM14.Weapons.Ranged.Mortar;
+namespace Content.Shared._CCM.Weapons.Ranged.Mortar;
 
 public sealed class GrenaderMortarSystem : EntitySystem
 {
